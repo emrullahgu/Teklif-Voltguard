@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       if (!user.approved) {
-        throw new Error('Hesabınız henüz onaylanmamış. Lütfen admin onayını bekleyin.');
+        throw new Error('Hesabınız henüz onaylanmamışş. Lütfen admin onayını bekleyin.');
       }
 
       console.log('✅ Giriş başarılı!', user);

@@ -41,7 +41,7 @@ const Register = ({ onSwitchToLogin }) => {
     setLoading(true);
 
     try {
-      // Kullanıcı oluıtur
+      // Kullanıcı oluştur
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
@@ -76,7 +76,7 @@ const Register = ({ onSwitchToLogin }) => {
       } else if (error.code === 'auth/weak-password') {
         setError('şifre ıok zayıf!');
       } else {
-        setError('Kayıt sırasında bir hata oluıtu: ' + error.message);
+        setError('Kayıt sırasında bir hata oluştu: ' + error.message);
       }
     } finally {
       setLoading(false);
@@ -96,7 +96,7 @@ const Register = ({ onSwitchToLogin }) => {
             Kayıt Baıarılı!
           </h2>
           <p className="text-gray-600 mb-4">
-            Hesabınız oluıturuldu. Admin onayı bekleniyor.
+            Hesabınız oluşturuldu. Admin onayı bekleniyor.
           </p>
           <p className="text-sm text-gray-500">
             Onaylandışınızda e-posta ile bilgilendirileceksiniz.

@@ -53,7 +53,7 @@ const OsosCanliIzleme = () => {
       setLoading(false);
     } catch (err) {
       console.error('OSOS verisi yüklenemedi:', err);
-      setError('OSOS baılantısı kurulamadı. Lütfen veri kaynaşını kontrol edin.');
+      setError('OSOS bağlantısı kurulamadı. Lütfen veri kaynağını kontrol edin.');
       setLoading(false);
     }
   };
@@ -132,7 +132,7 @@ const OsosCanliIzleme = () => {
         <AlertTriangle className="w-16 h-16 text-orange-500" />
         <div className="text-center">
           <h3 className="text-xl font-bold text-gray-800 mb-2">OSOS Verisi Bulunamadı</h3>
-          <p className="text-gray-600 mb-4">{error || 'Henız OSOS verisi kaydedilmemi.'}</p>
+          <p className="text-gray-600 mb-4">{error || 'Henüz OSOS verisi kaydedilmemiş.'}</p>
           <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-left max-w-2xl">
             <h4 className="font-semibold text-blue-800 mb-2">?? Veri Kaydetmek için:</h4>
             <ol className="text-sm text-blue-700 space-y-1 list-decimal list-inside">
@@ -348,7 +348,7 @@ const OsosCanliIzleme = () => {
               <ul className="space-y-1 text-orange-700">
                 {!gerilimDurumu && <li>ı Gerilim normal aralışın dışında (Beklenen: 210-240V)</li>}
                 {!frekansDurumu && <li>ı Frekans normal aralışın dışında (Beklenen: 49.5-50.5Hz)</li>}
-                {!gucFaktoruDurumu && <li>ı Güç faktörü dıık (Beklenen: &gt;0.85), kompanzasyon önerilir</li>}
+                {!gucFaktoruDurumu && <li>⚠ Güç faktörü düşük (Beklenen: &gt;0.85), kompanzasyon önerilir</li>}
               </ul>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { supabase } from './supabaseClient';
 
 /**
- * Aktivite log kaydı oluıturur
+ * Aktivite log kaydı oluşturur
  * @param {string} actionType - ılem tipi: 'create', 'update', 'delete', 'view', 'login', 'logout', 'export'
  * @param {string} actionDescription - ılem aıklaması
  * @param {string} module - Modıl adı: 'bordro', 'teklif', 'fatura', 'login', 'admin'
@@ -37,7 +37,7 @@ export const logActivity = async (actionType, actionDescription, module = 'syste
     if (error) {
       // Tablo yoksa veya RLS hatası varsa sessiz ol
       if (error.code === '42P01' || error.code === 'PGRST116') {
-        console.log('?? Activity logs tablosu henız oluıturulmamı');
+        console.log('?? Activity logs tablosu henüz oluşturulmamış');
       } else {
         console.error('Log kaydetme hatası:', error);
       }
@@ -69,13 +69,13 @@ export const ActivityLogger = {
   bordroExportExcel: (month, year) => logActivity('export', `Bordro Excel indirildi: ${month}/${year}`, 'bordro'),
   
   // Teklif işlemleri
-  teklifCreate: (companyName) => logActivity('create', `Teklif oluıturuldu: ${companyName}`, 'teklif'),
+  teklifCreate: (companyName) => logActivity('create', `Teklif oluşturuldu: ${companyName}`, 'teklif'),
   teklifUpdate: (companyName) => logActivity('update', `Teklif güncellendi: ${companyName}`, 'teklif'),
   teklifDelete: (companyName) => logActivity('delete', `Teklif silindi: ${companyName}`, 'teklif'),
   teklifExportPDF: (companyName) => logActivity('export', `Teklif PDF indirildi: ${companyName}`, 'teklif'),
   
   // Fatura işlemleri
-  faturaCreate: (invoiceNo) => logActivity('create', `Fatura oluıturuldu: ${invoiceNo}`, 'fatura'),
+  faturaCreate: (invoiceNo) => logActivity('create', `Fatura oluşturuldu: ${invoiceNo}`, 'fatura'),
   faturaUpdate: (invoiceNo) => logActivity('update', `Fatura güncellendi: ${invoiceNo}`, 'fatura'),
   faturaDelete: (invoiceNo) => logActivity('delete', `Fatura silindi: ${invoiceNo}`, 'fatura'),
   faturaExportPDF: (invoiceNo) => logActivity('export', `Fatura PDF indirildi: ${invoiceNo}`, 'fatura'),

@@ -83,7 +83,7 @@ app.post('/api/kosbi/login', async (req, res) => {
       });
     }
     
-    // Session ID oluıtur
+    // Session ID oluştur
     const sessionId = `${username}_${Date.now()}`;
     sessions.set(sessionId, {
       username,

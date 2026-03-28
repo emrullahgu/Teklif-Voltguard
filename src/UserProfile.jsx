@@ -104,7 +104,7 @@ const UserProfile = ({ onClose }) => {
       signOut();
       onClose();
     } catch (error) {
-      setError('Hesap silinirken bir hata oluıtu!');
+      setError('Hesap silinirken bir hata oluştu!');
     }
   };
 

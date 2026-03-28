@@ -5,7 +5,7 @@ import './index.css'
 
 const rootElement = document.getElementById('root');
 
-// Sadece bir kez root oluıtur
+// Sadece bir kez root oluştur
 if (!rootElement.__root) {
   rootElement.__root = ReactDOM.createRoot(rootElement);
   rootElement.__root.render(

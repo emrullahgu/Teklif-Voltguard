@@ -440,7 +440,7 @@ export default function PeriyodikKontrol() {
 
       setAiChatHistory(prev => [...prev, { role: "ai", text: replyText }]);
     } catch (error) {
-      setAiChatHistory(prev => [...prev, { role: "ai", text: "ızgınım, ıu an baılantı kuramıyorum. Lütfen daha sonra tekrar deneyin." }]);
+      setAiChatHistory(prev => [...prev, { role: "ai", text: "Özgünüm, şu an bağlantı kuramıyorum. Lütfen daha sonra tekrar deneyin." }]);
     } finally {
       setIsChatLoading(false);
     }
@@ -819,7 +819,7 @@ export default function PeriyodikKontrol() {
              </div>
              <div className="border border-black p-1">
                  <div className="font-bold underline mb-1">7. NOTLAR</div>
-                 <p>ılımler sırasında ortam sıcaklıı normaldir. Eıpotansiyel bara baılantıları kontrol edildi.</p>
+                 <p>Ölçümler sırasında ortam sıcaklığı normaldir. Ekipotansiyel bara bağlantıları kontrol edildi.</p>
              </div>
         </div>
 

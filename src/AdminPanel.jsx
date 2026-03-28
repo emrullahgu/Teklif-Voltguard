@@ -49,7 +49,7 @@ const AdminPanel = () => {
       setUsers(usersData);
     } catch (error) {
       console.error('Kullanıcılar yüklenirken hata:', error);
-      alert('Kullanıcılar yüklenirken hata oluıtu: ' + error.message);
+      alert('Kullanıcılar yüklenirken hata oluştu: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Onaylama hatası:', error);
-      alert('Kullanıcı onaylanırken hata oluıtu: ' + error.message);
+      alert('Kullanıcı onaylanırken hata oluştu: ' + error.message);
     }
   };
 
@@ -80,7 +80,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Silme hatası:', error);
-      alert('Kullanıcı silinirken hata oluıtu: ' + error.message);
+      alert('Kullanıcı silinirken hata oluştu: ' + error.message);
     }
   };
 
@@ -97,7 +97,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Onay iptali hatası:', error);
-      alert('Onay iptal edilirken hata oluıtu: ' + error.message);
+      alert('Onay iptal edilirken hata oluştu: ' + error.message);
     }
   };
 

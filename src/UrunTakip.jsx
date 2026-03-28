@@ -182,7 +182,7 @@ const UrunTakip = () => {
       } else if (error.message?.includes('JWT')) {
         alert('Oturum sıresi dolmuı. Lütfen yeniden giriş yapın.');
       } else {
-        alert('ürün kaydedilirken hata oluıtu: ' + (error.message || 'Bilinmeyen hata'));
+        alert('ürün kaydedilirken hata oluştu: ' + (error.message || 'Bilinmeyen hata'));
       }
     } finally {
       setLoading(false);
@@ -204,7 +204,7 @@ const UrunTakip = () => {
       loadUrunler();
     } catch (error) {
       console.error('ürün silinirken hata:', error);
-      alert('ürün silinirken hata oluıtu');
+      alert('ürün silinirken hata oluştu');
     } finally {
       setLoading(false);
     }
@@ -444,7 +444,7 @@ const UrunTakip = () => {
                 Veritabanı Tablosu Bulunamadı
               </h3>
               <p className="text-red-700 mb-4">
-                <code className="bg-red-100 px-2 py-1 rounded">urun_takip</code> tablosu henız oluıturulmamı. 
+                <code className="bg-red-100 px-2 py-1 rounded">urun_takip</code> tablosu henüz oluşturulmamış. 
                 Lütfen aıaıdaki adımları takip edin:
               </p>
               <ol className="list-decimal list-inside space-y-2 text-red-700 mb-4">
@@ -684,7 +684,7 @@ const UrunTakip = () => {
           ) : filteredUrunler.length === 0 ? (
             <div className="p-12 text-center">
               <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">Henız ürün eklenmemi</p>
+              <p className="text-gray-500 text-lg">Henüz ürün eklenmemi</p>
               <p className="text-gray-400 text-sm mt-2">Yeni ürün eklemek için yukarıdaki butonu kullanın</p>
             </div>
           ) : (

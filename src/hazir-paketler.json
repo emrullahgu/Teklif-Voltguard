@@ -2,11 +2,11 @@
   "paketler": [
     {
       "id": "kucuk-isyeri-elektrik",
-      "ad": "Kıık ıyeri Elektrik Tesisatı",
+      "ad": "Küçük İşyeri Elektrik Tesisatı",
       "kategori": "Komple Tesisat",
       "aciklama": "50-80mı iyeri için tam elektrik tesisatı paketi",
       "urunler": [
-        {"urun": "12 Lı SIVA ıSTı OTOMAT KUTUSU", "miktar": 1, "birim": "Adet", "aciklama": "Ana daıtım panosu"},
+        {"urun": "12 Lı SIVA ıSTı OTOMAT KUTUSU", "miktar": 1, "birim": "Adet", "aciklama": "Ana dağıtım panosu"},
         {"urun": "4X32 30 MA KAR", "miktar": 1, "birim": "Adet", "aciklama": "Ana kaıak akım koruma"},
         {"urun": "20 A OTOMAT", "miktar": 6, "birim": "Adet", "aciklama": "Priz grupları"},
         {"urun": "3X2,5 KABLO", "miktar": 200, "birim": "Metre", "aciklama": "Priz kablosu"},
@@ -42,9 +42,9 @@
     },
     {
       "id": "ada-dagitim-panosu-kucuk",
-      "ad": "ADP - Kıık Ana Daıtım Panosu",
+      "ad": "ADP - Küçük Ana Dağıtım Panosu",
       "kategori": "Pano Sistemleri",
-      "aciklama": "Kıık ılçekli ana daıtım panosu malzemeleri",
+      "aciklama": "Küçük ölçekli ana dağıtım panosu malzemeleri",
       "urunler": [
         {"urun": "ABS IP66 PANO 500*700*250", "miktar": 1, "birim": "Adet", "aciklama": "Sac pano gıvdesi"},
         {"urun": "4X63A OTOMAT", "miktar": 1, "birim": "Adet", "aciklama": "Ana ıalter"},
@@ -58,9 +58,9 @@
     },
     {
       "id": "ada-dagitim-panosu-orta",
-      "ad": "ADP - Orta ılçek Ana Daıtım Panosu",
+      "ad": "ADP - Orta ılçek Ana Dağıtım Panosu",
       "kategori": "Pano Sistemleri",
-      "aciklama": "Orta ılçekli iletmeler için ADP paketi",
+      "aciklama": "Orta ölçekli işletmeler için ADP paketi",
       "urunler": [
         {"urun": "ABS IP66 PANO 600*800*260", "miktar": 1, "birim": "Adet", "aciklama": "Sac pano gıvdesi"},
         {"urun": "ABB BMS614C63 BASICM 4X63A", "miktar": 1, "birim": "Adet", "aciklama": "Ana ıalter ABB"},
@@ -76,9 +76,9 @@
     },
     {
       "id": "kompanzasyon-sistemi-kucuk",
-      "ad": "Kompanzasyon Sistemi (Kıık)",
+      "ad": "Kompanzasyon Sistemi (Küçük)",
       "kategori": "Pano Sistemleri",
-      "aciklama": "Kıık iletmeler için kompanzasyon paketi (25-50 kVAR)",
+      "aciklama": "Küçük işletmeler için kompanzasyon paketi (25-50 kVAR)",
       "urunler": [
         {"urun": "ABS IP66 PANO 400*600*200", "miktar": 1, "birim": "Adet", "aciklama": "Kompanzasyon panosu"},
         {"urun": "LC1D25M7-25A Tesys D Kontaktır", "miktar": 3, "birim": "Adet", "aciklama": "Kademe kontaktırleri"},
@@ -130,7 +130,7 @@
         {"urun": "eB / 4 KUTUP 4.5kA C / 40A", "miktar": 4, "birim": "Adet", "aciklama": "Grup otomatları"},
         {"urun": "KOMBıNE PRıZ 3x25A + 1x16A", "miktar": 6, "birim": "Adet", "aciklama": "Endıstriyel prizler"},
         {"urun": "WIN NYY KABLO 5*6", "miktar": 100, "birim": "Metre", "aciklama": "Ana besleme"},
-        {"urun": "4X4 NYM KABLO", "miktar": 200, "birim": "Metre", "aciklama": "Daıtım kabloları"},
+        {"urun": "4X4 NYM KABLO", "miktar": 200, "birim": "Metre", "aciklama": "Dağıtım kabloları"},
         {"urun": "100W LED PROJEKTıR", "miktar": 8, "birim": "Adet", "aciklama": "ıantiye aydınlatma"},
         {"urun": "W OTOMAT RAYI 1 MT", "miktar": 3, "birim": "Adet", "aciklama": "Montaj rayı"}
       ]
@@ -141,11 +141,11 @@
       "kategori": "Koruma Sistemleri",
       "aciklama": "Komple topraklama altyapısı",
       "urunler": [
-        {"urun": "TOPRAKLAMA KLEMENSı ıERıT-ıERıT", "miktar": 20, "birim": "Adet", "aciklama": "ıerit baılantı"},
-        {"urun": "TOPRAKLAMA KLEMENSı ıERıT-DEMıR", "miktar": 20, "birim": "Adet", "aciklama": "Demir baılantı"},
-        {"urun": "ıERıTTEN DEMıRE APARAT", "miktar": 30, "birim": "Adet", "aciklama": "Aparatlar"},
+        {"urun": "TOPRAKLAMA KLEMENSİ ŞERİT-ŞERİT", "miktar": 20, "birim": "Adet", "aciklama": "şerit bağlantı"},
+        {"urun": "TOPRAKLAMA KLEMENSİ ŞERİT-DEMİR", "miktar": 20, "birim": "Adet", "aciklama": "Demir bağlantı"},
+        {"urun": "ŞERİTTEN DEMİRE APARAT", "miktar": 30, "birim": "Adet", "aciklama": "Aparatlar"},
         {"urun": "TOPRAKLAMA GEM TOZU", "miktar": 3, "birim": "Adet", "aciklama": "ıletkenlik artırıcı"},
-        {"urun": "KABLO BAıI 8x380", "miktar": 2, "birim": "Paket", "aciklama": "Baılama malzemesi"}
+        {"urun": "KABLO BAŞI 8x380", "miktar": 2, "birim": "Paket", "aciklama": "Başlama malzemesi"}
       ]
     },
     {
@@ -154,7 +154,7 @@
       "kategori": "Komple Tesisat",
       "aciklama": "Lıks villa tam elektrik ızımı",
       "urunler": [
-        {"urun": "ABS IP66 PANO 600*800*260", "miktar": 1, "birim": "Adet", "aciklama": "Ana daıtım panosu"},
+        {"urun": "ABS IP66 PANO 600*800*260", "miktar": 1, "birim": "Adet", "aciklama": "Ana dağıtım panosu"},
         {"urun": "4X63A OTOMAT", "miktar": 1, "birim": "Adet", "aciklama": "Ana ıalter"},
         {"urun": "eB / 4 KUTUP 4.5kA C / 63A", "miktar": 1, "birim": "Adet", "aciklama": "Ana kaıak akım"},
         {"urun": "eB / 3 KUTUP 4.5kA C / 40A", "miktar": 8, "birim": "Adet", "aciklama": "Klima grupları"},
@@ -168,7 +168,7 @@
         {"urun": "ELBı SIVA ıSTı ANAHTAR", "miktar": 40, "birim": "Adet", "aciklama": "Anahtarlar"},
         {"urun": "85X85 BUAT", "miktar": 100, "birim": "Adet", "aciklama": "Buat kutuları"},
         {"urun": "60X60 PANEL LED (BEYAZ)", "miktar": 25, "birim": "Adet", "aciklama": "Salon aydınlatma"},
-        {"urun": "HAıTı APLıK GıNIıIıI", "miktar": 15, "birim": "Adet", "aciklama": "Dekoratif aydınlatma"},
+        {"urun": "HAıTı APLıK GÜNIŞIĞI", "miktar": 15, "birim": "Adet", "aciklama": "Dekoratif aydınlatma"},
         {"urun": "W OTOMAT RAYI 1 MT", "miktar": 8, "birim": "Adet", "aciklama": "Pano rayları"}
       ]
     },
@@ -191,7 +191,7 @@
       "kategori": "Komple Tesisat",
       "aciklama": "Perakende maıaza için elektrik ızımı (80mı)",
       "urunler": [
-        {"urun": "12 Lı SIVA ıSTı OTOMAT KUTUSU", "miktar": 1, "birim": "Adet", "aciklama": "Daıtım panosu"},
+        {"urun": "12 Lı SIVA ıSTı OTOMAT KUTUSU", "miktar": 1, "birim": "Adet", "aciklama": "Dağıtım panosu"},
         {"urun": "4X40 30 mA GıNSAN", "miktar": 1, "birim": "Adet", "aciklama": "Ana kaıak akım"},
         {"urun": "20 A OTOMAT", "miktar": 10, "birim": "Adet", "aciklama": "Priz grupları"},
         {"urun": "25 A OTOMAT", "miktar": 4, "birim": "Adet", "aciklama": "Vitrin aydınlatma"},
@@ -200,7 +200,7 @@
         {"urun": "3 Lı GRUP PRıZ", "miktar": 15, "birim": "Adet", "aciklama": "Priz grupları"},
         {"urun": "60X60 PANEL LED (BEYAZ)", "miktar": 12, "birim": "Adet", "aciklama": "Genel aydınlatma"},
         {"urun": "100W LED PROJEKTıR", "miktar": 6, "birim": "Adet", "aciklama": "Vitrin spotları"},
-        {"urun": "ıERıT LED GıNIıIıI ı MEKAN", "miktar": 30, "birim": "Metre", "aciklama": "Dekoratif LED"},
+        {"urun": "ŞERİT LED GÜNIŞIĞI İÇ MEKAN", "miktar": 30, "birim": "Metre", "aciklama": "Dekoratif LED"},
         {"urun": "33 A LED TRAFOSU", "miktar": 3, "birim": "Adet", "aciklama": "LED sırıcı"},
         {"urun": "SIVA ıSTı ANAHTAR", "miktar": 12, "birim": "Adet", "aciklama": "Anahtarlar"}
       ]
@@ -215,7 +215,7 @@
         {"urun": "eB / 4 KUTUP 4.5kA C / 63A", "miktar": 1, "birim": "Adet", "aciklama": "Ana ıalter"},
         {"urun": "eB / 3 KUTUP 4.5kA C / 50A", "miktar": 4, "birim": "Adet", "aciklama": "Fürün grupları"},
         {"urun": "eB / 3 KUTUP 4.5kA C / 40A", "miktar": 4, "birim": "Adet", "aciklama": "Ocak grupları"},
-        {"urun": "eB / 3 KUTUP 4.5kA C / 25A", "miktar": 6, "birim": "Adet", "aciklama": "Kıık cihazlar"},
+        {"urun": "eB / 3 KUTUP 4.5kA C / 25A", "miktar": 6, "birim": "Adet", "aciklama": "Küçük cihazlar"},
         {"urun": "WIN NYM KABLO 3*2,5", "miktar": 200, "birim": "Metre", "aciklama": "Cihaz kabloları"},
         {"urun": "Y46 - 4*6 mm2 NYY KABLO", "miktar": 80, "birim": "Metre", "aciklama": "Güç kabloları"},
         {"urun": "KOMBıNE PRıZ 3x25A + 1x16A", "miktar": 4, "birim": "Adet", "aciklama": "Endıstriyel priz"},
@@ -291,9 +291,9 @@
       "aciklama": "Ofis/iyeri kablo dızenleme sistemi",
       "urunler": [
         {"urun": "25X25 KABLO KANALI", "miktar": 100, "birim": "Metre", "aciklama": "Ana kanallar"},
-        {"urun": "16X16 KABLO KANALI", "miktar": 80, "birim": "Metre", "aciklama": "Kıık kanallar"},
-        {"urun": "KABLO BAıI 8x380", "miktar": 3, "birim": "Paket", "aciklama": "Baılama malzemesi"},
-        {"urun": "KABLO BAıI 8x450", "miktar": 2, "birim": "Paket", "aciklama": "Bıyık kablo baı"}
+        {"urun": "16X16 KABLO KANALI", "miktar": 80, "birim": "Metre", "aciklama": "Küçük kanallar"},
+        {"urun": "KABLO BAŞI 8x380", "miktar": 3, "birim": "Paket", "aciklama": "Başlama malzemesi"},
+        {"urun": "KABLO BAŞI 8x450", "miktar": 2, "birim": "Paket", "aciklama": "Büyük kablo başı"}
       ]
     },
     {
@@ -313,17 +313,17 @@
     },
     {
       "id": "trafo-merkezi-kucuk",
-      "ad": "Trafo Merkezi Altyapısı (Kıık)",
+      "ad": "Trafo Merkezi Altyapısı (Küçük)",
       "kategori": "Enerji Sistemleri",
-      "aciklama": "Kıık ılçekli trafo merkezi elektrik malzemeleri",
+      "aciklama": "Küçük ölçekli trafo merkezi elektrik malzemeleri",
       "urunler": [
         {"urun": "1600x200x500mm RAL7035 PANO", "miktar": 1, "birim": "Adet", "aciklama": "Ana pano"},
         {"urun": "ABB BMS614C63 BASICM 4X63A", "miktar": 2, "birim": "Adet", "aciklama": "Ana ıalterler"},
         {"urun": "POFACO 210 MM TOROID AKIM TRAFOSU", "miktar": 3, "birim": "Adet", "aciklama": "Akım trafoları"},
         {"urun": "5ı35 mmı NYY Kablo", "miktar": 100, "birim": "Metre", "aciklama": "AG kablosu"},
-        {"urun": "Y56 - 5*6 mm2 NYY KABLO", "miktar": 150, "birim": "Metre", "aciklama": "Daıtım kablosu"},
+        {"urun": "Y56 - 5*6 mm2 NYY KABLO", "miktar": 150, "birim": "Metre", "aciklama": "Dağıtım kablosu"},
         {"urun": "W OTOMAT RAYI 1 MT", "miktar": 10, "birim": "Adet", "aciklama": "Montaj rayları"},
-        {"urun": "TOPRAKLAMA KLEMENSı ıERıT-ıERıT", "miktar": 30, "birim": "Adet", "aciklama": "Topraklama"},
+        {"urun": "TOPRAKLAMA KLEMENSİ ŞERİT-ŞERİT", "miktar": 30, "birim": "Adet", "aciklama": "Topraklama"},
         {"urun": "ELEKTRıK PANO KULLANIM TALıMATI", "miktar": 3, "birim": "Adet", "aciklama": "Etiketler"}
       ]
     }

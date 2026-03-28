@@ -40,7 +40,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
         
         // Kullanıcı onaylı mı kontrol et
         if (!userData.approved) {
-          setError('Hesabınız henüz onaylanmamış. Lütfen admin onayını bekleyin.');
+          setError('Hesabınız henüz onaylanmamışş. Lütfen admin onayını bekleyin.');
           await auth.signOut(); // Onaysız kullanıcıyı çıkış yaptır
           setLoading(false);
           return;

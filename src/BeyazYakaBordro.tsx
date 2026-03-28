@@ -931,8 +931,8 @@ const BeyazYakaBordro: React.FC = () => {
       ['TOPLAM HAKEDıLER', formatCurrency(totalEarnings)],
       ['', ''],
       ['KESıNTıLER', ''],
-      ['SGK ııi Payı (%14)', formatCurrency(payrollData.sgk_employee)],
-      ['ısizlik ııi Payı (%1)', formatCurrency(payrollData.unemployment_employee)],
+      ['SGK İşçi Payı (%14)', formatCurrency(payrollData.sgk_employee)],
+      ['İşsizlik İşçi Payı (%1)', formatCurrency(payrollData.unemployment_employee)],
       ['Gelir Vergisi', formatCurrency(payrollData.income_tax)],
       ['Damga Vergisi (%0.759)', formatCurrency(payrollData.stamp_tax)]
     ];
@@ -978,7 +978,7 @@ const BeyazYakaBordro: React.FC = () => {
         1: { halign: 'right' }
       },
       didParseCell: function(data: any) {
-        // Avans detay satırlarını kıık font ile gıster
+        // Avans detay satırlarını küçük font ile göster
         if (data.cell.text[0] && data.cell.text[0].startsWith('  - ')) {
           data.cell.styles.fontSize = 8;
           data.cell.styles.textColor = [220, 38, 38];
@@ -1022,7 +1022,7 @@ const BeyazYakaBordro: React.FC = () => {
         'Temel Maaı': emp.monthly_salary,
         'Net ıdeme': empPayroll.net_payment,
         'ıveren Maliyeti': empPayroll.total_employer_cost,
-        'ıe Baılama': new Date(emp.start_date).toLocaleDateString('tr-TR')
+        'İşe Başlama': new Date(emp.start_date).toLocaleDateString('tr-TR')
       };
     });
 
@@ -1196,7 +1196,7 @@ const BeyazYakaBordro: React.FC = () => {
                       <th className="px-4 py-3 text-left">Pozisyon</th>
                       <th className="px-4 py-3 text-left">Departman</th>
                       <th className="px-4 py-3 text-right">Aylık Maaı</th>
-                      <th className="px-4 py-3 text-left">ıe Baılama</th>
+                      <th className="px-4 py-3 text-left">İşe Başlama</th>
                       <th className="px-4 py-3 text-center">ılemler</th>
                     </tr>
                   </thead>
@@ -1395,7 +1395,7 @@ const BeyazYakaBordro: React.FC = () => {
                       <h3 className="text-lg font-bold mb-4 text-red-700">Kesinti Kalemleri</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="block text-sm font-medium mb-1">SGK ııi Payı</label>
+                          <label className="block text-sm font-medium mb-1">SGK İşçi Payı</label>
                           <input
                             type="number"
                             value={payrollData.sgk_employee}
@@ -1404,7 +1404,7 @@ const BeyazYakaBordro: React.FC = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1">ısizlik ııi Payı</label>
+                          <label className="block text-sm font-medium mb-1">İşsizlik İşçi Payı</label>
                           <input
                             type="number"
                             value={payrollData.unemployment_employee}
@@ -1690,7 +1690,7 @@ const BeyazYakaBordro: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">ıe Baılama Tarihi *</label>
+                  <label className="block text-sm font-medium mb-1">İşe Başlama Tarihi *</label>
                   <input
                     type="date"
                     value={employeeForm.start_date}

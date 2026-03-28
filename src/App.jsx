@@ -30,7 +30,7 @@ import faturaLogo from '../public/fatura_logo.png';
 const normalizedFatura1 = FaturaData.map(item => ({
   urun: item.iRiN || '',
   marka: item.MARKA || 'Genel',
-  birimFiyat: item["BiRiM FiYAT"] || 0,
+  birimFiyat: item["BİRİM FİYAT"] || 0,
   miktar: item.MiKTAR || 0,
   olcu: item.iLi || 'Adet',
   aciklama: '',
@@ -41,7 +41,7 @@ const normalizedFatura1 = FaturaData.map(item => ({
 const normalizedFatura2 = FaturaData2.map(item => ({
   urun: item["irin/hizmet"] || '',
   marka: 'Genel',
-  birimFiyat: item["Birim fiyati"] || 0,
+  birimFiyat: item["Birim fiyatı"] || 0,
   miktar: item.Miktar || 0,
   olcu: 'Adet',
   aciklama: item["irin/hizmet açıklaması"] || '',
@@ -232,7 +232,7 @@ const App = () => {
   
   const proposalRef = useRef(null); // PDF/Word export için referans
 
-  // Manuel Güçri Form State
+  // Manuel Giriş Form State
   const [manualForm, setManualForm] = useState({
     name: '',
     sector: '',
@@ -256,7 +256,7 @@ const App = () => {
     poleFee3: 6770.00,       // 161-400 kVA
 
     discountRate: 70,        // % (Varsayilan)
-    regionCoeff: 1.00,       // Bölge Katsayisi (BK) (Varsayilan)
+    regionCoeff: 1.00,       // Bölge Katsayısı (BK) (Varsayilan)
     year: 2026
   });
 
@@ -332,7 +332,7 @@ const App = () => {
   const [selectedHazirPaket, setSelectedHazirPaket] = useState(null);
   const [paketKarMarji, setPaketKarMarji] = useState(30); // %30 varsayilan kar marji
 
-  // Hizli Teklif özellikleri States
+  // Hızlı Teklif özellikleri States
   const [favoriteProducts, setFavoriteProducts] = useState(() => {
     const saved = localStorage.getItem('favoriteProducts');
     return saved ? JSON.parse(saved) : [];
@@ -519,7 +519,7 @@ const App = () => {
       urunKullanimSayilari[kp.urun] = (urunKullanimSayilari[kp.urun] || 0) + 1;
     });
 
-    // Kategorilere göre siniflandirma
+    // Kategorilere göre sınıflandırma
     const kategoriler = {
       'Kablolar': CombinedFaturaData.filter(p => p.urun?.toLowerCase().includes('kablo') || p.urun?.toLowerCase().includes('nvy') || p.urun?.toLowerCase().includes('nyy') || p.urun?.toLowerCase().includes('ttr') || p.urun?.toLowerCase().includes('kordon')),
       'Otomatlar': CombinedFaturaData.filter(p => p.urun?.toLowerCase().includes('otomat') || p.urun?.toLowerCase().includes('sigorta')),
@@ -624,7 +624,7 @@ const App = () => {
         filtered.sort((a, b) => (a.urun || '').localeCompare(b.urun || '', 'tr'));
     }
 
-    return filtered.slice(0, 50); // ilk 50 sonui
+    return filtered.slice(0, 50); // ilk 50 sonuç
   }, [productSearch, markaFilter, kategoriFilter, kaynakFilter, fiyatAraligi, siralama, productStats, kesifProducts]);
 
   // Keşif Metraj Editor Mode
@@ -639,7 +639,7 @@ const App = () => {
     return str.toString().split('+').reduce((acc, curr) => acc + parseInt(curr.trim() || 0), 0);
   };
 
-  // Merkezi Teklif Kaydetme Fonksiyonlari
+  // Merkezi Teklif Kaydetme Fonksiyonları
   const saveProposal = async (type, data, name) => {
     try {
       const newProposal = {
@@ -661,7 +661,7 @@ const App = () => {
       updated[type] = [...updated[type], saved];
       setAllSavedProposals(updated);
       
-      alert('? Teklif baiariyla kaydedildi!');
+      alert('? Teklif başarıyla kaydedildi!');
       return saved;
     } catch (error) {
       console.error('Teklif kaydetme hatasi:', error);
@@ -706,7 +706,7 @@ const App = () => {
   };
 
   const deleteProposal = async (type, id) => {
-    if (!confirm('Bu teklifi silmek istedışınıze emin misiniz?')) return;
+    if (!confirm('Bu teklifi silmek istediğinize emin misiniz?')) return;
     
     try {
       // Supabase'den sil
@@ -722,7 +722,7 @@ const App = () => {
       updated[type] = updated[type].filter(p => p.id !== id);
       setAllSavedProposals(updated);
       
-      alert('? Teklif baiariyla silindi!');
+      alert('? Teklif başarıyla silindi!');
     } catch (error) {
       console.error('Teklif silme hatasi:', error);
       alert('? Teklif silinemedi!');
@@ -735,7 +735,7 @@ const App = () => {
       alert('Lütfen firma bilgilerini doldurun!');
       return;
     }
-    const name = prompt('Teklif adi girin:', `${manualForm.name} - YG Teklifi`);
+    const name = prompt('Teklif adı girin:', `${manualForm.name} - YG Teklifi`);
     if (!name) return;
 
     const data = {
@@ -756,7 +756,7 @@ const App = () => {
       alert('Lütfen miteri bilgilerini doldurun!');
       return;
     }
-    const name = prompt('Teklif adi girin:', `${periodicCustomer.name} - Periyodik Kontrol`);
+    const name = prompt('Teklif adı girin:', `${periodicCustomer.name} - Periyodik Kontrol`);
     if (!name) return;
 
     const data = {
@@ -775,7 +775,7 @@ const App = () => {
       return;
     }
 
-    const name = prompt('Teklif adi girin:', `${kesifCustomer.name || 'Keşif'} - Malzeme Teklifi`);
+    const name = prompt('Teklif adı girin:', `${kesifCustomer.name || 'Keşif'} - Malzeme Teklifi`);
     if (!name) return;
 
     const data = {
@@ -796,7 +796,7 @@ const App = () => {
       return;
     }
 
-    const name = prompt('Teklif adi girin:', `${gesForm.customerName || 'GES'} - Güneş Enerjisi Teklifi`);
+    const name = prompt('Teklif adı girin:', `${gesForm.customerName || 'GES'} - Güneş Enerjisi Teklifi`);
     if (!name) return;
 
     const totals = calculateGESTotals();
@@ -810,7 +810,7 @@ const App = () => {
     alert('? GES Teklifi kaydedildi!');
   };
 
-  // GES Fonksiyonlari
+  // GES Fonksiyonları
   const loadDefaultGESPackage = () => {
     const kw = parseFloat(gesForm.autoPower) || 12;
     const panelCount = Math.ceil((kw * 1000) / 600); // 600W panel kullanımi
@@ -1082,11 +1082,11 @@ const App = () => {
         document.body.removeChild(loadingDiv);
       }
       
-      alert('PDF oluşturulurken bir hata oluitu. Lütfen tekrar deneyin.\n\nHata detayi: ' + error.message);
+      alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.\n\nHata detayı: ' + error.message);
     }
   };
 
-  // Hizli Teklif Yardimci Fonksiyonlari
+  // Hızlı Teklif Yardımcı Fonksiyonları
   const addToRecentProducts = (product) => {
     const newRecent = [product, ...recentProducts.filter(p => p.urun !== product.urun)].slice(0, 20);
     setRecentProducts(newRecent);
@@ -1125,7 +1125,7 @@ const App = () => {
     addToRecentProducts(product);
   };
 
-  // Hizli Güçri Parser - iYiLEiTiRiLMi: 3 FORMAT DESTEi
+  // Hızlı Giriş Parser - İYİLEŞTİRİLMİŞ: 3 FORMAT DESTEĞİ
   const parseQuickAddText = (text) => {
     const lines = text.split('\n').filter(l => l.trim());
     const products = [];
@@ -1171,7 +1171,7 @@ const App = () => {
         return;
       }
       
-      // Ürüni katalogda akilli ara
+      // Ürünü katalogda akilli ara
       const foundProduct = CombinedFaturaData.find(p => {
         const urunLower = p.urun?.toLowerCase() || '';
         const aramaLower = urunAdi.toLowerCase();
@@ -1203,7 +1203,7 @@ const App = () => {
         sira: kesifProducts.length + products.length + 1,
         type: 'normal',
         urun: foundProduct ? foundProduct.urun : urunAdi,
-        marka: foundProduct ? foundProduct.marka : (usedMarka || 'Manuel Güçri'),
+        marka: foundProduct ? foundProduct.marka : (usedMarka || 'Manuel Giriş'),
         maliyetFiyat: usedPrice,
         birimFiyat: parseFloat(finalPrice.toFixed(2)),
         miktar: miktar,
@@ -1254,7 +1254,7 @@ const App = () => {
     alert(`Maliyet: ${costPrice.toFixed(2)} TL\nKar Marji: %${profitMargin}\nSati Fiyati: ${sellingPrice.toFixed(2)} TL`);
   };
 
-  // Excel ie Aktarma - iYiLEiTiRiLMi VERSiYON
+  // Excel İşe Aktarma - İYİLEŞTİRİLMİŞ VERSİYON
   const handleExcelImport = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -1422,7 +1422,7 @@ const App = () => {
 
   // Kaydedilmi Teklifi Sil
   const deleteSavedQuotation = (id) => {
-    if (!confirm('Bu teklifi silmek istedışınıze emin misiniz?')) return;
+    if (!confirm('Bu teklifi silmek istediğinize emin misiniz?')) return;
     const updated = savedQuotations.filter(q => q.id !== id);
     setSavedQuotations(updated);
     localStorage.setItem('savedQuotations', JSON.stringify(updated));
@@ -1449,13 +1449,13 @@ const App = () => {
     }
     
     if (marginValue < 0) {
-      if (!confirm(`?? Negatif kar marji (%${marginValue}) uygulamak istedışınızden emin misiniz? Bu fiyatlari diirecektir.`)) {
+      if (!confirm(`?? Negatif kar marji (%${marginValue}) uygulamak istediğinizden emin misiniz? Bu fiyatlari diirecektir.`)) {
         return;
       }
     }
     
     const updated = kesifProducts.map(p => {
-      // Eier maliyet fiyati varsa ondan hesapla, yoksa mevcut fiyattan
+      // Eğer maliyet fiyatı varsa ondan hesapla, yoksa mevcut fiyattan
       const basePrice = p.maliyetFiyat || p.birimFiyat;
       const newPrice = basePrice * (1 + marginValue / 100);
       return { 
@@ -1475,13 +1475,13 @@ const App = () => {
     
     alert(
       `? KAR MARJI UYGULANDILAR!\n\n` +
-      `?? Ürün Sayisi: ${kesifProducts.length}\n` +
+      `?? Ürün Sayısı: ${kesifProducts.length}\n` +
       `?? Uygulanan Marj: %${marginValue}\n` +
       `?? Toplam Artı: ${totalIncrease.toFixed(2)} TL`
     );
   };
 
-  // Keşif Metraj Fonksiyonlari - iYiLEiTiRiLMi
+  // Keşif Metraj Fonksiyonları - İYİLEŞTİRİLMİŞ
   const addProductToKesif = () => {
     if (productType === 'normal') {
       // Normal Ürün ekleme
@@ -1619,7 +1619,7 @@ const App = () => {
       return;
     }
     
-    if (!confirm(`Tüm Ürünlere %${percentage} ${percentage > 0 ? 'zam' : 'indirim'} uygulamak istedışınızden emin misiniz?`)) {
+    if (!confirm(`Tüm Ürünlere %${percentage} ${percentage > 0 ? 'zam' : 'indirim'} uygulamak istediğinizden emin misiniz?`)) {
       return;
     }
     
@@ -1643,7 +1643,7 @@ const App = () => {
       return;
     }
     
-    if (!confirm(`${selectedIds.length} Ürüni silmek istedışınızden emin misiniz?`)) {
+    if (!confirm(`${selectedIds.length} Ürünü silmek istediğinizden emin misiniz?`)) {
       return;
     }
     
@@ -1679,14 +1679,14 @@ const App = () => {
     const newProducts = [];
 
     paket.urunler.forEach((paketUrun) => {
-      // CombinedFaturaData'dan Ürüni ara
+      // CombinedFaturaData'dan Ürünü ara
       const foundProduct = CombinedFaturaData.find(fp => 
         fp.urun?.toLowerCase().includes(paketUrun.urun.toLowerCase()) ||
         paketUrun.urun.toLowerCase().includes(fp.urun?.toLowerCase())
       );
 
       if (foundProduct) {
-        // Liste fiyatina (İskontosuz) kar marji ekle
+        // Liste fiyatına (İskontosuz) kar marji ekle
         const listeFiyat = foundProduct.birimFiyat || 0;
         const satisFiyat = listeFiyat * (1 + paketKarMarji / 100);
 
@@ -1748,7 +1748,7 @@ const App = () => {
     };
   };
 
-  // AI Gemini API Fonksiyonlari
+  // AI Gemini API Fonksiyonları
   const callGeminiAPI = async (prompt, systemInstruction, useJson = true) => {
     try {
       // Model: gemini-2.0-flash-exp (güncel experimental model)
@@ -1902,7 +1902,7 @@ KURALLAR:
       
     } catch (error) {
       console.error("AI Wizard hatasi:", error);
-      setAiError(error.message || "Bir hata oluitu. Lütfen tekrar deneyin.");
+      setAiError(error.message || "Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setAiLoading(false);
     }
@@ -1934,7 +1934,7 @@ KURALLAR:
         2. Firma adi: ${kesifCustomer.name || 'Deierli Müşterimiz'}
         3. Mail konusu ile baila
         4. Malzeme listesini tablo formatinda gister
-        5. Fiyat detaylarini aikla (ara toplam, İskonto, KDV, genel toplam)
+        5. Fiyat detaylarını açıkla (ara toplam, İskonto, KDV, genel toplam)
         6. Geçerlilik süresi, ödeme koşulları ve garanti bilgilerini ekle
         7. Türkçe yaz
       `;
@@ -2107,7 +2107,7 @@ KURALLAR:
       poleFee3: parseFloat((prev.poleFee3 * conversionRate).toFixed(2))
     }));
     
-    // Eier seili firma varsa, onun fiyatlarini da güncelle
+    // Eğer seili firma varsa, onun fiyatlarini da güncelle
     if (selectedCompany) {
       setSelectedCompany(prev => ({
         ...prev,
@@ -2168,7 +2168,7 @@ KURALLAR:
           }
       }
 
-      // Bölge Katsayisi Uygulamasi
+      // Bölge Katsayısı Uygulamasi
       const appliedRegionCoeff = companyData.regionCoeff !== undefined ? companyData.regionCoeff : params.regionCoeff;
       nominalFee = nominalFee * appliedRegionCoeff;
 
@@ -2317,7 +2317,7 @@ KURALLAR:
       pdf.save(fileName);
     } catch (error) {
       console.error('PDF oluşturma hatasi:', error);
-      alert('PDF oluşturulurken bir hata oluitu. Lütfen tekrar deneyin.');
+      alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.');
     }
   };
 
@@ -2403,7 +2403,7 @@ KURALLAR:
               spacing: { after: 300 }
             }),
             
-            // Güçri
+            // Giriş
             new Paragraph({
               children: [
                 new TextRun({
@@ -2574,7 +2574,7 @@ KURALLAR:
       saveAs(blob, fileName);
     } catch (error) {
       console.error('Word belgesi oluşturma hatasi:', error);
-      alert('Word belgesi oluşturulurken bir hata oluitu. Lütfen tekrar deneyin.');
+      alert('Word belgesi oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.');
     }
   };
 
@@ -2644,7 +2644,7 @@ KURALLAR:
           Toplam Güç: ${selectedCompany.totalKVA} kVA
           Teklif Tutari: ${formatCurrency(selectedCompany.offerPrice)} + KDV (Aylık)
           
-          E-posta, teklifin ekte sunulduğunu belirtmeli, VoltGuard'in uzmanlığına vurgu yapmali ve işbirliği temennisiyle bitmeli. Konu satiri da ekle.
+          E-posta, teklifin ekte sunulduğunu belirtmeli, VoltGuard'in uzmanlığına vurgu yapmalı ve işbirliği temennisiyle bitmelidirdir. Konu satırı da ekle.
         `;
     } else if (type === 'tips') {
         userPrompt = `
@@ -2671,7 +2671,7 @@ KURALLAR:
         setAiOutput(text);
     } catch (error) {
         console.error("AI Error:", error);
-        setAiError("Bailanti hatasi oluitu. Lütfen tekrar deneyin.");
+        setAiError("Bailanti hatasi oluştu. Lütfen tekrar deneyin.");
     } finally {
         setAiLoading(false);
     }
@@ -2703,7 +2703,7 @@ KURALLAR:
       ['Sektör:', selectedCompany.sector],
       ['Tesis Tipi:', selectedCompany.type === 'direk' ? 'Direk Tipi' : 'Bina Tipi'],
       ['Bölge:', selectedCompany.region || 'Belirtilmemiş'],
-      ['Bölge Katsayisi:', selectedCompany.regionCoeff],
+      ['Bölge Katsayısı:', selectedCompany.regionCoeff],
       [],
       ['Güç BiLGüçLERi'],
       ['Trafo Güçleri:', selectedCompany.powerStr + ' kVA'],
@@ -2764,7 +2764,7 @@ KURALLAR:
       };
       
       await emailjs.send(serviceID, templateID, templateParams, userID);
-      alert('E-posta baiariyla gönderildi!');
+      alert('E-posta başarıyla gönderildi!');
     } catch (error) {
       console.error('Email Error:', error);
       alert('E-posta gönderilemedi. Lütfen EmailJS yapilandirmasini kontrol edin.');
@@ -2926,7 +2926,7 @@ KURALLAR:
       pdf.save(fileName);
     } catch (error) {
       console.error('PDF oluşturma hatasi:', error);
-      alert('PDF oluşturulurken bir hata oluitu. Lütfen tekrar deneyin.');
+      alert('PDF oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.');
     }
   };
 
@@ -3148,7 +3148,7 @@ KURALLAR:
                 </div>
               </div>
                <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">Global Bölge Katsayisi (BK)</label>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Global Bölge Katsayısı (BK)</label>
                 <div className="relative">
                   <input 
                     type="number"
@@ -3559,7 +3559,7 @@ KURALLAR:
                   </div>
                 </div>
 
-                {/* Hizli Paket Yikleyici */}
+                {/* Hızlı Paket Yikleyici */}
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <div className="flex items-end gap-2">
                     <div className="flex-1">
@@ -3606,11 +3606,11 @@ KURALLAR:
                     </button>
                   </div>
 
-                  {/* Hizli Ürün Ekleme */}
+                  {/* Hızlı Ürün Ekleme */}
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200 mb-3">
                     <h4 className="text-xs font-bold text-blue-800 mb-2 flex items-center">
                       <Sparkles className="w-3 h-3 mr-1"/>
-                      Hizli Ürün Ekle (Veritabanindan)
+                      Hızlı Ürün Ekle (Veritabanından)
                     </h4>
                     <div className="grid grid-cols-2 gap-2">
                       <select 
@@ -3806,7 +3806,7 @@ KURALLAR:
                       </select>
                     </div>
                     <p className="text-xs text-blue-600 mt-2">
-                      ?? Veritabanindan seitiçiniz Ürünler otomatik olarak marka, aiklama ve fiyat bilgileriyle eklenir
+                      ?? Veritabanından seçtiğiniz Ürünler otomatik olarak marka, açıklama ve fiyat bilgileriyle eklenir
                     </p>
                   </div>
 
@@ -3967,7 +3967,7 @@ KURALLAR:
                   <div className="bg-indigo-600 text-white px-4 py-3 rounded-lg flex items-center justify-between">
                     <div className="flex items-center">
                       <Edit3 className="w-5 h-5 mr-2"/>
-                      <span className="font-semibold">Düzenleme Modu Aktif - Metinleri doğrudan dizenleyebilirsiniz</span>
+                      <span className="font-semibold">Düzenleme Modu Aktif - Metinleri doğrudan düzenleyebilirsiniz</span>
                     </div>
                     <button 
                       onClick={toggleGesEditorMode}
@@ -4244,7 +4244,7 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">2.</span> Kapsam ve Hizmetler
                           </h4>
                           <ul className="list-disc list-inside text-[9pt] text-gray-700 pl-5 space-y-1">
-                            <li>Tüm ekipmanlarin tedariki (panel, inverter, akü, kablo, bağlantı malzemeleri)</li>
+                            <li>Tüm ekipmanların tedariki (panel, inverter, akü, kablo, bağlantı malzemeleri)</li>
                             <li>Proje kapsamında gerekli tüm teknik hırdavat ve bağlantı malzemeleri dahildir</li>
                             <li>Profesyonel montaj ve kurulum hizmetleri</li>
                             <li>Sistem devreye alma ve test işlemleri</li>
@@ -4488,7 +4488,7 @@ KURALLAR:
                       {proposal.data.products && (
                         <>
                           <div className="flex items-center justify-between">
-                            <span>Ürün Sayisi:</span>
+                            <span>Ürün Sayısı:</span>
                             <span className="font-semibold">{proposal.data.products.length} kalem</span>
                           </div>
                           {proposal.data.totals && (
@@ -4798,7 +4798,7 @@ KURALLAR:
                         <p className="text-xs font-semibold text-gray-800">{urun.iRiN}</p>
                         <p className="text-xs text-gray-500">{urun.MARKA}</p>
                       </div>
-                      <span className="text-sm font-bold text-red-600">{urun["BiRiM FiYAT"]} ?</span>
+                      <span className="text-sm font-bold text-red-600">{urun["BİRİM FİYAT"]} ?</span>
                     </div>
                   ))}
                 </div>
@@ -4817,7 +4817,7 @@ KURALLAR:
                         <p className="text-xs font-semibold text-gray-800">{urun.iRiN}</p>
                         <p className="text-xs text-gray-500">{urun.MARKA}</p>
                       </div>
-                      <span className="text-sm font-bold text-green-600">{urun["BiRiM FiYAT"]} ?</span>
+                      <span className="text-sm font-bold text-green-600">{urun["BİRİM FİYAT"]} ?</span>
                     </div>
                   ))}
                 </div>
@@ -4903,13 +4903,13 @@ KURALLAR:
           </div>
         )}
 
-        {/* Tab Content: Manuel Güçri */}
+        {/* Tab Content: Manuel Giriş */}
         {activeTab === 'manual' && (
            <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
              <div className="bg-blue-900 px-6 py-4 border-b border-blue-800">
                 <h2 className="text-lg font-bold text-white flex items-center">
                     <UserPlus className="mr-2 h-5 w-5"/>
-                    Teklif Bilgileri Güçrii
+                    Teklif Bilgileri Girişi
                 </h2>
                 <p className="text-blue-200 text-xs mt-1">Firma bilgilerini ve EMO parametrelerini görerek teklif hesaplayin.</p>
              </div>
@@ -5030,7 +5030,7 @@ KURALLAR:
 
                 <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
                     <div className="text-sm text-gray-500">
-                        <span className="font-bold text-blue-900">Not:</span> EMO {params.year} tarifeleri, {manualForm.region} katsayisi ve %{manualForm.customDiscount} İskonto uygulanacaktir.
+                        <span className="font-bold text-blue-900">Not:</span> EMO {params.year} tarifeleri, {manualForm.region} katsayısı ve %{manualForm.customDiscount} İskonto uygulanacaktir.
                     </div>
                     <div className="flex gap-3">
                         <button 
@@ -5059,7 +5059,7 @@ KURALLAR:
         {activeTab === 'periodic' && (
           <div className="flex gap-6 flex-col lg:flex-row">
             
-            {/* Sol Panel: Veri Güçrii */}
+            {/* Sol Panel: Veri Girişi */}
             <div className="lg:w-1/3 bg-white p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto">
               <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <RefreshCw className="text-green-600" />
@@ -5123,7 +5123,7 @@ KURALLAR:
                     className="w-full border p-2 rounded mb-3 focus:ring-2 focus:ring-green-500 outline-none" 
                   />
 
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Paratoner Tesisat Sayisi</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Paratoner Tesisat Sayısı</label>
                   <input 
                     type="number" 
                     value={periodicInputs.paratonerAdet} 
@@ -5131,7 +5131,7 @@ KURALLAR:
                     className="w-full border p-2 rounded mb-3 focus:ring-2 focus:ring-green-500 outline-none" 
                   />
 
-                  <label className="block text-xs font-medium text-gray-600 mb-1">RCD Test Sayisi</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">RCD Test Sayısı</label>
                   <input 
                     type="number" 
                     value={periodicInputs.rcdAdet} 
@@ -5216,7 +5216,7 @@ KURALLAR:
                 <div className="mb-4 bg-indigo-600 text-white p-4 rounded-lg flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Edit3 className="h-5 w-5"/>
-                    <span className="font-bold">Düzenleme Modu Aktif - Metinleri doğrudan dizenleyebilirsiniz</span>
+                    <span className="font-bold">Düzenleme Modu Aktif - Metinleri doğrudan düzenleyebilirsiniz</span>
                   </div>
                   <button 
                     onClick={togglePeriodicEditorMode}
@@ -5574,10 +5574,10 @@ KURALLAR:
               <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-6 rounded-xl border-2 border-cyan-200 shadow-lg">
                 <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
                   <Zap className="w-6 h-6 mr-2 text-cyan-600"/>
-                  ? Hizli Teklif Arailari
+                  ? Hızlı Teklif Arailari
                 </h3>
                 
-                {/* Hizli Eriim Butonlari */}
+                {/* Hızlı Eriim Butonlari */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                   <button
                     type="button"
@@ -5611,7 +5611,7 @@ KURALLAR:
                     className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 shadow"
                   >
                     <Zap className="w-4 h-4"/>
-                    Hizli Güçri
+                    Hızlı Giriş
                   </button>
                   
                   <button
@@ -5654,12 +5654,12 @@ KURALLAR:
                   </div>
                 </div>
 
-                {/* Hizli Güçri Modu */}
+                {/* Hızlı Giriş Modu */}
                 {quickAddMode && (
                   <div className="bg-white p-4 rounded-lg border-2 border-purple-300 mt-4">
                     <h4 className="font-bold text-purple-800 mb-2 flex items-center">
                       <Zap className="w-4 h-4 mr-2"/>
-                      Hizli Güçri Modu
+                      Hızlı Giriş Modu
                     </h4>
                     <p className="text-xs text-gray-600 mb-3">
                       Her satira bir Ürün: "Ürün adi, miktar, fiyat" formatinda yazin
@@ -5858,7 +5858,7 @@ KURALLAR:
                   className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 px-6 rounded-lg font-bold transition shadow-lg flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-6 h-6"/>
-                  ? Hazir Paket Ekle (Hizli Teklif)
+                  ? Hazir Paket Ekle (Hızlı Teklif)
                 </button>
                 <p className="text-xs text-center text-gray-600 mt-2">
                   Kompanzasyon, ADP, Aydinlatma gibi hazir paketlerle hızlı teklif oluşturun
@@ -5986,7 +5986,7 @@ KURALLAR:
                         <div className="text-lg font-bold text-blue-600">{productStats.toplamUrun}</div>
                       </div>
                       <div className="bg-white p-2 rounded shadow-sm">
-                        <div className="text-gray-600">Marka Sayisi</div>
+                        <div className="text-gray-600">Marka Sayısı</div>
                         <div className="text-lg font-bold text-green-600">{productStats.markalar.length}</div>
                       </div>
                       <div className="bg-white p-2 rounded shadow-sm">
@@ -6129,7 +6129,7 @@ KURALLAR:
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div className="md:col-span-2 relative">
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Ürün Ara ({filteredProducts.length > 0 ? `${filteredProducts.length} sonui` : 'arama yapin'})
+                        Ürün Ara ({filteredProducts.length > 0 ? `${filteredProducts.length} sonuç` : 'arama yapın'})
                       </label>
                       <div className="relative">
                         <input 
@@ -6529,7 +6529,7 @@ KURALLAR:
                       <button 
                         type="button"
                         onClick={() => {
-                          if (confirm(`${kesifProducts.length} Ürünin tamamini silmek istedışınızden emin misiniz?`)) {
+                          if (confirm(`${kesifProducts.length} Ürünün tamamini silmek istediğinizden emin misiniz?`)) {
                             setKesifProducts([]);
                             alert('? Tüm Ürünler silindi!');
                           }
@@ -6550,7 +6550,7 @@ KURALLAR:
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">TiP</th>
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">iRiN ADI</th>
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">DETAY</th>
-                          <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">BiRiM FiYAT</th>
+                          <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">BİRİM FİYAT</th>
                           <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">MiKTAR</th>
                           <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">TOPLAM</th>
                           <th className="px-4 py-3 text-center text-xs font-bold text-gray-700">iLEM</th>
@@ -6868,7 +6868,7 @@ KURALLAR:
                           alert('Lütfen ince bir teklif oluşturun!');
                           return;
                         }
-                        const name = prompt('Teklif adi girin:', `${selectedCompany.name} - YG Teklifi`);
+                        const name = prompt('Teklif adı girin:', `${selectedCompany.name} - YG Teklifi`);
                         if (!name) return;
                         const data = {
                           form: manualForm,
@@ -6940,7 +6940,7 @@ KURALLAR:
                   <div className="bg-indigo-600 text-white px-4 py-3 rounded-lg flex items-center justify-between">
                     <div className="flex items-center">
                       <Edit3 className="w-5 h-5 mr-2"/>
-                      <span className="font-semibold">Düzenleme Modu Aktif - Metinleri doğrudan dizenleyebilirsiniz</span>
+                      <span className="font-semibold">Düzenleme Modu Aktif - Metinleri doğrudan düzenleyebilirsiniz</span>
                     </div>
                     <button 
                       onClick={toggleEditorMode}
@@ -7098,7 +7098,7 @@ KURALLAR:
                                         <th className="border border-gray-300 p-2 text-left text-white font-semibold">TiP</th>
                                         <th className="border border-gray-300 p-2 text-left text-white font-semibold">iRiN/KABLO ADI</th>
                                         <th className="border border-gray-300 p-2 text-left text-white font-semibold">DETAY/KESiT</th>
-                                        <th className="border border-gray-300 p-2 text-right text-white font-semibold">BiRiM FiYAT</th>
+                                        <th className="border border-gray-300 p-2 text-right text-white font-semibold">BİRİM FİYAT</th>
                                         <th className="border border-gray-300 p-2 text-right text-white font-semibold">MiKTAR</th>
                                         <th className="border border-gray-300 p-2 text-center text-white font-semibold">iLi</th>
                                         <th className="border border-gray-300 p-2 text-right text-white font-semibold">TOPLAM (TL)</th>
@@ -7299,7 +7299,7 @@ KURALLAR:
                         
                         {(selectedCompany.regionCoeff || params.regionCoeff) !== 1 && (
                           <tr style={{backgroundColor: '#d4f5d4'}}>
-                            <td className="border border-gray-300 p-2" colSpan="2">Bölgesel Azaltma Katsayisi (x {(selectedCompany.regionCoeff || params.regionCoeff)})</td>
+                            <td className="border border-gray-300 p-2" colSpan="2">Bölgesel Azaltma Katsayısı (x {(selectedCompany.regionCoeff || params.regionCoeff)})</td>
                             <td className="border border-gray-300 p-2 text-right font-bold" style={{color: '#2e7d32'}}>
                                 {(selectedCompany.regionCoeff || params.regionCoeff) < 1 ? '-' : '+'}{formatCurrency(Math.abs(selectedCompany.nominalFee - (selectedCompany.nominalFee / (selectedCompany.regionCoeff || params.regionCoeff))))}
                             </td>
@@ -7418,7 +7418,7 @@ KURALLAR:
                       </div>
                       
                       <p className="mt-2 mb-16 text-[9pt] italic text-gray-600 border-t border-gray-300 pt-2 leading-tight">
-                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunluluklari karşılayan bir tedarikişi değil, aynı zamanda maliyet optimizasyonuna ve operasyonel güvenliğe odaklanann stratejik bir iş ortağı olduğunu göstermektedir.
+                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunlulukları karşılayan bir tedarikçi değil, aynı zamanda maliyet optimizasyonuna ve operasyonel güvenliğe odaklanan stratejik bir iş ortağı olduğunu göstermektedir.
                       </p>
                     </div>
 
@@ -7451,7 +7451,7 @@ KURALLAR:
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Sparkles className="w-6 h-6 text-yellow-300"/>
-                <h2 className="text-xl font-bold text-white">Hazir Paket Seimi - Hizli Teklif</h2>
+                <h2 className="text-xl font-bold text-white">Hazir Paket Seimi - Hızlı Teklif</h2>
               </div>
               <button
                 onClick={() => {
@@ -7673,7 +7673,7 @@ KURALLAR:
               {aiLoading ? (
                 <div className="h-96 flex flex-col items-center justify-center text-indigo-600">
                   <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-6"/>
-                  <p className="font-bold text-lg">Profesyonel teklifiniz hazırlaniyor...</p>
+                  <p className="font-bold text-lg">Profesyonel teklifiniz hazırlanıyor...</p>
                   <p className="text-sm text-gray-500 mt-2">Bu birkai saniye sirebilir</p>
                 </div>
               ) : (
@@ -7683,7 +7683,7 @@ KURALLAR:
                       <Lightbulb className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"/>
                       <span>
                         <span className="font-bold text-indigo-700">Duzenleme ipucu:</span> Metni istediğiniz gibi düzenleyebilir, 
-                        ardindan kopyalayip e-posta programiniza yapistirabilirsiniz.
+                        ardından kopyalayıp e-posta programınıza yapıştırabilirsiniz.
                       </span>
                     </p>
                   </div>

@@ -28,7 +28,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
         return;
       }
 
-      // Geıici şifre oluıtur
+      // Geıici şifre oluştur
       const tempPassword = generateTempPassword();
 
       // şifreyi güncelle

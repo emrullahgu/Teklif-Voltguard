@@ -30,7 +30,7 @@ const GorevTakip = () => {
   ];
 
   const oncelikler = [
-    { value: 'dusuk', label: 'Dıık', color: 'bg-gray-100 text-gray-800' },
+    { value: 'dusuk', label: 'Düşük', color: 'bg-gray-100 text-gray-800' },
     { value: 'orta', label: 'Orta', color: 'bg-blue-100 text-blue-800' },
     { value: 'yüksek', label: 'Yıksek', color: 'bg-orange-100 text-orange-800' },
     { value: 'acil', label: 'Acil', color: 'bg-red-100 text-red-800' }
@@ -86,7 +86,7 @@ const GorevTakip = () => {
   const saveGorev = async () => {
     try {
       if (!gorevForm.baslik.trim()) {
-        alert('Görev başlıı zorunludur!');
+        alert('Görev başlığı zorunludur!');
         return;
       }
 
@@ -376,7 +376,7 @@ const GorevTakip = () => {
             <div className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Görev Baılıı <span className="text-red-500">*</span>
+                  Görev Başlığı <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
