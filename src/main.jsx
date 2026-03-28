@@ -1,17 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import SimpleAppWithAuth from './SimpleAppWithAuth.jsx'
+import ErrorBoundary from './ErrorBoundary.jsx'
 import './index.css'
 
-const rootElement = document.getElementById('root');
-
-// Sadece bir kez root oluıtur
-if (!rootElement.__root) {
-  rootElement.__root = ReactDOM.createRoot(rootElement);
-  rootElement.__root.render(
-    <React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <ErrorBoundary>
       <SimpleAppWithAuth />
-    </React.StrictMode>
-  );
-}
+    </ErrorBoundary>
+  </React.StrictMode>
+)
 

@@ -22,7 +22,7 @@ const PYTHON_SCRIPT = path.join(__dirname, '../Gunay/osos_collector.py');
  */
 async function runOSOSCollector() {
   return new Promise((resolve, reject) => {
-    console.log('?? OSOS veri toplama başlatılıyor...');
+    console.log('[INFO] OSOS veri toplama başlatılıyor...');
     
     const python = spawn('python', [PYTHON_SCRIPT]);
     
@@ -42,10 +42,10 @@ async function runOSOSCollector() {
     
     python.on('close', (code) => {
       if (code === 0) {
-        console.log('? OSOS veri toplama tamamlandı');
+        console.log('[OK] OSOS veri toplama tamamlandı');
         resolve({ success: true, output });
       } else {
-        console.error('? OSOS veri toplama başarısız:', errorOutput);
+        console.error('[ERR] OSOS veri toplama başarısız:', errorOutput);
         reject(new Error(`Python script exited with code ${code}`));
       }
     });
@@ -59,7 +59,7 @@ async function runOSOSCollector() {
  */
 async function fetchLiveOSOSData(fabrikaAdi, sayacNo) {
   try {
-    console.log(`?? Canlı OSOS verisi çekiliyor: ${fabrikaAdi} - ${sayacNo}`);
+    console.log(`[INFO] Canlı OSOS verisi çekiliyor: ${fabrikaAdi} - ${sayacNo}`);
     
     // Python script'i çalıştır
     await runOSOSCollector();
@@ -80,7 +80,7 @@ async function fetchLiveOSOSData(fabrikaAdi, sayacNo) {
     
     return data;
   } catch (error) {
-    console.error('? OSOS veri çekme hatası:', error);
+    console.error('[ERR] OSOS veri çekme hatası:', error);
     throw error;
   }
 }
@@ -90,7 +90,7 @@ async function fetchLiveOSOSData(fabrikaAdi, sayacNo) {
  */
 async function updateAllFactories() {
   try {
-    console.log('?? Tım fabrikalar için OSOS güncelleniyor...');
+    console.log('[INFO] Tüm fabrikalar için OSOS güncelleniyor...');
     
     // Supabase'den fabrika listesini al
     const { data: fabrikalar, error } = await supabase
@@ -103,7 +103,7 @@ async function updateAllFactories() {
     }
     
     if (!fabrikalar || fabrikalar.length === 0) {
-      console.log('?? Aktif fabrika bulunamadı');
+      console.log('[WARN] Aktif fabrika bulunamadı');
       return { updated: 0, errors: 0 };
     }
     
@@ -114,21 +114,21 @@ async function updateAllFactories() {
       try {
         await fetchLiveOSOSData(fabrika.fabrika_adi, fabrika.sayac_no);
         updated++;
-        console.log(`? ${fabrika.fabrika_adi} güncellendi`);
+        console.log(`[OK] ${fabrika.fabrika_adi} güncellendi`);
       } catch (err) {
         errors++;
-        console.error(`? ${fabrika.fabrika_adi} güncellenemedi:`, err.message);
+        console.error(`[ERR] ${fabrika.fabrika_adi} güncellenemedi:`, err.message);
       }
       
       // Rate limiting - API'yi yormamak için
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     
-    console.log(`?? Güncelleme tamamlandı: ${updated} başarılı, ${errors} hatalı`);
+    console.log(`[INFO] Güncelleme tamamlandı: ${updated} başarılı, ${errors} hatalı`);
     
     return { updated, errors };
   } catch (error) {
-    console.error('? Fabrika güncelleme hatası:', error);
+    console.error('[ERR] Fabrika güncelleme hatası:', error);
     throw error;
   }
 }
@@ -239,14 +239,14 @@ function startAutoUpdate(intervalMinutes = 5) {
     clearInterval(autoUpdateInterval);
   }
   
-  console.log(`?? Otomatik OSOS güncelleme başlatıldı (${intervalMinutes} dakikada bir)`);
+  console.log(`[INFO] Otomatik OSOS güncelleme başlatıldı (${intervalMinutes} dakikada bir)`);
   
   autoUpdateInterval = setInterval(async () => {
     try {
-      console.log('? Otomatik güncelleme zamanı...');
+      console.log('[INFO] Otomatik güncelleme zamanı...');
       await updateAllFactories();
     } catch (error) {
-      console.error('? Otomatik güncelleme hatası:', error);
+      console.error('[ERR] Otomatik güncelleme hatası:', error);
     }
   }, intervalMinutes * 60 * 1000);
   
@@ -260,7 +260,7 @@ function stopAutoUpdate() {
   if (autoUpdateInterval) {
     clearInterval(autoUpdateInterval);
     autoUpdateInterval = null;
-    console.log('?? Otomatik OSOS güncelleme durduruldu');
+    console.log('[INFO] Otomatik OSOS güncelleme durduruldu');
   }
 }
 
