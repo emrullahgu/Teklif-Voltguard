@@ -2414,7 +2414,7 @@ KURALLAR:
               spacing: { after: 200 }
             }),
             new Paragraph({
-              text: `Tesisinize yönelik YG işletme Sorumluluğu hizmeti fiyat teklifi, VoltGuard tarafından talep ettiğiniz trafo kurulu gücü ve TMMOB Elektrik Mühendisleri Odası'nin (EMO) ${params.year} yılı Ücret Tanımları (KISIM III) esas alınarak, rekabetçi piyasa koşulları doğrultusunda aşağıda sunulmuştur.`,
+              text: `Tesisinize yönelik YG işletme Sorumluluğu hizmeti fiyat teklifi, VoltGuard tarafından talep ettiğiniz trafo kurulu gücü ve TMMOB Elektrik Mühendisleri Odası'nın (EMO) ${params.year} yılı Ücret Tanımları (KISIM III) esas alınarak, rekabetçi piyasa koşulları doğrultusunda aşağıda sunulmuştur.`,
               spacing: { after: 400 }
             }),
             
@@ -2563,7 +2563,7 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "2. işletme sorumluluğu hizmetinin SMM tarafından istlenilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.",
+              text: "2. işletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.",
               spacing: { after: 100 }
             }),
             new Paragraph({
@@ -7247,8 +7247,8 @@ KURALLAR:
                         </p>
                     <p className="mb-4 text-justify text-[9.5pt] leading-tight">
                       Tesisinize yönelik <strong>YG işletme Sorumluluğu</strong> hizmeti fiyat teklifi, talep ettiğiniz trafo kurulu gücü ve 
-                      TMMOB Elektrik Mühendisleri Odası'nin (EMO) {params.year} yılı Ücret Tanımları (KISIM III) esas alınarak, 
-                      rekabetçi piyasa koşulları doğrultusunda tekliflerimizde uyguladiimiz indirim oraniyla aşağıda sunulmuştur.
+                      TMMOB Elektrik Mühendisleri Odası'nın (EMO) {params.year} yılı Ücret Tanımları (KISIM III) esas alınarak, 
+                      rekabetçi piyasa koşulları doğrultusunda tekliflerimizde uyguladığımız indirim oranıyla aşağıda sunulmuştur.
                     </p>
 
                     <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">1. Tesis Bilgileri ve Toplam Kurulu Güç</h3>
@@ -7264,7 +7264,7 @@ KURALLAR:
                     </div>
 
                     <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">2. EMO {params.year} Yılı Aylık Asgari Ücret Hesabı</h3>
-                    <p className="mb-2 text-[9.5pt] leading-tight">EMO {params.year} Yılı Ücret Tanımları'nda (Kısım III), bina ve direk tipi trafo merkezleri için aylik işletme sorumluluğu bedelleri kapasiteye göre belirlenmektedir.</p>
+                    <p className="mb-2 text-[9.5pt] leading-tight">EMO {params.year} Yılı Ücret Tanımları'nda (Kısım III), bina ve direk tipi trafo merkezleri için aylık işletme sorumluluğu bedelleri kapasiteye göre belirlenmektedir.</p>
                     
                     <table className="w-full text-[9pt] border-collapse border border-gray-300 mb-3">
                       <thead style={{backgroundColor: '#bbdefb'}}>
@@ -7389,7 +7389,7 @@ KURALLAR:
                       <h4 className="font-bold mb-1 text-[9.5pt]">Açıklamalar:</h4>
                       <ul className="list-disc list-inside space-y-0.5 text-[9pt] leading-tight">
                         <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.</li>
-                        <li>2. işletme sorumluluğu hizmetinin SMM tarafından istlenilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
+                        <li>2. işletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
                         <li>3. enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.</li>
                         <li>4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır. YG işletme Sorumluluğunu istlenecek mühendisin EMO tarafından verilen YGTiS belgesine sahip olması gerekir.</li>
                         <li>5. işveren olarak sizin yükümlülüğünüz, İşletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.</li>
@@ -7443,13 +7443,13 @@ KURALLAR:
                               Yüksek enerji tüketicisi olan sanayi firmaları için reaktif güç cezaları önemli bir maliyet kalemidir. EMO yönetmelikleri bu takibi kapsamaz.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>Ücretsiz Hizmet:</strong> Tesisin reaktif güç durumunun ve güç faktörünün (PF) uzaktan izlenmesi ve çeyreklik dönemlerde (her ayda bir) kompanzasyon sisteminin durumu ve olası ceza riskleri hakkinda özet rapor sunulmasi.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Tesisin reaktif güç durumunun ve güç faktörünün (PF) uzaktan izlenmesi ve çeyreklik dönemlerde (her ayda bir) kompanzasyon sisteminin durumu ve olası ceza riskleri hakkında özet rapor sunulması.</li>
                               <li><strong>Artı Değer:</strong> Yasal sınırların (genellikle 0.95 seviyesine yakın) dışına çıkılmasını önleyerek, yüksek kompanzasyon cezası riskini ortadan kaldırmaya yardımcı olur ve görünür güç talebini iyileştirir.</li>
                             </ul>
                           </div>
 
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
-                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">3. Enerji Verimlilii ve Sürdürülebilirlik Ön Analizi</h4>
+                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">3. Enerji Verimliliği ve Sürdürülebilirlik Ön Analizi</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
                               Büyük firmalar GES ve enerji verimliliği (IE3/IE4 motorlar, VSD uygulamaları) konusunda aktif yatirimlar yapmaktadir.
                             </p>
@@ -7466,7 +7466,7 @@ KURALLAR:
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
                               <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki YG ve AG kritik ekipmanlar (trafo bushingleri, parafudur, sekonder koruma röleleri, OG hücre mekanizmaları vb.) için risk ve tedarik sürelerine dayali acil durum yedek parça listesi ve önerilen minimum stok seviyelerinin belirlenmesi konusunda danışmanlık sağlanması.</li>
-                              <li><strong>Artı Değer:</strong> Ariza durumunda gerekli yedek parçaların hızlı teminini sağlayarak arıza onarım süresini (MTTR) minimize eder ve işletme sürekliliğini destekler.</li>
+                              <li><strong>Artı Değer:</strong> Arıza durumunda gerekli yedek parçaların hızlı teminini sağlayarak arıza onarım süresini (MTTR) minimize eder ve işletme sürekliliğini destekler.</li>
                             </ul>
                           </div>
                       </div>
