@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from './firebase';
-import { UserPlus, Mail, Lock, User, AlertCircle } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, AlertCircle, Zap } from 'lucide-react';
 
 const Register = ({ onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -29,19 +29,19 @@ const Register = ({ onSwitchToLogin }) => {
 
     // Validasyonlar
     if (formData.password !== formData.confirmPassword) {
-      setError('şifreler eıleımiyor!');
+      setError('Şifreler eşleşmiyor!');
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('şifre en az 6 karakter olmalıdır!');
+      setError('Şifre en az 6 karakter olmalıdır!');
       return;
     }
 
     setLoading(true);
 
     try {
-      // Kullanıcı oluıtur
+      // Kullanıcı oluştur
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
@@ -61,7 +61,7 @@ const Register = ({ onSwitchToLogin }) => {
       setSuccess(true);
       setError('');
       
-      // Baıarılı mesaj gıster ve 3 saniye sonra login'e yınlendir
+      // Başarılı mesaj göster ve 3 saniye sonra login'e yönlendir
       setTimeout(() => {
         onSwitchToLogin();
       }, 3000);
@@ -72,11 +72,11 @@ const Register = ({ onSwitchToLogin }) => {
       if (error.code === 'auth/email-already-in-use') {
         setError('Bu e-posta adresi zaten kullanılıyor!');
       } else if (error.code === 'auth/invalid-email') {
-        setError('Geıersiz e-posta adresi!');
+        setError('Geçersiz e-posta adresi!');
       } else if (error.code === 'auth/weak-password') {
-        setError('şifre ıok zayıf!');
+        setError('Şifre çok zayıf!');
       } else {
-        setError('Kayıt sırasında bir hata oluıtu: ' + error.message);
+        setError('Kayıt sırasında bir hata oluştu: ' + error.message);
       }
     } finally {
       setLoading(false);
@@ -93,16 +93,16 @@ const Register = ({ onSwitchToLogin }) => {
             </div>
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Kayıt Baıarılı!
+            Kayıt Başarılı!
           </h2>
           <p className="text-gray-600 mb-4">
-            Hesabınız oluıturuldu. Admin onayı bekleniyor.
+            Hesabınız oluşturuldu. Admin onayı bekleniyor.
           </p>
           <p className="text-sm text-gray-500">
-            Onaylandışınızda e-posta ile bilgilendirileceksiniz.
+            Onaylandığınızda e-posta ile bilgilendirileceksiniz.
           </p>
           <p className="text-sm text-gray-500 mt-2">
-            Giri sayfasına yınlendiriliyorsunuz...
+            Giriş sayfasına yönlendiriliyorsunuz...
           </p>
         </div>
       </div>
@@ -114,10 +114,10 @@ const Register = ({ onSwitchToLogin }) => {
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <UserPlus className="w-8 h-8 text-blue-600" />
+            <Zap className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800">Yeni Hesap</h2>
-          <p className="text-gray-600 mt-2">Kayıt olun ve admin onayını bekleyin</p>
+          <h2 className="text-3xl font-bold text-gray-800">VoltGuard</h2>
+          <p className="text-gray-600 mt-2">Yeni hesap oluşturun</p>
         </div>
 
         {error && (
@@ -148,7 +148,7 @@ const Register = ({ onSwitchToLogin }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              ıirket Adı
+              Şirket Adı
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -158,7 +158,7 @@ const Register = ({ onSwitchToLogin }) => {
                 value={formData.company}
                 onChange={handleChange}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="ıirket Adı (Opsiyonel)"
+                placeholder="Şirket Adı (Opsiyonel)"
               />
             </div>
           </div>
@@ -212,7 +212,7 @@ const Register = ({ onSwitchToLogin }) => {
                 onChange={handleChange}
                 required
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="şifrenizi tekrar girin"
+                placeholder="Şifrenizi tekrar girin"
               />
             </div>
           </div>
@@ -243,7 +243,7 @@ const Register = ({ onSwitchToLogin }) => {
               onClick={onSwitchToLogin}
               className="text-blue-600 hover:text-blue-700 font-semibold"
             >
-              Giri Yap
+              Giriş Yap
             </button>
           </p>
         </div>

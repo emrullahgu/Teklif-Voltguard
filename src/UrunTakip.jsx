@@ -31,7 +31,7 @@ const UrunTakip = () => {
     tarih: new Date().toISOString().split('T')[0]
   });
 
-  // ürünleri yükle - authentication kontrolı ile
+  // ürünleri yükle - authentication kontrolü ile
   useEffect(() => {
     if (isAuthenticated && currentUser) {
       loadUrunler();
@@ -118,7 +118,7 @@ const UrunTakip = () => {
     }
 
     if (!currentUser) {
-      alert('Lütfen ınce giriş yapın.');
+      alert('Lütfen önce giriş yapın.');
       return;
     }
 
@@ -148,7 +148,7 @@ const UrunTakip = () => {
           user_email: currentUser.email
         };
         
-        console.log('?? Eklenecek veri:', dataToInsert);
+        console.log('📋 Eklenecek veri:', dataToInsert);
         
         const { data, error } = await supabase
           .from('urun_takip')
@@ -182,7 +182,7 @@ const UrunTakip = () => {
       } else if (error.message?.includes('JWT')) {
         alert('Oturum sıresi dolmuı. Lütfen yeniden giriş yapın.');
       } else {
-        alert('ürün kaydedilirken hata oluıtu: ' + (error.message || 'Bilinmeyen hata'));
+        alert('ürün kaydedilirken hata oluştu: ' + (error.message || 'Bilinmeyen hata'));
       }
     } finally {
       setLoading(false);
@@ -204,7 +204,7 @@ const UrunTakip = () => {
       loadUrunler();
     } catch (error) {
       console.error('ürün silinirken hata:', error);
-      alert('ürün silinirken hata oluıtu');
+      alert('ürün silinirken hata oluştu');
     } finally {
       setLoading(false);
     }
@@ -292,12 +292,12 @@ const UrunTakip = () => {
       yPos += 6;
     });
     
-    // Kategori ızeti
+    // Kategori özeti
     if (kategoriOzet.length > 0) {
       yPos += 5;
       doc.setFontSize(12);
       doc.setTextColor(0);
-      doc.text('Kategori ızeti:', 20, yPos);
+      doc.text('Kategori özeti:', 20, yPos);
       yPos += 7;
       
       const kategoriData = kategoriOzet.map(k => [
@@ -401,7 +401,7 @@ const UrunTakip = () => {
     doc.save(fileName);
   };
 
-  // Auth kontrolı yapılıyor
+  // Auth kontrolü yapılıyor
   if (authLoading) {
     return (
       <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[60vh]">
@@ -413,19 +413,19 @@ const UrunTakip = () => {
     );
   }
 
-  // Giri yapılmamı
+  // Giriş yapılmamış
   if (!isAuthenticated) {
     return (
       <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[60vh]">
         <div className="text-center bg-white p-8 rounded-xl shadow-lg">
           <AlertCircle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Lütfen ınce Giri Yapınız</h2>
-          <p className="text-gray-600 mb-6">Bu sayfayı gürüntılemek için giriş yapmanız gerekmektedir.</p>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Lütfen Önce Giriş Yapınız</h2>
+          <p className="text-gray-600 mb-6">Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.</p>
           <button
             onClick={() => window.location.href = '/'}
             className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
           >
-            Giri Sayfasına Dın
+            Giriş Sayfasına Dön
           </button>
         </div>
       </div>
@@ -444,7 +444,7 @@ const UrunTakip = () => {
                 Veritabanı Tablosu Bulunamadı
               </h3>
               <p className="text-red-700 mb-4">
-                <code className="bg-red-100 px-2 py-1 rounded">urun_takip</code> tablosu henız oluıturulmamı. 
+                <code className="bg-red-100 px-2 py-1 rounded">urun_takip</code> tablosu henüz oluşturulmamış. 
                 Lütfen aıaıdaki adımları takip edin:
               </p>
               <ol className="list-decimal list-inside space-y-2 text-red-700 mb-4">
@@ -458,9 +458,9 @@ const UrunTakip = () => {
                     Supabase Dashboard
                   </a>'a gidin
                 </li>
-                <li>Sol menıden <strong>SQL Editor</strong> seçeneıine tıklayın</li>
-                <li><code className="bg-red-100 px-2 py-1 rounded">urun-takip-migration.sql</code> dosyasının ieriçini kopyalayın</li>
-                <li>SQL Editor'e yapıtırıp <strong>Run</strong> butonuna tıklayın</li>
+                <li>Sol menüden <strong>SQL Editor</strong> seçeneğine tıklayın</li>
+                <li><code className="bg-red-100 px-2 py-1 rounded">urun-takip-migration.sql</code> dosyasının içeriğini kopyalayın</li>
+                <li>SQL Editor'e yapıştırıp <strong>Run</strong> butonuna tıklayın</li>
                 <li>Bu sayfayı yenileyin</li>
               </ol>
               <div className="flex gap-3">
@@ -514,7 +514,7 @@ const UrunTakip = () => {
               <Package className="mr-3 h-8 w-8" />
               ürün Takip Sistemi
             </h1>
-            <p className="text-purple-100 mt-2">Envanter yınetimi ve ürün takibi</p>
+            <p className="text-purple-100 mt-2">Envanter yönetimi ve ürün takibi</p>
           </div>
           <div className="flex gap-3">
             <button
@@ -658,7 +658,7 @@ const UrunTakip = () => {
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
             <Tag className="w-5 h-5 mr-2 text-purple-600" />
-            Kategori ızeti
+            Kategori özeti
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {kategoriOzet.map((item, index) => (
@@ -698,7 +698,7 @@ const UrunTakip = () => {
                   <th className="px-4 py-3 text-center text-sm font-semibold">Miktar</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">Lokasyon</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">Seri No</th>
-                  <th className="px-4 py-3 text-center text-sm font-semibold">ılemler</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">

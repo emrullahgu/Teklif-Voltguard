@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { 
   Plus, Edit3, Trash2, Save, X, Download, FileDown, 
   TrendingUp, TrendingDown, AlertTriangle, CheckCircle, 
@@ -2090,7 +2090,7 @@ export default function HaftalikRaporlama() {
                         <div style={{ position: 'absolute', bottom: '8mm', left: '20mm', right: '20mm', paddingTop: '3mm', borderTop: '2px solid #2980b9' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                             <div style={{ flex: 1 }}>
-                              <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>KOBİNERJİ MÜHENDİSLİK</p>
+                              <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
                               <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
@@ -2172,7 +2172,7 @@ export default function HaftalikRaporlama() {
                         <div style={{ position: 'absolute', bottom: '8mm', left: '20mm', right: '20mm', paddingTop: '3mm', borderTop: '2px solid #2980b9' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                             <div style={{ flex: 1 }}>
-                              <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>KOBİNERJİ MÜHENDİSLİK</p>
+                              <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
                               <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
@@ -2288,7 +2288,7 @@ export default function HaftalikRaporlama() {
                               <div style={{ position: 'absolute', bottom: '8mm', left: '20mm', right: '20mm', paddingTop: '3mm', borderTop: `2px solid ${excelSet.color}` }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                                   <div style={{ flex: 1 }}>
-                                    <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>KOBİNERJİ MÜHENDİSLİK</p>
+                                    <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
                                     <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                                     <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                   </div>
@@ -2379,7 +2379,7 @@ export default function HaftalikRaporlama() {
                             <div style={{ position: 'absolute', bottom: '8mm', left: '20mm', right: '20mm', paddingTop: '3mm', borderTop: '2px solid #2980b9' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                                 <div style={{ flex: 1 }}>
-                                  <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>KOBİNERJİ MÜHENDİSLİK</p>
+                                  <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
                                   <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                                   <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                 </div>
@@ -2419,7 +2419,7 @@ export default function HaftalikRaporlama() {
                           <div style={{ position: 'absolute', bottom: '8mm', left: '20mm', right: '20mm', paddingTop: '3mm', borderTop: '2px solid #2980b9' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                               <div style={{ flex: 1 }}>
-                                <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>KOBİNERJİ MÜHENDİSLİK</p>
+                                <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
                                 <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                                 <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                               </div>

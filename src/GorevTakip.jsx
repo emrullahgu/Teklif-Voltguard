@@ -26,13 +26,13 @@ const GorevTakip = () => {
     { value: 'beklemede', label: 'Beklemede', icon: '?', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
     { value: 'devam-ediyor', label: 'Devam Ediyor', icon: '??', color: 'bg-blue-100 text-blue-800 border-blue-300' },
     { value: 'tamamlandi', label: 'Tamamlandı', icon: '?', color: 'bg-green-100 text-green-800 border-green-300' },
-    { value: 'iptal', label: 'ıptal Edildi', icon: '?', color: 'bg-red-100 text-red-800 border-red-300' }
+    { value: 'iptal', label: 'İptal Edildi', icon: '?', color: 'bg-red-100 text-red-800 border-red-300' }
   ];
 
   const oncelikler = [
-    { value: 'dusuk', label: 'Dıık', color: 'bg-gray-100 text-gray-800' },
+    { value: 'dusuk', label: 'Düşük', color: 'bg-gray-100 text-gray-800' },
     { value: 'orta', label: 'Orta', color: 'bg-blue-100 text-blue-800' },
-    { value: 'yuksek', label: 'Yıksek', color: 'bg-orange-100 text-orange-800' },
+    { value: 'yuksek', label: 'Yüksek', color: 'bg-orange-100 text-orange-800' },
     { value: 'acil', label: 'Acil', color: 'bg-red-100 text-red-800' }
   ];
 
@@ -75,7 +75,7 @@ const GorevTakip = () => {
       filtered = filtered.filter(g => g.durum === filterStatus);
     }
 
-    // ıncelik filtresi
+    // Öncelik filtresi
     if (filterPriority !== 'all') {
       filtered = filtered.filter(g => g.oncelik === filterPriority);
     }
@@ -86,11 +86,11 @@ const GorevTakip = () => {
   const saveGorev = async () => {
     try {
       if (!gorevForm.baslik.trim()) {
-        alert('Görev başlıı zorunludur!');
+        alert('Görev başlığı zorunludur!');
         return;
       }
 
-      // Boı string tarih alanlarını null'a ıevir
+      // Boş string tarih alanlarını null'a çevir
       const gorevData = {
         ...gorevForm,
         baslangic_tarihi: gorevForm.baslangic_tarihi || null,
@@ -119,7 +119,7 @@ const GorevTakip = () => {
       setIsModalOpen(false);
     } catch (error) {
       console.error('Görev kaydedişlemedi:', error);
-      alert('Görev kaydedilirken bir hata oluıtu!');
+      alert('Görev kaydedilirken bir hata oluştu!');
     }
   };
 
@@ -176,7 +176,7 @@ const GorevTakip = () => {
     return oncelikler.find(o => o.value === oncelik) || oncelikler[1];
   };
 
-  // ıstatistikler
+  // İstatistikler
   const stats = {
     toplam: gorevler.length,
     beklemede: gorevler.filter(g => g.durum === 'beklemede').length,
@@ -195,7 +195,7 @@ const GorevTakip = () => {
               <CheckCircle className="w-8 h-8" />
               Görev Takip Sistemi
             </h1>
-            <p className="text-blue-100 mt-1">Tım görevlerinizi tek yerden yınetin</p>
+            <p className="text-blue-100 mt-1">Tüm görevlerinizi tek yerden yınetin</p>
           </div>
           <button
             onClick={() => {
@@ -209,7 +209,7 @@ const GorevTakip = () => {
           </button>
         </div>
 
-        {/* ıstatistikler */}
+        {/* İstatistikler */}
         <div className="grid grid-cols-5 gap-4 mt-6">
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
             <div className="text-3xl font-bold text-white">{stats.toplam}</div>
@@ -229,7 +229,7 @@ const GorevTakip = () => {
           </div>
           <div className="bg-red-500/20 backdrop-blur-sm rounded-lg p-4 text-center">
             <div className="text-3xl font-bold text-white">{stats.iptal}</div>
-            <div className="text-red-100 text-sm mt-1">ıptal</div>
+            <div className="text-red-100 text-sm mt-1">İptal</div>
           </div>
         </div>
       </div>
@@ -255,19 +255,19 @@ const GorevTakip = () => {
             onChange={(e) => setFilterStatus(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           >
-            <option value="all">Tım Durumlar</option>
+            <option value="all">Tüm Durumlar</option>
             {durumlar.map(d => (
               <option key={d.value} value={d.value}>{d.icon} {d.label}</option>
             ))}
           </select>
 
-          {/* ıncelik Filtresi */}
+          {/* Öncelik Filtresi */}
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           >
-            <option value="all">Tım ıncelikler</option>
+            <option value="all">Tüm Öncelikler</option>
             {oncelikler.map(o => (
               <option key={o.value} value={o.value}>{o.label}</option>
             ))}
@@ -285,7 +285,7 @@ const GorevTakip = () => {
             return (
               <div key={gorev.id} className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                 <div className="p-4">
-                  {/* Baılık ve ıncelik */}
+                  {/* Başlık ve Öncelik */}
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="font-bold text-gray-800 text-lg flex-1 pr-2">{gorev.baslik}</h3>
                     <span className={`px-2 py-1 rounded text-xs font-semibold ${oncelikInfo.color}`}>
@@ -293,7 +293,7 @@ const GorevTakip = () => {
                     </span>
                   </div>
 
-                  {/* Aıklama */}
+                  {/* Açıklama */}
                   {gorev.aciklama && (
                     <p className="text-gray-600 text-sm mb-3 line-clamp-2">{gorev.aciklama}</p>
                   )}
@@ -304,7 +304,7 @@ const GorevTakip = () => {
                     <span className="font-semibold text-sm">{durumInfo.label}</span>
                   </div>
 
-                  {/* Atanan Ki */}
+                  {/* Atanan Kişi */}
                   {gorev.atanan_kisi && (
                     <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
                       <User className="w-4 h-4" />
@@ -328,7 +328,7 @@ const GorevTakip = () => {
                       className="flex-1 flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded-lg font-medium transition-colors"
                     >
                       <Edit3 className="w-4 h-4" />
-                      Dızenle
+                      Düzenle
                     </button>
                     <button
                       onClick={() => deleteGorev(gorev.id)}
@@ -347,7 +347,7 @@ const GorevTakip = () => {
           <div className="text-center py-12">
             <AlertCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500 text-lg">Görev bulunamadı</p>
-            <p className="text-gray-400 text-sm mt-2">Yeni bir görev ekleyerek baılayın!</p>
+            <p className="text-gray-400 text-sm mt-2">Yeni bir görev ekleyerek başlayın!</p>
           </div>
         )}
       </div>
@@ -359,7 +359,7 @@ const GorevTakip = () => {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white sticky top-0 z-10">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">
-                  {editingGorev ? 'Görevi Dızenle' : 'Yeni Görev Ekle'}
+                  {editingGorev ? 'Görevi Düzenle' : 'Yeni Görev Ekle'}
                 </h2>
                 <button
                   onClick={() => {
@@ -376,7 +376,7 @@ const GorevTakip = () => {
             <div className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Görev Baılıı <span className="text-red-500">*</span>
+                  Görev Başlığı <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -388,7 +388,7 @@ const GorevTakip = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Aıklama</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Açıklama</label>
                 <textarea
                   value={gorevForm.aciklama}
                   onChange={(e) => setGorevForm({...gorevForm, aciklama: e.target.value})}
@@ -413,7 +413,7 @@ const GorevTakip = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">ıncelik</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Öncelik</label>
                   <select
                     value={gorevForm.oncelik}
                     onChange={(e) => setGorevForm({...gorevForm, oncelik: e.target.value})}
@@ -427,7 +427,7 @@ const GorevTakip = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Atanan Ki</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Atanan Kişi</label>
                 <input
                   type="text"
                   value={gorevForm.atanan_kisi}
@@ -439,7 +439,7 @@ const GorevTakip = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Baılangüç Tarihi</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Başlangıç Tarihi</label>
                   <input
                     type="date"
                     value={gorevForm.baslangic_tarihi}
@@ -449,7 +449,7 @@ const GorevTakip = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Biti Tarihi</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Bitiş Tarihi</label>
                   <input
                     type="date"
                     value={gorevForm.bitis_tarihi}
@@ -478,7 +478,7 @@ const GorevTakip = () => {
                   }}
                   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-bold transition-colors"
                 >
-                  ıptal
+                  İptal
                 </button>
                 <button
                   onClick={saveGorev}

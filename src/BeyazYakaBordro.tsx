@@ -32,10 +32,10 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
-// --- SABıTLER ---
-const MONTHS = ['Ocak', 'ıubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Aıustos', 'Eylıl', 'Ekim', 'Kasım', 'Aralık'];
+// --- SABİTLER ---
+const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylıl', 'Ekim', 'Kasım', 'Aralık'];
 
-// --- TıP TANIMLAMALARI ---
+// --- TİP TANIMLAMALARI ---
 type DayType = 'Normal' | 'Pazar' | 'Resmi Tatil' | 'Raporlu' | 'ızinli' | 'Gelmedi';
 
 interface DailyLog {
@@ -105,7 +105,7 @@ interface MonthlyPayroll {
   payment_method?: string;
   is_paid: boolean;
   notes?: string;
-  logs?: Record<number, DailyLog>;  // Gınlık kayıtlar
+  logs?: Record<number, DailyLog>;  // Günlük kayıtlar
   expenses?: Expense[];  // Avans/Gider/Prim kayıtları
 }
 
@@ -121,7 +121,7 @@ interface Advance {
   is_fully_paid: boolean;
 }
 
-// --- YARDIMCI FONKSıYONLAR ---
+// --- YARDIMCI FONKSİYONLAR ---
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('tr-TR', { 
     style: 'currency', 
@@ -245,14 +245,14 @@ const BeyazYakaBordro: React.FC = () => {
     [employees, selectedEmployeeId]
   );
 
-  // Admin kontrolı
+  // Admin kontrolü
   const checkUserAuth = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setCurrentUserId(user.id);
         
-        // Admin kontrolı - user_id NULL olan kayıtlar admin kayıtlarıdır
+        // Admin kontrolü - user_id NULL olan kayıtlar admin kayıtlarıdır
         const { data: adminCheck } = await supabase
           .from('beyaz_yaka_employees')
           .select('user_id')
@@ -266,7 +266,7 @@ const BeyazYakaBordro: React.FC = () => {
     }
   };
 
-  // Maaı bilgisini maskele
+  // Maaş bilgisini maskele
   const maskSalary = (employee: Employee): string => {
     if (isAdmin || employee.user_id === currentUserId) {
       return formatCurrency(employee.monthly_salary);
@@ -274,7 +274,7 @@ const BeyazYakaBordro: React.FC = () => {
     return '****';
   };
 
-  // Detaylı bilgileri gıster/maskele
+  // Detaylı bilgileri göster/maskele
   const canViewDetails = (employee: Employee): boolean => {
     return isAdmin || employee.user_id === currentUserId;
   };
@@ -302,7 +302,7 @@ const BeyazYakaBordro: React.FC = () => {
   const loadAvailableUsers = async () => {
     try {
       if (isAdmin) {
-        // Admin için: Sistemdeki tım onaylı kullanıcıları users tablosundan çek
+        // Admin için: Sistemdeki tüm onaylı kullanıcıları users tablosundan çek
         const { data: usersData, error: usersError } = await supabase
           .from('users')
           .select('id, name, email, company, role')
@@ -311,7 +311,7 @@ const BeyazYakaBordro: React.FC = () => {
         
         if (usersError) throw usersError;
         
-        // Kullanıcıları uygun formata dınıtır
+        // Kullanıcıları uygun formata dönüştür
         const formattedUsers = usersData?.map(user => ({
           id: user.id,
           email: user.email || '',
@@ -324,7 +324,7 @@ const BeyazYakaBordro: React.FC = () => {
         
         setAvailableUsers(formattedUsers);
       } else {
-        // Normal kullanıcı için: Sadece kendi bilgilerini gıster
+        // Normal kullanıcı için: Sadece kendi bilgilerini göster
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           setAvailableUsers([{
@@ -402,7 +402,7 @@ const BeyazYakaBordro: React.FC = () => {
   const loadEmployees = async () => {
     try {
       setLoading(true);
-      console.log('?? çalışanlar yükleniyor...');
+      console.log('📋 Çalışanlar yükleniyor...');
       
       const { data, error } = await supabase
         .from('beyaz_yaka_employees')
@@ -413,13 +413,13 @@ const BeyazYakaBordro: React.FC = () => {
       if (error) {
         console.error('? Supabase hatası:', error);
         
-        // Tablo yoksa kullanıcıya aık mesaj gıster
+        // Tablo yoksa kullanıcıya açık mesaj göster
         if (error.code === '42P01') {
-          alert('?? VERıTABANI HATASI\n\n"beyaz_yaka_employees" tablosu bulunamadı!\n\n?? ızım:\n1. Supabase Dashboard\'a gidin\n2. SQL Editor\'ı aşın\n3. beyaz-yaka-bordro-migration.sql dosyasındaki SQL\'leri çalıştürün');
+          alert('🚨 VERİTABANI HATASI\n\n"beyaz_yaka_employees" tablosu bulunamadı!\n\n🔧 Çözüm:\n1. Supabase Dashboard\'a gidin\n2. SQL Editor\'ı aşın\n3. beyaz-yaka-bordro-migration.sql dosyasındaki SQL\'leri çalıştırın');
         } else if (error.code === 'PGRST116' || error.message?.includes('RLS')) {
-          alert('?? ERııM HATASI\n\nRow Level Security (RLS) politikaları hatalı!\n\n?? ızım:\n1. Supabase Dashboard • Database • Policies\n2. beyaz_yaka_employees tablosu için politikaları kontrol edin\n3. Geıici olarak RLS\'i devre dıı bırakabilirsiniz:\n\nALTER TABLE beyaz_yaka_employees DISABLE ROW LEVEL SECURITY;');
+          alert('🚫 ERİŞİM HATASI\n\nRow Level Security (RLS) politikaları hatalı!\n\n🔧 Çözüm:\n1. Supabase Dashboard • Database • Policies\n2. beyaz_yaka_employees tablosu için politikaları kontrol edin\n3. Geçici olarak RLS\'i devre dışı bırakabilirsiniz:\n\nALTER TABLE beyaz_yaka_employees DISABLE ROW LEVEL SECURITY;');
         } else {
-          alert('? çalışan listesi yüklenemedi!\n\nHata: ' + error.message + '\n\nSupabase baılantınızı kontrol edin.');
+          alert('? çalışan listesi yüklenemedi!\n\nHata: ' + error.message + '\n\nSupabase bağlantınızı kontrol edin.');
         }
         throw error;
       }
@@ -454,7 +454,7 @@ const BeyazYakaBordro: React.FC = () => {
         // Expenses bilgisini yükle
         setExpensesList(data.expenses || []);
       } else {
-        // Yeni bordro oluıtur
+        // Yeni bordro oluştur
         const employee = employees.find(e => e.id === selectedEmployeeId);
         if (employee) {
           const newPayroll = createDefaultPayroll(employee);
@@ -523,7 +523,7 @@ const BeyazYakaBordro: React.FC = () => {
 
   const saveEmployee = async () => {
     if (!employeeForm.name || !employeeForm.monthly_salary) {
-      showMessage('error', 'Ad ve maaı bilgisi zorunludur');
+      showMessage('error', 'Ad ve maaş bilgisi zorunludur');
       return;
     }
 
@@ -574,7 +574,7 @@ const BeyazYakaBordro: React.FC = () => {
       loadEmployees();
     } catch (error) {
       console.error('çalışan kaydedilirken hata:', error);
-      showMessage('error', 'ılem başarısız oldu');
+      showMessage('error', 'İşlem başarısız oldu');
     } finally {
       setLoading(false);
     }
@@ -642,7 +642,7 @@ const BeyazYakaBordro: React.FC = () => {
 
       const updatedExpenses = [...expensesList, newExpense];
       
-      // ? ıNCE VERıTABANINA KAYDET (başarısız olursa state'e dokunma)
+      // ➡️ ÖNCE VERİTABANINA KAYDET (başarısız olursa state'e dokunma)
       if (payrollData && payrollData.id) {
         const { error: payrollError } = await supabase
           .from('beyaz_yaka_monthly_payroll')
@@ -652,7 +652,7 @@ const BeyazYakaBordro: React.FC = () => {
         if (payrollError) throw payrollError;
       }
       
-      // ? BAıARILI OLDUYSA State'i güncelle
+      // ? BAŞARILI OLDUYSA State'i güncelle
       setExpensesList(updatedExpenses);
       
       if (payrollData) {
@@ -660,7 +660,7 @@ const BeyazYakaBordro: React.FC = () => {
         setPayrollData(updatedPayrollData);
       }
       
-      // Eıer Avans ise, eski sisteme de kaydet
+      // Eğer Avans ise, eski sisteme de kaydet
       if (advanceForm.type === 'Avans') {
         const monthlyDeduction = amount / installment_total;
         const advanceData = {
@@ -700,7 +700,7 @@ const BeyazYakaBordro: React.FC = () => {
     try {
       const updatedExpenses = expensesList.filter(e => e.id !== expenseId);
       
-      // ? ıNCE VERıTABANINDAN SıL (başarısız olursa state'e dokunma)
+      // ➡️ ÖNCE VERİTABANINDAN SİL (başarısız olursa state'e dokunma)
       if (payrollData && payrollData.id) {
         const { error } = await supabase
           .from('beyaz_yaka_monthly_payroll')
@@ -710,7 +710,7 @@ const BeyazYakaBordro: React.FC = () => {
         if (error) throw error;
       }
       
-      // ? BAıARILI OLDUYSA State'i güncelle
+      // ? BAŞARILI OLDUYSA State'i güncelle
       setExpensesList(updatedExpenses);
       
       if (payrollData) {
@@ -725,7 +725,7 @@ const BeyazYakaBordro: React.FC = () => {
     }
   };
 
-  // Gınlık kayıt yınetimi
+  // Günlük kayıt yönetimi
   const handleLogChange = (day: number, field: keyof DailyLog, value: any) => {
     setDailyLogs(prev => ({
       ...prev,
@@ -760,9 +760,9 @@ const BeyazYakaBordro: React.FC = () => {
     try {
       // Veritabanına kaydetme işlemi burada yapılacak
       // ıimdilik sadece local state'de tutuyoruz
-      console.log('Gınlık kayıt kaydedildi:', day, log);
+      console.log('Günlük kayıt kaydedildi:', day, log);
     } catch (error) {
-      console.error('Gınlık kayıt hatası:', error);
+      console.error('Günlük kayıt hatası:', error);
     }
   };
 
@@ -831,7 +831,7 @@ const BeyazYakaBordro: React.FC = () => {
       
     } catch (error) {
       console.error('çalışan silme hatası:', error);
-      alert('çalışan silinirken bir hata oluıtu!');
+      alert('çalışan silinirken bir hata oluştu!');
     } finally {
       setLoading(false);
     }
@@ -865,7 +865,7 @@ const BeyazYakaBordro: React.FC = () => {
       
       updated.net_payment = totalEarnings - totalDeductions;
       
-      // ıveren maliyetini hesapla
+      // İşveren maliyetini hesapla
       updated.total_employer_cost = totalEarnings + 
         Number(updated.sgk_employer) + 
         Number(updated.unemployment_employer);
@@ -920,19 +920,19 @@ const BeyazYakaBordro: React.FC = () => {
       payrollData.stamp_tax + payrollData.advance_deduction + payrollData.other_deductions;
     
     const tableData: any[] = [
-      ['HAKEDıLER', ''],
-      ['Temel Maaı', formatCurrency(payrollData.base_salary)],
+      ['HAKEDİŞLER', ''],
+      ['Temel Maaş', formatCurrency(payrollData.base_salary)],
       ['Mesai ıcreti', formatCurrency(payrollData.overtime_pay)],
       ['Prim', formatCurrency(payrollData.bonus)],
       ['Yemek Yardımı', formatCurrency(payrollData.meal_allowance)],
       ['Ulaım Yardımı', formatCurrency(payrollData.transport_allowance)],
-      ['Dier Kazanılar', formatCurrency(payrollData.other_earnings)],
+      ['Diğer Kazançlar', formatCurrency(payrollData.other_earnings)],
       ['', ''],
-      ['TOPLAM HAKEDıLER', formatCurrency(totalEarnings)],
+      ['TOPLAM HAKEDİŞLER', formatCurrency(totalEarnings)],
       ['', ''],
-      ['KESıNTıLER', ''],
-      ['SGK ııi Payı (%14)', formatCurrency(payrollData.sgk_employee)],
-      ['ısizlik ııi Payı (%1)', formatCurrency(payrollData.unemployment_employee)],
+      ['KESİNTİLER', ''],
+      ['SGK İşçi Payı (%14)', formatCurrency(payrollData.sgk_employee)],
+      ['İşsizlik İşçi Payı (%1)', formatCurrency(payrollData.unemployment_employee)],
       ['Gelir Vergisi', formatCurrency(payrollData.income_tax)],
       ['Damga Vergisi (%0.759)', formatCurrency(payrollData.stamp_tax)]
     ];
@@ -956,16 +956,16 @@ const BeyazYakaBordro: React.FC = () => {
       tableData.push(['Avans Kesintisi', formatCurrency(payrollData.advance_deduction)]);
     }
     
-    tableData.push(['Dier Kesintiler', formatCurrency(payrollData.other_deductions)]);
+    tableData.push(['Diğer Kesintiler', formatCurrency(payrollData.other_deductions)]);
     tableData.push(['', '']);
-    tableData.push(['TOPLAM KESıNTıLER', formatCurrency(totalDeductions)]);
+    tableData.push(['TOPLAM KESİNTİLER', formatCurrency(totalDeductions)]);
     tableData.push(['', '']);
-    tableData.push(['NET ıDEME', formatCurrency(payrollData.net_payment)]);
+    tableData.push(['NET ÖDEME', formatCurrency(payrollData.net_payment)]);
     tableData.push(['', '']);
-    tableData.push(['ıVEREN MALıYETı', '']);
-    tableData.push(['SGK ıveren Payı (%20.5)', formatCurrency(payrollData.sgk_employer)]);
-    tableData.push(['ısizlik ıveren Payı (%2)', formatCurrency(payrollData.unemployment_employer)]);
-    tableData.push(['TOPLAM ıVEREN MALıYETı', formatCurrency(payrollData.total_employer_cost)]);
+    tableData.push(['İŞVEREN MALİYETİ', '']);
+    tableData.push(['SGK İşveren Payı (%20.5)', formatCurrency(payrollData.sgk_employer)]);
+    tableData.push(['İşsizlik İşveren Payı (%2)', formatCurrency(payrollData.unemployment_employer)]);
+    tableData.push(['TOPLAM İŞVEREN MALİYETİ', formatCurrency(payrollData.total_employer_cost)]);
     
     (doc as any).autoTable({
       startY: 80,
@@ -978,17 +978,17 @@ const BeyazYakaBordro: React.FC = () => {
         1: { halign: 'right' }
       },
       didParseCell: function(data: any) {
-        // Avans detay satırlarını kıık font ile gıster
+        // Avans detay satırlarını küçük font ile göster
         if (data.cell.text[0] && data.cell.text[0].startsWith('  - ')) {
           data.cell.styles.fontSize = 8;
           data.cell.styles.textColor = [220, 38, 38];
         }
         // Ana başlıkları vurgula
         if (data.cell.text[0] && (
-          data.cell.text[0].includes('HAKEDıLER') || 
-          data.cell.text[0].includes('KESıNTıLER') || 
+          data.cell.text[0].includes('HAKEDİŞLER') || 
+          data.cell.text[0].includes('KESİNTİLER') || 
           data.cell.text[0].includes('AVANSLAR') ||
-          data.cell.text[0].includes('ıVEREN MALıYETı') ||
+          data.cell.text[0].includes('İŞVEREN MALİYETİ') ||
           data.cell.text[0].includes('TOPLAM')
         )) {
           data.cell.styles.fillColor = [232, 234, 246];
@@ -1019,10 +1019,10 @@ const BeyazYakaBordro: React.FC = () => {
         'çalışan': emp.name,
         'Pozisyon': emp.position || '-',
         'Departman': emp.department || '-',
-        'Temel Maaı': emp.monthly_salary,
+        'Temel Maaş': emp.monthly_salary,
         'Net ıdeme': empPayroll.net_payment,
-        'ıveren Maliyeti': empPayroll.total_employer_cost,
-        'ıe Baılama': new Date(emp.start_date).toLocaleDateString('tr-TR')
+        'İşveren Maliyeti': empPayroll.total_employer_cost,
+        'İşe Başlama': new Date(emp.start_date).toLocaleDateString('tr-TR')
       };
     });
 
@@ -1088,7 +1088,7 @@ const BeyazYakaBordro: React.FC = () => {
               <Building className="text-indigo-600" size={32} />
               <div>
                 <h1 className="text-3xl font-bold text-gray-800">Beyaz Yaka Bordro Sistemi</h1>
-                <p className="text-gray-600">Maaılı personel bordro yınetimi</p>
+                <p className="text-gray-600">Maaşlı personel bordro yönetimi</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -1145,7 +1145,7 @@ const BeyazYakaBordro: React.FC = () => {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Toplam Maaı</p>
+                    <p className="text-sm text-gray-600">Toplam Maaş</p>
                     <p className="text-2xl font-bold text-green-600">{formatCurrency(summaryStats.totalSalary)}</p>
                   </div>
                   <Banknote className="text-green-600" size={48} />
@@ -1154,7 +1154,7 @@ const BeyazYakaBordro: React.FC = () => {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600">Ortalama Maaı</p>
+                    <p className="text-sm text-gray-600">Ortalama Maaş</p>
                     <p className="text-2xl font-bold text-blue-600">{formatCurrency(summaryStats.averageSalary)}</p>
                   </div>
                   <TrendingUp className="text-blue-600" size={48} />
@@ -1195,9 +1195,9 @@ const BeyazYakaBordro: React.FC = () => {
                       <th className="px-4 py-3 text-left">Ad Soyad</th>
                       <th className="px-4 py-3 text-left">Pozisyon</th>
                       <th className="px-4 py-3 text-left">Departman</th>
-                      <th className="px-4 py-3 text-right">Aylık Maaı</th>
-                      <th className="px-4 py-3 text-left">ıe Baılama</th>
-                      <th className="px-4 py-3 text-center">ılemler</th>
+                      <th className="px-4 py-3 text-right">Aylık Maaş</th>
+                      <th className="px-4 py-3 text-left">İşe Başlama</th>
+                      <th className="px-4 py-3 text-center">İşlemler</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1307,8 +1307,8 @@ const BeyazYakaBordro: React.FC = () => {
                   <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-8 text-center">
                     <AlertCircle className="w-16 h-16 text-yellow-600 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Yetkiniz Yok</h3>
-                    <p className="text-gray-600">Bu çalışanın bordro bilgilerini gürüntıleme yetkiniz bulunmamaktadır.</p>
-                    <p className="text-sm text-gray-500 mt-2">Sadece kendi bordro bilgilerinizi gürüntıleyebilirsiniz.</p>
+                    <p className="text-gray-600">Bu çalışanın bordro bilgilerini görüntüleme yetkiniz bulunmamaktadır.</p>
+                    <p className="text-sm text-gray-500 mt-2">Sadece kendi bordro bilgilerinizi görüntüleyebilirsiniz.</p>
                   </div>
                 ) : (
                   <>
@@ -1334,7 +1334,7 @@ const BeyazYakaBordro: React.FC = () => {
                       <h3 className="text-lg font-bold mb-4 text-green-700">Hakedi Kalemleri</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="block text-sm font-medium mb-1">Temel Maaı</label>
+                          <label className="block text-sm font-medium mb-1">Temel Maaş</label>
                           <input
                             type="number"
                             value={payrollData.base_salary}
@@ -1379,7 +1379,7 @@ const BeyazYakaBordro: React.FC = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1">Dier Kazanılar</label>
+                          <label className="block text-sm font-medium mb-1">Diğer Kazançlar</label>
                           <input
                             type="number"
                             value={payrollData.other_earnings}
@@ -1395,7 +1395,7 @@ const BeyazYakaBordro: React.FC = () => {
                       <h3 className="text-lg font-bold mb-4 text-red-700">Kesinti Kalemleri</h3>
                       <div className="space-y-3">
                         <div>
-                          <label className="block text-sm font-medium mb-1">SGK ııi Payı</label>
+                          <label className="block text-sm font-medium mb-1">SGK İşçi Payı</label>
                           <input
                             type="number"
                             value={payrollData.sgk_employee}
@@ -1404,7 +1404,7 @@ const BeyazYakaBordro: React.FC = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1">ısizlik ııi Payı</label>
+                          <label className="block text-sm font-medium mb-1">İşsizlik İşçi Payı</label>
                           <input
                             type="number"
                             value={payrollData.unemployment_employee}
@@ -1440,7 +1440,7 @@ const BeyazYakaBordro: React.FC = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium mb-1">Dier Kesintiler</label>
+                          <label className="block text-sm font-medium mb-1">Diğer Kesintiler</label>
                           <input
                             type="number"
                             value={payrollData.other_deductions}
@@ -1460,11 +1460,11 @@ const BeyazYakaBordro: React.FC = () => {
                         <p className="text-3xl font-bold text-indigo-600">{formatCurrency(payrollData.net_payment)}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">ıveren Maliyeti</p>
+                        <p className="text-sm text-gray-600">İşveren Maliyeti</p>
                         <p className="text-3xl font-bold text-orange-600">{formatCurrency(payrollData.total_employer_cost)}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">çalışılan Gın</p>
+                        <p className="text-sm text-gray-600">Çalışılan Gün</p>
                         <input
                           type="number"
                           value={payrollData.worked_days}
@@ -1502,7 +1502,7 @@ const BeyazYakaBordro: React.FC = () => {
                             <th className="px-4 py-2 text-right">Tutar</th>
                             <th className="px-4 py-2 text-center">Taksit</th>
                             <th className="px-4 py-2 text-left">Aıklama</th>
-                            <th className="px-4 py-2 text-center">ılem</th>
+                            <th className="px-4 py-2 text-center">İşlem</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1557,7 +1557,7 @@ const BeyazYakaBordro: React.FC = () => {
                             <th className="px-4 py-2 text-center">Taksit</th>
                             <th className="px-4 py-2 text-right">Aylık Kesinti</th>
                             <th className="px-4 py-2 text-left">Aıklama</th>
-                            <th className="px-4 py-2 text-center">ılem</th>
+                            <th className="px-4 py-2 text-center">İşlem</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1611,7 +1611,7 @@ const BeyazYakaBordro: React.FC = () => {
               {!editingEmployee && (
                 <div className="mb-4 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
                   <label className="block text-sm font-medium mb-2 text-indigo-900">
-                    ?? Mevcut Kullanıcılardan Seç (Opsiyonel)
+                    👥 Mevcut Kullanıcılardan Seç (Opsiyonel)
                   </label>
                   <select
                     value={selectedUserId}
@@ -1629,7 +1629,7 @@ const BeyazYakaBordro: React.FC = () => {
                     ))}
                   </select>
                   <p className="text-xs text-indigo-600 mt-2">
-                    ?? Kullanıcı seçtiçinizde email ve ad alanları otomatik doldurulur
+                    ℹ️ Kullanıcı seçtiğinizde email ve ad alanları otomatik doldurulur
                   </p>
                 </div>
               )}
@@ -1690,7 +1690,7 @@ const BeyazYakaBordro: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">ıe Baılama Tarihi *</label>
+                  <label className="block text-sm font-medium mb-1">İşe Başlama Tarihi *</label>
                   <input
                     type="date"
                     value={employeeForm.start_date}
@@ -1699,7 +1699,7 @@ const BeyazYakaBordro: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Aylık Net Maaı *</label>
+                  <label className="block text-sm font-medium mb-1">Aylık Net Maaş *</label>
                   <input
                     type="number"
                     value={employeeForm.monthly_salary}
@@ -1708,7 +1708,7 @@ const BeyazYakaBordro: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Brıt Maaı</label>
+                  <label className="block text-sm font-medium mb-1">Brüt Maaş</label>
                   <input
                     type="number"
                     value={employeeForm.gross_salary}
@@ -1817,7 +1817,7 @@ const BeyazYakaBordro: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">ıu Anki Taksit</label>
+                      <label className="block text-sm font-medium mb-1">Şu Anki Taksit</label>
                       <input
                         type="number"
                         min="1"

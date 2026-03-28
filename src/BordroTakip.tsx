@@ -2403,7 +2403,7 @@ TÜM TAKSİT PLANINI silmek istiyor musunuz?
           <div className="flex items-center space-x-3">
             <Calculator className="w-8 h-8 text-yellow-400" />
             <div>
-              <h1 className="text-xl font-bold tracking-wide">KOBİNERJİ</h1>
+              <h1 className="text-xl font-bold tracking-wide">VoltGuard</h1>
               <p className="text-xs text-blue-200">Personel Hakediş & Puantaj Otomasyonu</p>
             </div>
           </div>

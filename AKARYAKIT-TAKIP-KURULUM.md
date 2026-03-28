@@ -102,7 +102,7 @@ Migration baıarılı olduıunda, aıaııdaki tablolar oluıturulacaktır:
 - `payment_method` - ıdeme ıekli (Nakit, Kredi Kartı, Fuel Kart, Havale)
 - `description` - Aııklama
 
-## ?? Gıvenlik
+## ?? Güvenlik
 
 Row Level Security (RLS) aktiftir:
 - **SELECT:** Herkes gırebilir

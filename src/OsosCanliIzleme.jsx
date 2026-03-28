@@ -53,7 +53,7 @@ const OsosCanliIzleme = () => {
       setLoading(false);
     } catch (err) {
       console.error('OSOS verisi yüklenemedi:', err);
-      setError('OSOS baılantısı kurulamadı. Lütfen veri kaynaşını kontrol edin.');
+      setError('OSOS bağlantısı kurulamadı. Lütfen veri kaynağını kontrol edin.');
       setLoading(false);
     }
   };
@@ -109,7 +109,7 @@ const OsosCanliIzleme = () => {
         setLiveCollecting(start);
         alert(result.message);
       } else {
-        throw new Error(result.error || 'ılem başarısız');
+        throw new Error(result.error || 'İşlem başarısız');
       }
     } catch (err) {
       console.error('Otomatik toplama ayar hatası:', err);
@@ -134,7 +134,7 @@ const OsosCanliIzleme = () => {
           <h3 className="text-xl font-bold text-gray-800 mb-2">OSOS Verisi Bulunamadı</h3>
           <p className="text-gray-600 mb-4">{error || 'Henız OSOS verisi kaydedilmemi.'}</p>
           <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-left max-w-2xl">
-            <h4 className="font-semibold text-blue-800 mb-2">?? Veri Kaydetmek için:</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">💾 Veri Kaydetmek için:</h4>
             <ol className="text-sm text-blue-700 space-y-1 list-decimal list-inside">
               <li>OSOS Portal'a giriş yapın (EDAı kullanıcı bilgilerinizle)</li>
               <li>Sayaç verilerinizi indirin (JSON/Excel formatında)</li>
@@ -169,7 +169,7 @@ const OsosCanliIzleme = () => {
     { label: 'Frekans', value: olcum.frekans, unit: 'Hz', color: 'text-yellow-600', bgColor: 'bg-yellow-50', icon: Activity },
   ];
 
-  // Durum kontrolı
+  // Durum kontrolü
   const gerilimDurumu = olcum.gerilim_l1 >= 210 && olcum.gerilim_l1 <= 240;
   const frekansDurumu = olcum.frekans >= 49.5 && olcum.frekans <= 50.5;
   const gucFaktoruDurumu = olcum.guc_faktoru >= 0.85;
@@ -179,7 +179,7 @@ const OsosCanliIzleme = () => {
       {/* Header */}
       <div className="flex items-center justify-between bg-white p-6 rounded-xl shadow-sm">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">?? OSOS Canlı ızleme</h1>
+          <h1 className="text-3xl font-bold text-gray-800">📊 OSOS Canlı İzleme</h1>
           <p className="text-gray-600 mt-1">
             {olcum.fabrika_adi || 'OSOS Sayaç'} - 
             Son güncelleme: {new Date(olcum.created_at).toLocaleString('tr-TR')}
@@ -344,11 +344,11 @@ const OsosCanliIzleme = () => {
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0 mt-1" />
             <div>
-              <h3 className="text-lg font-bold text-orange-800 mb-2">?? Uyarılar</h3>
+              <h3 className="text-lg font-bold text-orange-800 mb-2">⚠️ Uyarılar</h3>
               <ul className="space-y-1 text-orange-700">
                 {!gerilimDurumu && <li>ı Gerilim normal aralışın dışında (Beklenen: 210-240V)</li>}
                 {!frekansDurumu && <li>ı Frekans normal aralışın dışında (Beklenen: 49.5-50.5Hz)</li>}
-                {!gucFaktoruDurumu && <li>ı Güç faktörü dıık (Beklenen: &gt;0.85), kompanzasyon önerilir</li>}
+                {!gucFaktoruDurumu && <li>⚠️ Güç faktörü düşük (Beklenen: &gt;0.85), kompanzasyon önerilir</li>}
               </ul>
             </div>
           </div>

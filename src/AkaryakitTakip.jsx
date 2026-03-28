@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
-import faturaLogo from '../public/fatura_logo.png';
+const faturaLogo = '/fatura_logo.png';
 
 export default function AkaryakitTakip() {
   const [kayitlar, setKayitlar] = useState([]);

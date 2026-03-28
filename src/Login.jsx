@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './firebase';
-import { LogIn, Mail, Lock, AlertCircle, UserPlus } from 'lucide-react';
+import { LogIn, Mail, Lock, AlertCircle, UserPlus, Zap } from 'lucide-react';
 
 const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
   const [formData, setFormData] = useState({
@@ -40,8 +40,8 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
         
         // Kullanıcı onaylı mı kontrol et
         if (!userData.approved) {
-          setError('Hesabınız henız onaylanmamı. Lütfen admin onayını bekleyin.');
-          await auth.signOut(); // Onaysız kullanıcıyı ıkı yaptır
+          setError('Hesabınız henüz onaylanmamış. Lütfen admin onayını bekleyin.');
+          await auth.signOut(); // Onaysız kullanıcıyı çıkış yaptır
           setLoading(false);
           return;
         }
@@ -54,18 +54,18 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
       }
 
     } catch (error) {
-      console.error('Giri hatası:', error);
+      console.error('Giriş hatası:', error);
       
       if (error.code === 'auth/user-not-found') {
         setError('Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı!');
       } else if (error.code === 'auth/wrong-password') {
         setError('Hatalı şifre!');
       } else if (error.code === 'auth/invalid-email') {
-        setError('Geıersiz e-posta adresi!');
+        setError('Geçersiz e-posta adresi!');
       } else if (error.code === 'auth/invalid-credential') {
         setError('E-posta veya şifre hatalı!');
       } else {
-        setError('Giri sırasında bir hata oluıtu: ' + error.message);
+        setError('Giriş sırasında bir hata oluştu: ' + error.message);
       }
     } finally {
       setLoading(false);
@@ -76,11 +76,12 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <LogIn className="w-8 h-8 text-blue-600" />
+          <div className="mx-auto w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-4">
+            <Zap className="w-10 h-10 text-yellow-400" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800">Hoı Geldiniz</h2>
-          <p className="text-gray-600 mt-2">Hesabınıza giriş yapın</p>
+          <h1 className="text-2xl font-extrabold text-blue-700 tracking-wide mb-1">VoltGuard</h1>
+          <h2 className="text-xl font-bold text-gray-800">Hoş Geldiniz</h2>
+          <p className="text-gray-600 mt-1">Hesabınıza giriş yapın</p>
         </div>
 
         {error && (
@@ -111,7 +112,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              şifre
+              Şifre
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -135,12 +136,12 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                <span>Giri yapılıyor...</span>
+                <span>Giriş yapılıyor...</span>
               </>
             ) : (
               <>
                 <LogIn className="w-5 h-5" />
-                <span>Giri Yap</span>
+                <span>Giriş Yap</span>
               </>
             )}
           </button>

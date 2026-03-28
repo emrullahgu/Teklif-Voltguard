@@ -49,7 +49,7 @@ const AdminPanel = () => {
       setUsers(usersData);
     } catch (error) {
       console.error('Kullanıcılar yüklenirken hata:', error);
-      alert('Kullanıcılar yüklenirken hata oluıtu: ' + error.message);
+      alert('Kullanıcılar yüklenirken hata oluştu: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Onaylama hatası:', error);
-      alert('Kullanıcı onaylanırken hata oluıtu: ' + error.message);
+      alert('Kullanıcı onaylanırken hata oluştu: ' + error.message);
     }
   };
 
@@ -80,7 +80,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Silme hatası:', error);
-      alert('Kullanıcı silinirken hata oluıtu: ' + error.message);
+      alert('Kullanıcı silinirken hata oluştu: ' + error.message);
     }
   };
 
@@ -97,7 +97,7 @@ const AdminPanel = () => {
       fetchUsers();
     } catch (error) {
       console.error('Onay iptali hatası:', error);
-      alert('Onay iptal edilirken hata oluıtu: ' + error.message);
+      alert('Onay iptal edilirken hata oluştu: ' + error.message);
     }
   };
 
@@ -112,7 +112,7 @@ const AdminPanel = () => {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin Paneli</h1>
-          <p className="text-gray-600">Kullanıcı onay ve yınetim sistemi</p>
+          <p className="text-gray-600">Kullanıcı onay ve yönetim sistemi</p>
         </div>
 
         {/* Filtreler */}
@@ -185,7 +185,7 @@ const AdminPanel = () => {
                       Kayıt Tarihi
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      ılemler
+                      İşlemler
                     </th>
                   </tr>
                 </thead>

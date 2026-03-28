@@ -57,7 +57,7 @@ ALTER TABLE bordro_daily_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE bordro_expenses ENABLE ROW LEVEL SECURITY;
 
 -- 6. RLS POLıTıKALARI
--- Herkes kendi oluıturduıu verileri gırebilir/dızenleyebilir
+-- Herkes kendi oluşturduğu verileri girebilir/düzenleyebilir
 CREATE POLICY "Users can view their own employees" ON bordro_employees
   FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
 
@@ -196,7 +196,7 @@ CREATE INDEX IF NOT EXISTS idx_activity_logs_date ON activity_logs(created_at DE
 -- RLS aktifleıtir
 ALTER TABLE activity_logs ENABLE ROW LEVEL SECURITY;
 
--- RLS politikaları - Herkes kendi loglarını gırebilir
+-- RLS politikaları - Herkes kendi loglarını girebilir
 CREATE POLICY "Users can view their own logs" ON activity_logs
   FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
 

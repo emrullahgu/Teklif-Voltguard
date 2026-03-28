@@ -43,7 +43,7 @@ export const BordroWithPassword = () => {
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg font-semibold transition flex items-center space-x-2"
           >
             <span>??</span>
-            <span>ıkı Yap</span>
+            <span>Çıkış Yap</span>
           </button>
         </div>
         <BordroTakip />
@@ -82,7 +82,7 @@ export const BordroWithPassword = () => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg"
           >
-            Giri Yap
+            Giriş Yap
           </button>
         </form>
       </div>

@@ -8,7 +8,7 @@ Bu sistem **ultra maksimum veri gıvenlii** iin tasarlanmııtır. **11 KATMANLI
 
 ---
 
-## ??? 11 Katmanlı Gıvenlik Sistemi
+## ??? 11 Katmanlı Güvenlik Sistemi
 
 ### 1. ?? Puantaj Silme Tamamen Engellendi
 
@@ -34,10 +34,10 @@ Bu sistem **ultra maksimum veri gıvenlii** iin tasarlanmııtır. **11 KATMANLI
 ?? Bir gını silmek yerine "ızinli" veya "Raporlu" 
    olarak iaretleyebilirsiniz.
 
-?? Tım kayıtlar gıvenlik nedeniyle korunmaktadır.
+?? Tım kayıtlar güvenlik nedeniyle korunmaktadır.
 ```
 
-### 2. ?? Gider/Avans Silme: ıift Onay Sistemi
+### 2. ?? Gider/Avans Silme: çift Onay Sistemi
 
 **ılk Onay:**
 ```
@@ -76,7 +76,7 @@ Bu ilem GERı ALINAMAZ!
 ?? DıKKAT: Ahmet Yılmaz isimli personeli silmek ızeresiniz!
 
 ?? GıVENLıK BıLGıSı:
-ı Personel "pasif" yapılacak (gerıekten silinmeyecek)
+ı Personel "pasif" yapılacak (gerçekten silinmeyecek)
 ı Tım puantaj kayıtları VERıTABANINDA KORUNACAK
 ı Gerekirse tekrar aktif hale getirilebilir
 
@@ -149,7 +149,7 @@ fillMonthDefaults() {
 ?? 15 mevcut kayıt korundu.
 ```
 
-### 7. ?? Hata Durumlarında Gıvenlik
+### 7. ?? Hata Durumlarında Güvenlik
 
 **Veritabanı Hatası:**
 ```javascript
@@ -167,7 +167,7 @@ fillMonthDefaults() {
 ?? Tekrar denenebilir
 ```
 
-### 8. ?? LocalStorage ıift Yedekleme (YENı!)
+### 8. ?? LocalStorage çift Yedekleme (YENı!)
 
 **Her kayıt iki yere yazılıyor:**
 1. ? Supabase Veritabanı (Ana depolama)
@@ -178,7 +178,7 @@ saveDailyLog() {
   // Veritabanına kaydet
   await supabase.insert(...)
   
-  // ?? LocalStorage'a da kaydet (ıift gıvenlik)
+  // ?? LocalStorage'a da kaydet (çift güvenlik)
   saveToLocalStorage(log, key)
   
   console.log('? Hem DB hem LocalStorage'da')
@@ -187,7 +187,7 @@ saveDailyLog() {
 
 **Avantajlar:**
 - ? ıok hızlı eriim (LocalStorage)
-- ??? ıift yedekleme (DB + LocalStorage)
+- ??? çift yedekleme (DB + LocalStorage)
 - ?? Offline ıalııma desteıi
 - ?? Ekstra veri koruma katmanı
 
@@ -241,27 +241,27 @@ Yedek Tarihi: 29.01.2026 14:35:22
 Devam etmek istiyor musunuz?
 ```
 
-### 11. ?? Gıvenlik Kodu Sistemi (YENı!)
+### 11. ?? Güvenlik Kodu Sistemi (YENı!)
 
 **Silme ilemleri iin ekstra koruma:**
 
 **Gider/Avans Silme:**
 ```
-1?? ılk Onay (Tutar gısterimi)
+1?? ılk Onay (Tutar gösterimi)
    v
-2?? Gıvenlik Kodu: "SIL" yazın
+2?? Güvenlik Kodu: "SIL" yazın
    v
 3?? Son Onay
    v
 ? Silindi (3 adım onay)
 ```
 
-**Gıvenlik Kodu Ekranı:**
+**Güvenlik Kodu Ekranı:**
 ```
 ?? GıVENLıK KODU GEREKLı
 
 Avans kaydı (5.000,00 TL) silmek iin 
-gıvenlik kodunu girin:
+güvenlik kodunu girin:
 
 "SIL" yazıp ENTER'a basın
 
@@ -277,11 +277,11 @@ gıvenlik kodunu girin:
 Doıru kod: "SIL" (tırnak iaretleri olmadan)
 ```
 
-**Neden Gıvenlik Kodu?**
+**Neden Güvenlik Kodu?**
 - ?? Kazara tıklamayı engeller
 - ?? Kullanıcıyı dııınmeye zorlar
 - ?? Acele ilemleri ınler
-- ?? Ekstra gıvenlik katmanı
+- ?? Ekstra güvenlik katmanı
 
 ### 12. ?? Sayfa Kapatma Uyarısı (YENı!)
 
@@ -311,31 +311,31 @@ window.addEventListener('beforeunload', (e) => {
 
 ---
 
-## ?? Gıvenlik Seviyesi Karıılaıtırması
+## ?? Güvenlik Seviyesi Karşılaştırması
 
 | ızellik | Eski Sistem | Yeni Sistem |
 |---------|-------------|-------------|
 | Puantaj Silme | ? ızin veriliyor | ? TAMAMEN ENGELLENDı |
 | Gider Silme | ?? Tek onay | ? 3 Adım: Onay + Kod + Son Onay |
-| Personel Silme | ? Hard delete | ? Soft delete + Gıvenlik kodu |
+| Personel Silme | ? Hard delete | ? Soft delete + Güvenlik kodu |
 | Otomatik Doldurma | ? ızerine yazıyor | ? Sadece boı gınleri dolduruyor |
 | Veri Yıkleme | ?? Yarıı koıulu | ? Sıralı gıvenli yıkleme |
 | Veri Birleıtirme | ? Yok | ? Akıllı merge |
 | Silme Fonksiyonu | ? Aktif | ? Devre dııı + Uyarı |
-| **LocalStorage Yedekleme** | ? Yok | ? **Her kayıtta ıift yedek** |
+| **LocalStorage Yedekleme** | ? Yok | ? **Her kayıtta çift yedek** |
 | **Otomatik Yedekleme** | ? Yok | ? **Her 30 saniyede** |
 | **Kurtarma Modu** | ? Yok | ? **Tek tuıla geri yıkleme** |
-| **Gıvenlik Kodu** | ? Yok | ? **"SIL" kodu gerekli** |
+| **Güvenlik Kodu** | ? Yok | ? **"SIL" kodu gerekli** |
 | **Sayfa Kapatma Uyarısı** | ? Yok | ? **Kaydedilmemi veri uyarısı** |
 
 ---
 
-## ?? Gıvenlik Seviyesi Karıılaıtırması
+## ?? Güvenlik Seviyesi Karşılaştırması
 
 | ızellik | Eski Sistem | Yeni Sistem |
 |---------|-------------|-------------|
 | Puantaj Silme | ? ızin veriliyor | ? TAMAMEN ENGELLENDı |
-| Gider Silme | ?? Tek onay | ? ıift onay + Detay gısterimi |
+| Gider Silme | ?? Tek onay | ? çift onay + Detay gösterimi |
 | Personel Silme | ? Hard delete | ? Soft delete (veriler korunur) |
 | Otomatik Doldurma | ? ızerine yazıyor | ? Sadece boı gınleri dolduruyor |
 | Veri Yıkleme | ?? Yarıı koıulu | ? Sıralı gıvenli yıkleme |
@@ -357,7 +357,7 @@ window.addEventListener('beforeunload', (e) => {
 ?? Bir gını silmek yerine "ızinli" veya "Raporlu" 
    olarak iaretleyebilirsiniz.
 
-?? Tım kayıtlar gıvenlik nedeniyle korunmaktadır.
+?? Tım kayıtlar güvenlik nedeniyle korunmaktadır.
 ```  
 **Sonuı:** Veri korunur, kayıp olmaz
 
@@ -466,7 +466,7 @@ alert(`? ${filledCount} gın dolduruldu\n?? ${skippedCount} kayıt korundu`);
 - "? Mevcut kayıtlar yıklendi: X gın" yazısını ara
 - X sayısı beklediin kadar mı kontrol et
 
-**Eıer gerıekten kayıp varsa:**
+**Eıer gerçekten kayıp varsa:**
 ```sql
 -- Supabase SQL Editor'da ıalııtır
 SELECT * FROM bordro_daily_logs 
@@ -479,21 +479,21 @@ Kayıtlar veritabanında varsa, sayfa yıkleme sorunu var demektir.
 
 ---
 
-## ? Gıvenlik ızeti
+## ? Güvenlik ızeti
 
 | Katman | Koruma | Durum |
 |--------|--------|-------|
 | 1. Puantaj Silme | Tamamen engellendi | ?? AKTıF |
-| 2. Gider Silme | ıift onay sistemi | ?? AKTıF |
+| 2. Gider Silme | çift onay sistemi | ?? AKTıF |
 | 3. Personel Silme | Soft delete (veriler korunur) | ?? AKTıF |
 | 4. Otomatik Yedekleme | Her deıiiklik kaydediliyor | ?? AKTıF |
 | 5. Akıllı Yıkleme | Veri birleıtirme | ?? AKTıF |
 | 6. Otomatik Doldurma | Mevcut kayıtları korur | ?? AKTıF |
 | 7. Hata Yınetimi | Detaylı uyarılar | ?? AKTıF |
-| **8. LocalStorage Yedek** | **ıift depolama** | ?? **YENı!** |
+| **8. LocalStorage Yedek** | **çift depolama** | ?? **YENı!** |
 | **9. Periyodik Yedek** | **Her 30 saniyede** | ?? **YENı!** |
 | **10. Kurtarma Modu** | **Tek tuıla geri yıkleme** | ?? **YENı!** |
-| **11. Gıvenlik Kodu** | **"SIL" kodu** | ?? **YENı!** |
+| **11. Güvenlik Kodu** | **"SIL" kodu** | ?? **YENı!** |
 | **12. Sayfa Kapatma Uyarısı** | **Kaydedilmemi veri** | ?? **YENı!** |
 
 ---
@@ -555,7 +555,7 @@ Sol altta: ?? Son Yedek: 14:35:22
 - Senkronizasyon sorunu
 - ınceki duruma dınmek
 
-### ?? Gıvenlik Kodu
+### ?? Güvenlik Kodu
 
 **Kullanım:**
 1. Silme butonuna bas
@@ -589,7 +589,7 @@ Kaydedilmemi deıiiklikleriniz var!
 ### ? YAPILMASI GEREKENLER
 
 1. **ıalıımadııı gınler iin:** "ızinli" veya "Raporlu" iaretle
-2. **Hatalı giri iin:** Dızelt, silme
+2. **Hatalı giriş için:** Düzelt, silme
 3. **Personel ayrıldıysa:** Pasif yap (veriler korunur)
 4. **Aylık kapanıı:** "Ayı Kapat" butonunu kullan
 5. **Yedekleme:** Sistem otomatik yapıyor, ek ilem gerekmez
@@ -599,7 +599,7 @@ Kaydedilmemi deıiiklikleriniz var!
 1. ? Gınleri boı bırakma (sistem izin vermez)
 2. ? Veritabanından manuel silme
 3. ? Konsolu kapatma (hata takibi iin gerekli)
-4. ? ıift onayla silmeyi terslie alma (gerıekten sil demektir)
+4. ? çift onayla silmeyi tersine alma (gerçekten sil demektir)
 
 ---
 
@@ -645,7 +645,7 @@ CREATE TABLE bordro_employees (
 ---
 
 **Son Gıncelleme:** 29 Ocak 2026  
-**Gıvenlik Seviyesi:** ?????? **ULTRA MAKSıMUM** (12/12 Katman Aktif)  
+**Güvenlik Seviyesi:** ?????? **ULTRA MAKSıMUM** (12/12 Katman Aktif)  
 **Veri Kaybı Riski:** ?? **%0**  
 **Yedek Kopyalar:** ?????? **3 Kopya** (DB + LocalStorage + Otomatik)  
 **Durum:** ? **Tım kayıtlar TAMAMEN VE ıOK KATMANLI KORUNUYOR**

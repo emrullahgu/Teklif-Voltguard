@@ -1,8 +1,8 @@
-# ??? Bordro Veri Gıvenlik Sistemi - Veritabanı Kurulumu
+# ??? Bordro Veri Güvenlik Sistemi - Veritabanı Kurulumu
 
 ## ?? ACıL: Migration ıalııtırılması Gerekiyor!
 
-Yeni gıvenlik katmanları iin veritabanına yeni kolonlar eklenmesi gerekiyor.
+Yeni güvenlik katmanları için veritabanına yeni kolonlar eklenmesi gerekiyor.
 
 ## ?? Kurulum Adımları
 
@@ -33,7 +33,7 @@ ADD COLUMN IF NOT EXISTS last_modified_at TIMESTAMPTZ;
 ALTER TABLE bordro_daily_logs 
 ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
 
--- Mevcut kayıtlar iin created_at'i gıncelle
+-- Mevcut kayıtlar için created_at'i gıncelle
 UPDATE bordro_daily_logs 
 SET created_at = NOW() 
 WHERE created_at IS NULL;
@@ -77,7 +77,7 @@ Migration tamamlandıktan sonra:
 ## ??? Yeni ızellikler
 
 Migration'dan sonra aktif olacak ızellikler:
-- ? Her deıiiklik iin session ID kaydı
+- ? Her deıiiklik için session ID kaydı
 - ? Deıiiklik zamanı takibi
 - ? Kayıt oluıturulma zamanı
 - ? Spontan silme algılama (10 saniyede bir)

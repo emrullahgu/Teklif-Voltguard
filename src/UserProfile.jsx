@@ -41,16 +41,16 @@ const UserProfile = ({ onClose }) => {
 
       const user = users[userIndex];
 
-      // şifre değitirme kontrolı
+      // Şifre değiştirme kontrolü
       if (formData.newPassword) {
         if (!formData.currentPassword) {
           throw new Error('Mevcut şifrenizi girmeniz gerekiyor');
         }
         if (user.password !== formData.currentPassword) {
-          throw new Error('Mevcut şifre yanlı!');
+          throw new Error('Mevcut şifre yanlış!');
         }
         if (formData.newPassword !== formData.confirmPassword) {
-          throw new Error('Yeni şifreler eıleımiyor!');
+          throw new Error('Yeni şifreler eşleşmiyor!');
         }
         if (formData.newPassword.length < 6) {
           throw new Error('Yeni şifre en az 6 karakter olmalı!');
@@ -98,13 +98,13 @@ const UserProfile = ({ onClose }) => {
       const updatedUsers = users.filter(u => u.id !== currentUser.id);
       localStorage.setItem('users', JSON.stringify(updatedUsers));
       
-      // Kullanıcıyı ıkı yap
+      // Kullanıcıyı çıkış yap
       localStorage.removeItem('currentUser');
       alert('Hesabınız başarıyla silindi!');
       signOut();
       onClose();
     } catch (error) {
-      setError('Hesap silinirken bir hata oluıtu!');
+      setError('Hesap silinirken bir hata oluştu!');
     }
   };
 
@@ -164,7 +164,7 @@ const UserProfile = ({ onClose }) => {
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">E-posta adresi değitirişlemez</p>
+                <p className="text-xs text-gray-500 mt-1">E-posta adresi değiştirilemez</p>
               </div>
 
               <div>
@@ -261,7 +261,7 @@ const UserProfile = ({ onClose }) => {
 
               <div className="p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-gray-600">
-                  <strong className="text-blue-700">Not:</strong> şifre değitirmek istemiyorsanız bu alanları boş bırakabilirsiniz.
+                  <strong className="text-blue-700">Not:</strong> Şifre değiştirmek istemiyorsanız bu alanları boş bırakabilirsiniz.
                 </p>
               </div>
             </div>
@@ -290,18 +290,18 @@ const UserProfile = ({ onClose }) => {
                 onClick={onClose}
                 className="px-6 py-3 border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold rounded-lg transition duration-200"
               >
-                ıptal
+                İptal
               </button>
             </div>
           </form>
 
-          {/* Hesap Silme Bılımı */}
+          {/* Hesap Silme Bölümü */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800 mb-2 text-red-600">
-              Tehlikeli Bılge
+              Tehlikeli Bölge
             </h3>
             <p className="text-gray-600 text-sm mb-4">
-              Hesabınızı silmek geri alınamaz bir işlemdir. Tım verileriniz silinecektir.
+              Hesabınızı silmek geri alınamaz bir işlemdir. Tüm verileriniz silinecektir.
             </p>
             
             {!showDeleteConfirm ? (
@@ -316,10 +316,10 @@ const UserProfile = ({ onClose }) => {
             ) : (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                 <p className="text-red-800 font-semibold mb-3">
-                  ?? Hesabınızı silmek istediçinizden emin misiniz?
+                  ⚠️ Hesabınızı silmek istediğinizden emin misiniz?
                 </p>
                 <p className="text-red-600 text-sm mb-4">
-                  Bu işlem geri alınamaz ve tım verileriniz kalıcı olarak silinecektir.
+                  Bu işlem geri alınamaz ve tüm verileriniz kalıcı olarak silinecektir.
                 </p>
                 <div className="flex gap-2">
                   <button
@@ -335,7 +335,7 @@ const UserProfile = ({ onClose }) => {
                     onClick={() => setShowDeleteConfirm(false)}
                     className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition"
                   >
-                    ıptal
+                    İptal
                   </button>
                 </div>
               </div>

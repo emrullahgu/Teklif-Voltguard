@@ -352,7 +352,7 @@ npm run dev
 
 ## Destek ve İletişim
 
-- **Geliştirici**: KOBİNERJİ Mühendislik
+- **Geliştirici**: VoltGuard
 - **Email**: info@voltguard.com.tr
 - **Tel**: +90 545 434 67 35
 - **Adres**: Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaia/izmir

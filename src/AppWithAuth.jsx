@@ -34,7 +34,7 @@ const AuthWrapper = () => {
 
   return (
     <div>
-      {/* Kullanıcı bilgisi ve ıkı butonu */}
+      {/* Kullanıcı bilgisi ve Çıkış butonu */}
       <div className="bg-white border-b shadow-sm">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ const AuthWrapper = () => {
             className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition duration-200"
           >
             <LogOut className="w-4 h-4" />
-            <span>ıkı Yap</span>
+            <span>Çıkış Yap</span>
           </button>
         </div>
       </div>

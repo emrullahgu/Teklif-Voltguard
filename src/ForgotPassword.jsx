@@ -28,37 +28,37 @@ const ForgotPassword = ({ onBackToLogin }) => {
         return;
       }
 
-      // Geıici şifre oluıtur
+      // Geçici şifre oluştur
       const tempPassword = generateTempPassword();
 
-      // şifreyi güncelle
+      // Şifreyi güncelle
       const updatedUsers = users.map(u => 
         u.email === email ? { ...u, password: tempPassword } : u
       );
       localStorage.setItem('users', JSON.stringify(updatedUsers));
 
-      // E-posta gınder
+      // E-posta gönder
       await emailjs.send(
         'service_5l9ghli',
         'template_5xj0s46',
         {
           to_email: email,
           to_name: user.name,
-          message: `Merhaba ${user.name},\n\nYeni geıici şifreniz: ${tempPassword}\n\nGiri için: ${window.location.origin}\n\nGiri yaptıktan sonra lütfen şifrenizi değitirin.`
+          message: `Merhaba ${user.name},\n\nYeni geçici şifreniz: ${tempPassword}\n\nGiriş için: ${window.location.origin}\n\nGiriş yaptıktan sonra lütfen şifrenizi değiştirin.`
         },
         '-rEVDm1IKnRaw6jCm'
       );
 
       setSuccess(true);
       
-      // 5 saniye sonra login'e yınlendir
+      // 5 saniye sonra login'e yönlendir
       setTimeout(() => {
         onBackToLogin();
       }, 5000);
 
     } catch (error) {
-      console.error('şifre sıfırlama hatası:', error);
-      setError('şifre sıfırlama işlemi başarısız oldu. Lütfen tekrar deneyin.');
+      console.error('Şifre sıfırlama hatası:', error);
+      setError('Şifre sıfırlama işlemi başarısız oldu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);
     }
@@ -74,22 +74,22 @@ const ForgotPassword = ({ onBackToLogin }) => {
             </div>
           </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            E-posta Gınderildi!
+            E-posta Gönderildi!
           </h2>
           <p className="text-gray-600 mb-4">
-            Yeni geıici şifreniz e-posta adresinize gınderildi.
+            Yeni geçici şifreniz e-posta adresinize gönderildi.
           </p>
           <p className="text-sm text-gray-500">
             E-postanızı kontrol edin ve yeni şifrenizle giriş yapın.
           </p>
           <p className="text-sm text-gray-500 mt-2">
-            Giri sayfasına yınlendiriliyorsunuz...
+            Giriş sayfasına yönlendiriliyorsunuz...
           </p>
           <button
             onClick={onBackToLogin}
             className="mt-4 text-blue-600 hover:text-blue-700 font-semibold"
           >
-            Hemen Giri Yap ı
+            Hemen Giriş Yap →
           </button>
         </div>
       </div>
@@ -104,15 +104,15 @@ const ForgotPassword = ({ onBackToLogin }) => {
           className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6 transition"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Geri Dın</span>
+          <span>Geri Dön</span>
         </button>
 
         <div className="text-center mb-8">
           <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
             <Mail className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800">şifremi Unuttum</h2>
-          <p className="text-gray-600 mt-2">E-posta adresinize yeni şifre gındereceşiz</p>
+          <h2 className="text-3xl font-bold text-gray-800">Şifremi Unuttum</h2>
+          <p className="text-gray-600 mt-2">E-posta adresinize yeni şifre göndereceğiz</p>
         </div>
 
         {error && (
@@ -148,12 +148,12 @@ const ForgotPassword = ({ onBackToLogin }) => {
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                <span>Gınderiliyor...</span>
+                <span>Gönderiliyor...</span>
               </>
             ) : (
               <>
                 <Mail className="w-5 h-5" />
-                <span>şifre Gınder</span>
+                <span>Şifre Gönder</span>
               </>
             )}
           </button>
@@ -161,7 +161,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
 
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm text-gray-600 text-center">
-            <strong className="text-blue-700">Not:</strong> Yeni şifreniz e-posta adresinize gınderilecek. Giri yaptıktan sonra şifrenizi değitirmenizi öneririz.
+            <strong className="text-blue-700">Not:</strong> Yeni şifreniz e-posta adresinize gönderilecek. Giriş yaptıktan sonra şifrenizi değiştirmenizi öneririz.
           </p>
         </div>
       </div>

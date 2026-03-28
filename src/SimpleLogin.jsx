@@ -26,7 +26,7 @@ const SimpleLogin = ({ onSwitchToRegister, onSwitchToForgotPassword }) => {
     try {
       await signIn(formData.email, formData.password);
     } catch (error) {
-      setError(error.message || 'Giri sırasında bir hata oluıtu');
+      setError(error.message || 'Giriş sırasında bir hata oluştu');
     } finally {
       setLoading(false);
     }
@@ -104,12 +104,12 @@ const SimpleLogin = ({ onSwitchToRegister, onSwitchToForgotPassword }) => {
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                <span>Giri yapılıyor...</span>
+                <span>Giriş yapılıyor...</span>
               </>
             ) : (
               <>
                 <LogIn className="w-5 h-5" />
-                <span>Giri Yap</span>
+                <span>Giriş Yap</span>
               </>
             )}
           </button>

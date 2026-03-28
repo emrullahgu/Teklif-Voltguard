@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
             email: ADMIN_EMAIL,
             password: ADMIN_PASSWORD,
             name: 'Admin',
-            company: 'Kob Enerji',
+            company: 'VoltGuard',
             approved: true,
             role: 'admin'
           }]);

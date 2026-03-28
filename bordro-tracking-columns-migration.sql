@@ -1,5 +1,5 @@
 -- Bordro Daily Logs tablosuna takip kolonları ekleme
--- Bu migration, veri gıvenlik sistemi iin gerekli alanları ekler
+-- Bu migration, veri güvenlik sistemi için gerekli alanları ekler
 
 -- 1. Session takip alanı (kim deıitirdi)
 ALTER TABLE bordro_daily_logs 
@@ -13,7 +13,7 @@ ADD COLUMN IF NOT EXISTS last_modified_at TIMESTAMPTZ;
 ALTER TABLE bordro_daily_logs 
 ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
 
--- 4. Mevcut kayıtlar iin created_at'i gıncelle
+-- 4. Mevcut kayıtlar için created_at'i gıncelle
 UPDATE bordro_daily_logs 
 SET created_at = NOW() 
 WHERE created_at IS NULL;

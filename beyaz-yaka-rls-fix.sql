@@ -1,4 +1,4 @@
--- BEYAZ YAKA BORDRO - RLS POLıTıKALARI DıZELTMESı
+-- BEYAZ YAKA BORDRO - RLS POLİTİKALARI DÜZELTMESİ
 -- Tım adminlerin birbirlerinin kayıtlarını gırebilmesi iin
 -- Bu dosyayı Supabase SQL Editor'da ıalııtırın
 

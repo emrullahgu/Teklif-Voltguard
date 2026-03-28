@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
             const data = userDoc.data();
             setUserData(data);
             
-            // Eıer kullanıcı onaylı değilse ıkı yap
+            // Eğer kullanıcı onaylı değilse çıkış yap
             if (!data.approved) {
               await firebaseSignOut(auth);
               setCurrentUser(null);
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(null);
       setUserData(null);
     } catch (error) {
-      console.error('ıkı hatası:', error);
+      console.error('Çıkış hatası:', error);
     }
   };
 

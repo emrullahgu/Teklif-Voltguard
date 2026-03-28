@@ -4,7 +4,7 @@ import { supabase } from './supabaseClient';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import faturaLogo from '../public/fatura_logo.png';
+const faturaLogo = '/fatura_logo.png';
 
 export default function IsTakip() {
   const [activeTab, setActiveTab] = useState('kayitlar'); // 'kayitlar', 'calisanlar', 'lokasyonlar', 'malzemeler'
@@ -1098,7 +1098,7 @@ export default function IsTakip() {
 
                 {/* Alt bilgi */}
                 <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '2px solid #e5e7eb', fontSize: '10px', color: '#666' }}>
-                  <p><strong>KONERJİ Teklif Sistemi</strong> - İş Takip Raporu</p>
+                  <p><strong>VoltGuard Teklif Sistemi</strong> - İş Takip Raporu</p>
                   <p>voltguard.com.tr | info@voltguard.com.tr</p>
                 </div>
               </div>

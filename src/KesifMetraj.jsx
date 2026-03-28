@@ -1071,7 +1071,7 @@ const KesifMetraj = ({ onCustomerUpdate, onNavigateToPreview }) => {
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(60, 60, 60);
-    const odemeText = "Isbu teklif bedeli; %50 siparis onayi ile birlikte avans (pesin), kalan %50 bakiye is tesliminde vadesiz (pesin) olarak tahsil edilecek sekilde hesaplanmistir.";
+    const odemeText = "Isbu teklif bedeli; %50 sipariş onayı ile birlikte avans (peşin), kalan %50 bakiye iş tesliminde vadesiz (peşin) olarak tahsil edilecek şekilde hesaplanmıştır.";
     doc.text(odemeText, 20, y, { maxWidth: 170 });
     y += 15;
     
