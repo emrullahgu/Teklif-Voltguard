@@ -971,7 +971,7 @@ export default function BordroTakip() {
     try {
       console.log('🗑️ Veritabanından siliniyor (adminSupabase ile):', id);
       
-      // 🔐 Admin client kullan (service_role key ile - Trigger bypass)
+      // 🔐 Yetkili client kullan (RLS/policy tarafında izinli işlem)
       const { error } = await adminSupabase
         .from('bordro_expenses')
         .delete()
