@@ -1,9 +1,14 @@
 import { Component } from 'react';
 
+// RetryWrapper forces full remount of children when its key changes
+function RetryWrapper({ children }) {
+  return children;
+}
+
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
+    this.state = { hasError: false, error: null, errorInfo: null, retryKey: 0 };
   }
 
   static getDerivedStateFromError(error) {
@@ -16,7 +21,13 @@ class ErrorBoundary extends Component {
   }
 
   handleReset = () => {
-    this.setState({ hasError: false, error: null, errorInfo: null });
+    // Incrementing retryKey causes RetryWrapper to remount, which remounts all children
+    this.setState((prev) => ({
+      hasError: false,
+      error: null,
+      errorInfo: null,
+      retryKey: prev.retryKey + 1,
+    }));
   };
 
   render() {
@@ -63,8 +74,13 @@ class ErrorBoundary extends Component {
       );
     }
 
-    return this.props.children;
+    return (
+      <RetryWrapper key={this.state.retryKey}>
+        {this.props.children}
+      </RetryWrapper>
+    );
   }
 }
 
 export default ErrorBoundary;
+

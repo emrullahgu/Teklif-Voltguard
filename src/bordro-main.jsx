@@ -19,7 +19,11 @@ export const BordroWithPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const bordroPassword = import.meta.env.VITE_BORDRO_PASSWORD || '687191';
+    const bordroPassword = import.meta.env.VITE_BORDRO_PASSWORD;
+    if (!bordroPassword) {
+      setError('Sistem hatası: Bordro şifresi yapılandırılmamış.');
+      return;
+    }
     if (password === bordroPassword) {
       setIsAuthenticated(true);
       sessionStorage.setItem('bordro_authenticated', 'true');

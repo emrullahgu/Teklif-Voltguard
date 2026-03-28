@@ -58,6 +58,6 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', 'node_modules/**', 'server/**', '*.config.js'],
+    ignores: ['dist/**', 'node_modules/**', 'server/**', 'eslint.config.js', 'vite.config.js', 'postcss.config.js', 'tailwind.config.js'],
   },
 ];
