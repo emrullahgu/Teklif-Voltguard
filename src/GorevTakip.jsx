@@ -32,7 +32,7 @@ const GorevTakip = () => {
   const oncelikler = [
     { value: 'dusuk', label: 'Dıık', color: 'bg-gray-100 text-gray-800' },
     { value: 'orta', label: 'Orta', color: 'bg-blue-100 text-blue-800' },
-    { value: 'yuksek', label: 'Yıksek', color: 'bg-orange-100 text-orange-800' },
+    { value: 'yüksek', label: 'Yıksek', color: 'bg-orange-100 text-orange-800' },
     { value: 'acil', label: 'Acil', color: 'bg-red-100 text-red-800' }
   ];
 
@@ -118,8 +118,8 @@ const GorevTakip = () => {
       resetForm();
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Görev kaydedişlemedi:', error);
-      alert('Görev kaydedilirken bir hata oluıtu!');
+      console.error('Görev kaydedilemedi:', error);
+      alert('Görev kaydedilirken bir hata oluştu!');
     }
   };
 
@@ -383,7 +383,7 @@ const GorevTakip = () => {
                   value={gorevForm.baslik}
                   onChange={(e) => setGorevForm({...gorevForm, baslik: e.target.value})}
                   className="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  placeholder="Görev başlışını girin..."
+                  placeholder="Görev başlığını girin..."
                 />
               </div>
 

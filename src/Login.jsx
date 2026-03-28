@@ -40,8 +40,8 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
         
         // Kullanıcı onaylı mı kontrol et
         if (!userData.approved) {
-          setError('Hesabınız henız onaylanmamı. Lütfen admin onayını bekleyin.');
-          await auth.signOut(); // Onaysız kullanıcıyı ıkı yaptır
+          setError('Hesabınız henüz onaylanmamış. Lütfen admin onayını bekleyin.');
+          await auth.signOut(); // Onaysız kullanıcıyı çıkış yaptır
           setLoading(false);
           return;
         }
@@ -54,18 +54,18 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
       }
 
     } catch (error) {
-      console.error('Giri hatası:', error);
+      console.error('Giriş hatası:', error);
       
       if (error.code === 'auth/user-not-found') {
         setError('Bu e-posta adresiyle kayıtlı kullanıcı bulunamadı!');
       } else if (error.code === 'auth/wrong-password') {
         setError('Hatalı şifre!');
       } else if (error.code === 'auth/invalid-email') {
-        setError('Geıersiz e-posta adresi!');
+        setError('Geçersiz e-posta adresi!');
       } else if (error.code === 'auth/invalid-credential') {
         setError('E-posta veya şifre hatalı!');
       } else {
-        setError('Giri sırasında bir hata oluıtu: ' + error.message);
+        setError('Giriş sırasında bir hata oluştu: ' + error.message);
       }
     } finally {
       setLoading(false);
@@ -79,7 +79,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
           <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
             <LogIn className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-3xl font-bold text-gray-800">Hoı Geldiniz</h2>
+          <h2 className="text-3xl font-bold text-gray-800">Hoş Geldiniz</h2>
           <p className="text-gray-600 mt-2">Hesabınıza giriş yapın</p>
         </div>
 
@@ -111,7 +111,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              şifre
+              Şifre
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -122,7 +122,7 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
                 onChange={handleChange}
                 required
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="şifrenizi girin"
+                placeholder="Şifrenizi girin"
               />
             </div>
           </div>
@@ -135,12 +135,12 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
             {loading ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                <span>Giri yapılıyor...</span>
+                <span>Giriş yapılıyor...</span>
               </>
             ) : (
               <>
                 <LogIn className="w-5 h-5" />
-                <span>Giri Yap</span>
+                <span>Giriş Yap</span>
               </>
             )}
           </button>

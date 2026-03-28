@@ -415,11 +415,11 @@ const BeyazYakaBordro: React.FC = () => {
         
         // Tablo yoksa kullanıcıya aık mesaj gıster
         if (error.code === '42P01') {
-          alert('?? VERıTABANI HATASI\n\n"beyaz_yaka_employees" tablosu bulunamadı!\n\n?? ızım:\n1. Supabase Dashboard\'a gidin\n2. SQL Editor\'ı aşın\n3. beyaz-yaka-bordro-migration.sql dosyasındaki SQL\'leri çalıştürün');
+          alert('?? VERİTABANI HATASI\n\n"beyaz_yaka_employees" tablosu bulunamadı!\n\n?? Çözüm:\n1. Supabase Dashboard\'a gidin\n2. SQL Editor\'ı açın\n3. beyaz-yaka-bordro-migration.sql dosyasındaki SQL\'leri çalıştürün');
         } else if (error.code === 'PGRST116' || error.message?.includes('RLS')) {
-          alert('?? ERııM HATASI\n\nRow Level Security (RLS) politikaları hatalı!\n\n?? ızım:\n1. Supabase Dashboard • Database • Policies\n2. beyaz_yaka_employees tablosu için politikaları kontrol edin\n3. Geıici olarak RLS\'i devre dıı bırakabilirsiniz:\n\nALTER TABLE beyaz_yaka_employees DISABLE ROW LEVEL SECURITY;');
+          alert('?? ERİŞİM HATASI\n\nRow Level Security (RLS) politikaları hatalı!\n\n?? Çözüm:\n1. Supabase Dashboard • Database • Policies\n2. beyaz_yaka_employees tablosu için politikaları kontrol edin\n3. Geçici olarak RLS\'i devre dışı bırakabilirsiniz:\n\nALTER TABLE beyaz_yaka_employees DISABLE ROW LEVEL SECURITY;');
         } else {
-          alert('? çalışan listesi yüklenemedi!\n\nHata: ' + error.message + '\n\nSupabase baılantınızı kontrol edin.');
+          alert('? çalışan listesi yüklenemedi!\n\nHata: ' + error.message + '\n\nSupabase bağlantınızı kontrol edin.');
         }
         throw error;
       }
@@ -454,7 +454,7 @@ const BeyazYakaBordro: React.FC = () => {
         // Expenses bilgisini yükle
         setExpensesList(data.expenses || []);
       } else {
-        // Yeni bordro oluıtur
+        // Yeni bordro oluştur
         const employee = employees.find(e => e.id === selectedEmployeeId);
         if (employee) {
           const newPayroll = createDefaultPayroll(employee);
@@ -642,7 +642,7 @@ const BeyazYakaBordro: React.FC = () => {
 
       const updatedExpenses = [...expensesList, newExpense];
       
-      // ? ıNCE VERıTABANINA KAYDET (başarısız olursa state'e dokunma)
+      // ? ÖNCE VERİTABANINA KAYDET (başarısız olursa state'e dokunma)
       if (payrollData && payrollData.id) {
         const { error: payrollError } = await supabase
           .from('beyaz_yaka_monthly_payroll')
@@ -700,7 +700,7 @@ const BeyazYakaBordro: React.FC = () => {
     try {
       const updatedExpenses = expensesList.filter(e => e.id !== expenseId);
       
-      // ? ıNCE VERıTABANINDAN SıL (başarısız olursa state'e dokunma)
+      // ? ÖNCE VERİTABANINDAN SİL (başarısız olursa state'e dokunma)
       if (payrollData && payrollData.id) {
         const { error } = await supabase
           .from('beyaz_yaka_monthly_payroll')
@@ -831,7 +831,7 @@ const BeyazYakaBordro: React.FC = () => {
       
     } catch (error) {
       console.error('çalışan silme hatası:', error);
-      alert('çalışan silinirken bir hata oluıtu!');
+      alert('çalışan silinirken bir hata oluştu!');
     } finally {
       setLoading(false);
     }

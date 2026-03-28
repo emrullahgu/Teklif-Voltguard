@@ -592,7 +592,7 @@ const KesifMetraj = ({ onCustomerUpdate, onNavigateToPreview }) => {
 
       alert('Ürün başarıyla kaydedildi! ✅');
     } catch (error) {
-      console.error('Ürün kaydedişlemedi:', error);
+      console.error('Ürün kaydedilemedi:', error);
       alert('Ürün kaydedilirken hata oluştu: ' + error.message);
     }
   };
@@ -1071,7 +1071,7 @@ const KesifMetraj = ({ onCustomerUpdate, onNavigateToPreview }) => {
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(60, 60, 60);
-    const odemeText = "Isbu teklif bedeli; %50 siparis onayi ile birlikte avans (pesin), kalan %50 bakiye is tesliminde vadesiz (pesin) olarak tahsil edilecek sekilde hesaplanmistir.";
+    const odemeText = "İşbu teklif bedeli; %50 sipariş onayı ile birlikte avans (pesin), kalan %50 bakiye is tesliminde vadesiz (pesin) olarak tahsil edilecek şekilde hesaplanmıştır.";
     doc.text(odemeText, 20, y, { maxWidth: 170 });
     y += 15;
     

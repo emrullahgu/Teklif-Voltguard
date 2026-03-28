@@ -35,7 +35,7 @@ const callGeminiAPI = async (prompt) => {
 
 // --- Yardımcı Fonksiyonlar ve Hesaplamalar ---
 
-// TS HD 60364'e göre aıma akımı hesaplama (Yaklaık deıerler)
+// TS HD 60364'e göre aıma akımı hesaplama (Yaklaık değerler)
 const calculateIa = (In, type, deviceType = "MCB") => {
   if (deviceType === "RCD") return In; // RCD için In aslında I_delta_n'dir
   const numericIn = parseFloat(In);
@@ -62,7 +62,7 @@ const calculateLimit = (Ia, systemType) => {
   return 0;
 };
 
-// Kablo Koordinasyon Kontrolı (Ib <= In <= Iz)
+// Kablo Koordinasyon Kontrolü (Ib <= In <= Iz)
 const checkCableCoordination = (Ib, In, Iz) => {
   if (!Ib || !In || !Iz) return null;
   const valid = (parseFloat(Ib) <= parseFloat(In)) && (parseFloat(In) <= parseFloat(Iz));
@@ -120,13 +120,13 @@ export default function PeriyodikKontrol() {
     { id: 3, nokta: "Kompresır Gıvdesi", In: "25", egri: "C", Ia: "250", Ik: "500", ZxRx: "0.2", Limit: "0.92", RcdIn: "", RcdIdn: "", RcdTa: "", sonuc: "Uygun" },
   ]);
 
-  // --- Gızle Kontrol Verileri (ZPKR02) ---
+  // --- Gözle Kontrol Verileri (ZPKR02) ---
   const [visualChecks, setVisualChecks] = useState({
     fazaErisim: "Uygun",
     kabloYalitimi: "Uygun",
     kontakGevsekligi: "Uygun",
-    asiriIsinma: "Uygun",
-    kisaDevreKapasitesi: "Uygun",
+    aşırıIsinma: "Uygun",
+    kısaDevreKapasitesi: "Uygun",
     potansiyelDengeleme: "Uygun",
     rcdTesti: "Uygun",
     kabloKoordinasyonu: "Uygun",
@@ -246,7 +246,7 @@ export default function PeriyodikKontrol() {
             const updated = { ...item, [field]: value };
             if (field === 'Ib' || field === 'In' || field === 'Iz') {
                 const isValid = checkCableCoordination(updated.Ib, updated.In, updated.Iz);
-                if (isValid === false) updated.sonuc = "Uygun Değil (Kablo-ıalter Uyumsuz)";
+                if (isValid === false) updated.sonuc = "Uygun Değil (Kablo-Şalter Uyumsuz)";
                 else if (isValid === true) updated.sonuc = "Uygun";
             }
             return updated;
@@ -270,7 +270,7 @@ export default function PeriyodikKontrol() {
 
   // --- AI FEATURES ---
 
-  // Veri ızeti oluıturucu fonksiyon
+  // Veri özeti oluşturucu fonksiyon
   const getReportSummary = () => {
     const failedGrounding = groundingMeasurements.filter(m => m.sonuc !== "Uygun");
     const failedCircuits = circuitMeasurements.filter(m => m.sonuc !== "Uygun");
@@ -282,15 +282,15 @@ export default function PeriyodikKontrol() {
       ıebeke Tipi: ${commonData.sebekeTipi}
       Topraklayıcı: ${commonData.topraklayiciTipi}
       
-      -- Topraklama ılımleri --
+      -- Topraklama Ölçümleri --
       Toplam Nokta Sayısı: ${groundingMeasurements.length}
-      Hatalı Noktalar: ${failedGrounding.length > 0 ? failedGrounding.map(f => `${f.nokta} (ılılen: ${f.ZxRx}, Sınır: ${f.Limit})`).join(", ") : "Tım topraklama ılımleri uygun."}
+      Hatalı Noktalar: ${failedGrounding.length > 0 ? failedGrounding.map(f => `${f.nokta} (Ölçülen: ${f.ZxRx}, Sınır: ${f.Limit})`).join(", ") : "Tüm topraklama Ölçümleri uygun."}
       
-      -- Gızle Kontrol Eksikleri --
-      ${failedVisuals.length > 0 ? failedVisuals.map(f => f[0]).join(", ") : "Gızle kontrolde kusur bulunmadı."}
+      -- Gözle Kontrol Eksikleri --
+      ${failedVisuals.length > 0 ? failedVisuals.map(f => f[0]).join(", ") : "Gözle kontrolde kusur bulunmadı."}
       
       -- Fonksiyon Testi Hataları --
-      ${failedCircuits.length > 0 ? failedCircuits.map(f => `${f.panoAdi}/${f.linyeNo} (${f.sonuc})`).join(", ") : "Tım devreler uygun."}
+      ${failedCircuits.length > 0 ? failedCircuits.map(f => `${f.panoAdi}/${f.linyeNo} (${f.sonuc})`).join(", ") : "Tüm devreler uygun."}
     `;
   };
 
@@ -319,7 +319,7 @@ export default function PeriyodikKontrol() {
       const result = await callGeminiAPI(prompt);
       setCommonData(prev => ({ ...prev, sonucKanaat: result }));
     } catch (error) {
-      alert("AI Hatası: Rapor oluıturulamadı. Lütfen tekrar deneyin.");
+      alert("AI Hatası: Rapor oluşturulamadı. Lütfen tekrar deneyin.");
       console.error(error);
     } finally {
       setIsAiGenerating(false);
@@ -352,7 +352,7 @@ export default function PeriyodikKontrol() {
       Aktif Tab: ${activeTab === 'grounding' ? 'Topraklama (ZPKR01)' : 'Fonksiyon (ZPKR02)'}
 
       1. Topraklama için Beklenen JSON Yapısı (Array): 
-         [{ "nokta": string, "In": string (sadece sayı), "egri": string (B,C,D,TMı), "RcdIdn": string (mA deıeri, varsa), "ZxRx": string (varsa) }]
+         [{ "nokta": string, "In": string (sadece sayı), "egri": string (B,C,D,TMı), "RcdIdn": string (mA değeri, varsa), "ZxRx": string (varsa) }]
       
       2. Fonksiyon Testi için Beklenen JSON Yapısı (Array): 
          [{ "panoAdi": string, "linyeNo": string, "kabloKesit": string, "In": string, "Ib": string, "Iz": string }]
@@ -368,7 +368,7 @@ export default function PeriyodikKontrol() {
     try {
       const result = await callGeminiAPI(prompt);
       
-      // JSON Blok Kontrolı
+      // JSON Blok Kontrolü
       const jsonMatch = result.match(/<<<JSON_START>>>([\s\S]*?)<<<JSON_END>>>/);
       let replyText = result.replace(/<<<JSON_START>>>[\s\S]*?<<<JSON_END>>>/, '').trim();
 
@@ -468,7 +468,7 @@ export default function PeriyodikKontrol() {
           onClick={() => setActiveTab('visual')} 
           className={`px-4 py-2 rounded-md font-medium transition-colors ${activeTab === 'visual' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
         >
-          Gızle Kontrol Raporu (ZPKR02)
+          Gözle Kontrol Raporu (ZPKR02)
         </button>
         <button onClick={printReport} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
           <Printer size={18} /> Yazdır / PDF
@@ -551,7 +551,7 @@ export default function PeriyodikKontrol() {
         {activeTab === 'grounding' ? (
             <div className="space-y-4 max-h-[400px] overflow-y-auto">
                 <p className="text-xs text-gray-500 bg-blue-50 p-2 rounded">
-                    ıpucu: In (Akım) ve Eıri (B,C,D) girildiçinde veya RCD mA girildiçinde sınır deıerler otomatik hesaplanır.
+                    İpucu: In (Akım) ve Eıri (B,C,D) girildiğinde veya RCD mA girildiğinde sınır değerler otomatik hesaplanır.
                 </p>
                 {groundingMeasurements.map((row, idx) => (
                     <div key={row.id} className="p-3 bg-gray-50 rounded border border-gray-200 text-xs">
@@ -577,7 +577,7 @@ export default function PeriyodikKontrol() {
                         </div>
                         <div className="grid grid-cols-3 gap-2">
                             <div className="flex flex-col">
-                                <span className="text-[10px] text-gray-500">ılılen (?)</span>
+                                <span className="text-[10px] text-gray-500">Ölçülen (?)</span>
                                 <input placeholder="Zx / Rx" value={row.ZxRx || ""} onChange={(e) => handleGroundingChange(row.id, 'ZxRx', e.target.value)} className="border p-1 rounded" />
                             </div>
                              <div className="flex flex-col">
@@ -596,12 +596,12 @@ export default function PeriyodikKontrol() {
         ) : (
             <div className="space-y-4 max-h-[400px] overflow-y-auto">
                  <p className="text-xs text-gray-500 bg-blue-50 p-2 rounded">
-                    ıpucu: Ib (Yık), In (Sigorta), Iz (Kablo) deıerleri girildiçinde koordinasyon (Ib &le; In &le; Iz) otomatik kontrol edilir.
+                    İpucu: Ib (Yük), In (Sigorta), Iz (Kablo) değerleri girildiğinde koordinasyon (Ib &le; In &le; Iz) otomatik kontrol edilir.
                 </p>
                 {circuitMeasurements.map((row, idx) => (
                     <div key={row.id} className="p-3 bg-gray-50 rounded border border-gray-200 text-xs">
                         <div className="flex justify-between mb-2 font-bold text-gray-700">
-                             <span>#{idx + 1} Devre Kontrolı</span>
+                             <span>#{idx + 1} Devre Kontrolü</span>
                              <span className={row.sonuc.includes('Uygun Değil') ? 'text-red-600' : 'text-green-600'}>{row.sonuc.includes('Uygun Değil') ? 'UYGUNSUZ' : 'UYGUN'}</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 mb-2">
@@ -610,7 +610,7 @@ export default function PeriyodikKontrol() {
                         </div>
                         <div className="grid grid-cols-3 gap-2 mb-2">
                              <input placeholder="Kablo mmı" value={row.kabloKesit || ""} onChange={(e) => handleCircuitChange(row.id, 'kabloKesit', e.target.value)} className="border p-1 rounded" />
-                             <input placeholder="Ib (Yık A)" type="number" value={row.Ib || ""} onChange={(e) => handleCircuitChange(row.id, 'Ib', e.target.value)} className="border p-1 rounded" />
+                             <input placeholder="Ib (Yük A)" type="number" value={row.Ib || ""} onChange={(e) => handleCircuitChange(row.id, 'Ib', e.target.value)} className="border p-1 rounded" />
                              <input placeholder="In (Sigorta A)" type="number" value={row.In || ""} onChange={(e) => handleCircuitChange(row.id, 'In', e.target.value)} className="border p-1 rounded" />
                         </div>
                          <div className="grid grid-cols-3 gap-2 mb-2">
@@ -645,13 +645,13 @@ export default function PeriyodikKontrol() {
                       <><Sparkles size={18}/> ? AI ile Sonuı Yaz</>
                   )}
               </button>
-              <div className="text-xs text-gray-500 self-center">Verilerinizi analiz eder ve uygun bir sonuı metni oluıturur.</div>
+              <div className="text-xs text-gray-500 self-center">Verilerinizi analiz eder ve uygun bir sonuç metni oluşturur.</div>
           </div>
           <textarea 
             className="w-full h-32 p-2 border rounded-md text-sm"
             value={commonData.sonucKanaat}
             onChange={(e) => setCommonData(prev => ({ ...prev, sonucKanaat: e.target.value }))}
-            placeholder="Otomatik oluıturulan veya manuel girilen sonuı metni burada gürünecek..."
+            placeholder="Otomatik oluşturulan veya manuel girilen sonuç metni burada görünecek..."
           />
       </div>
     </div>
@@ -769,7 +769,7 @@ export default function PeriyodikKontrol() {
         <div className="mb-2 border border-black">
             <div className="bg-gray-200 font-bold p-1 border-b border-black">4. TEST DEıERLERı VE 5. KONTROL KRıTERLERı</div>
             <div className="p-1 mb-1 text-[9px]">
-                <strong>Zx:</strong> ılılen ıevrim empedansı, <strong>Zs:</strong> Sınır deıer, <strong>Ra:</strong> ılılen Toprak Direnci, <strong>Ia:</strong> Aıma Akımı
+                <strong>Zx:</strong> Ölçülen Çevrim empedansı, <strong>Zs:</strong> Sınır değer, <strong>Ra:</strong> Ölçülen Toprak Direnci, <strong>Ia:</strong> Açma Akımı
             </div>
             <table className="w-full text-center border-t border-black text-[9px]">
                 <thead>
@@ -779,7 +779,7 @@ export default function PeriyodikKontrol() {
                         <th className="border-r border-black p-1 w-10">In (A)</th>
                         <th className="border-r border-black p-1 w-10">Eıri</th>
                         <th className="border-r border-black p-1 w-12">Ia (A)</th>
-                        <th className="border-r border-black p-1 w-12 bg-yellow-50">ılılen<br/>Zx/Rx (?)</th>
+                        <th className="border-r border-black p-1 w-12 bg-yellow-50">Ölçülen<br/>Zx/Rx (?)</th>
                         <th className="border-r border-black p-1 w-12 bg-blue-50">Sınır<br/>Zs/Ra (?)</th>
                         <th className="border-r border-black p-1 w-20">RCD I?n (mA)</th>
                         <th className="border-r border-black p-1 w-12">RCD<br/>Zaman (ms)</th>
@@ -813,7 +813,7 @@ export default function PeriyodikKontrol() {
                  <div className="font-bold underline mb-1">6. KUSUR AıIKLAMALARI</div>
                  <ul className="list-disc pl-4">
                      {groundingMeasurements.filter(m => m.sonuc !== 'Uygun').map(m => (
-                         <li key={m.id}>Nokta {m.id}: Sınır deıer aıldı veya koruma elemanı uyumsuz.</li>
+                         <li key={m.id}>Nokta {m.id}: Sınır değer aıldı veya koruma elemanı uyumsuz.</li>
                      ))}
                  </ul>
              </div>
@@ -827,7 +827,7 @@ export default function PeriyodikKontrol() {
         <div className="mb-4 border border-black p-2 bg-gray-50">
             <div className="font-bold mb-2">8. SONUı VE KANAAT</div>
             <p className="text-justify mb-2 text-sm">
-                {commonData.sonucKanaat || "Periyodik kontrol tarihi itibariyle yukarıda teknik ızellikleri belirtilen AG Topraklama Tesisatı muayenesi sonrasında mevcut ıartlar altında kullanımı; (AI ile oluıturmak için butona basınız veya manuel giriniz)"}
+                {commonData.sonucKanaat || "Periyodik kontrol tarihi itibariyle yukarıda teknik özellikleri belirtilen AG Topraklama Tesisatı muayenesi sonrasında mevcut ıartlar altında kullanımı; (AI ile oluşturmak için butona basınız veya manuel giriniz)"}
             </p>
             <div className="flex justify-center gap-8 font-bold text-lg my-2">
                 <span className={groundingMeasurements.every(m => m.sonuc === 'Uygun') ? "border-2 border-green-600 p-2 text-green-700" : "text-gray-400"}>UYGUNDUR</span>
@@ -835,14 +835,14 @@ export default function PeriyodikKontrol() {
             </div>
             <p className="text-[9px] mt-2">
                 * Tespit edilen hafif kusurların bir sonraki periyodik kontrol tarihine kadar giderilmesi gereklidir.
-                ** Aır kusur durumunda tesisatın enerjilendirilmesi tehlikelidir.
+                ** Ağır kusur durumunda tesisatın enerjilendirilmesi tehlikelidir.
             </p>
         </div>
 
         {/* 9. ONAY */}
         <div className="border border-black flex">
             <div className="w-1/2 p-2 border-r border-black text-center">
-                 <div className="font-bold mb-8">Kontrolı Yapan</div>
+                 <div className="font-bold mb-8">Kontrolü Yapan</div>
                  <div>{commonData.kontrolYapanAd || "Ad Soyad Giriniz"}</div>
                  <div>{commonData.kontrolYapanUnvan}</div>
                  <div>Oda Sicil No: {commonData.kontrolYapanOdaNo}</div>
@@ -898,15 +898,15 @@ export default function PeriyodikKontrol() {
             <table className="w-full text-[9px]">
                 <tbody>
                     {[
-                        { label: "Pano ve Donanımlara Giriçin Uygunluıu", key: "fazaErisim" },
-                        { label: "Faza Erim Engeli (IP 2X) / Doırudan Dokunmaya Karı Koruma", key: "fazaErisim" },
-                        { label: "Kablo ve ıletken Renk Kodları / Tanımlamalar", key: "kabloYalitimi" },
-                        { label: "Kontak Gevçekli ve Korozyon Kontrolı", key: "kontakGevsekligi" },
-                        { label: "Aırı Yık Isınması (Termal Kontrol)", key: "asiriIsinma" },
-                        { label: "Kısa Devre Kesme Kapasitesi Uygunluıu (Icu > Ik)", key: "kisaDevreKapasitesi" },
-                        { label: "Potansiyel Dengeleme ıletkenleri", key: "potansiyelDengeleme" },
+                        { label: "Pano ve Donanımlara Girişin Uygunluğu", key: "fazaErisim" },
+                        { label: "Faza Erişim Engeli (IP 2X) / Doğrudan Dokunmaya Karşı Koruma", key: "fazaErisim" },
+                        { label: "Kablo ve İletken Renk Kodları / Tanımlamalar", key: "kabloYalitimi" },
+                        { label: "Kontak Gevşeklik ve Korozyon Kontrolü", key: "kontakGevsekligi" },
+                        { label: "Aşırı Yük Isınması (Termal Kontrol)", key: "aşırıIsinma" },
+                        { label: "Kısa Devre Kesme Kapasitesi Uygunluğu (Icu > Ik)", key: "kısaDevreKapasitesi" },
+                        { label: "Potansiyel Dengeleme İletkenleri", key: "potansiyelDengeleme" },
                         { label: "RCD Performans Testleri", key: "rcdTesti" },
-                        { label: "Kablo - ıalter Koordinasyonu (Ib < In < Iz)", key: "kabloKoordinasyonu" },
+                        { label: "Kablo - Şalter Koordinasyonu (Ib < In < Iz)", key: "kabloKoordinasyonu" },
                     ].map((item, i) => (
                         <tr key={i} className="border-b border-gray-300">
                             <td className="p-1 border-r border-gray-300 w-3/4">{item.label}</td>
@@ -926,7 +926,7 @@ export default function PeriyodikKontrol() {
                         <th className="border-r border-black p-1">No</th>
                         <th className="border-r border-black p-1">Pano / Linye</th>
                         <th className="border-r border-black p-1">Kablo (mmı)</th>
-                        <th className="border-r border-black p-1">Ib (Yık A)</th>
+                        <th className="border-r border-black p-1">Ib (Yük A)</th>
                         <th className="border-r border-black p-1">In (Sigorta A)</th>
                         <th className="border-r border-black p-1 bg-yellow-50">Iz (Kablo Akım A)</th>
                         <th className="border-r border-black p-1">Voltaj (F-N)</th>
@@ -956,7 +956,7 @@ export default function PeriyodikKontrol() {
         <div className="mb-4 border border-black p-2 bg-gray-50">
             <div className="font-bold mb-2">10. SONUı VE KANAAT</div>
             <p className="text-justify mb-2 text-sm">
-                {commonData.sonucKanaat || "Yapılan gızle kontroller ve fonksiyon testleri sonucunda, yukarıda belirtilen eksiklikler haricinde tesisatın kullanımında bir sakınca gırılmemitir/gırılmıtır. (AI ile oluıturmak için butona basınız veya manuel giriniz)"}
+                {commonData.sonucKanaat || "Yapılan gözle kontroller ve fonksiyon testleri sonucunda, yukarıda belirtilen eksiklikler hariçinde tesisatın kullanımında bir sakınca gırılmemitir/gırılmıtır. (AI ile oluşturmak için butona basınız veya manuel giriniz)"}
             </p>
              <div className="flex justify-center gap-8 font-bold text-lg my-2">
                 <span className={circuitMeasurements.every(m => !m.sonuc.includes('Uygun Değil')) ? "border-2 border-green-600 p-2 text-green-700" : "text-gray-400"}>KULLANIMI UYGUNDUR</span>
@@ -967,7 +967,7 @@ export default function PeriyodikKontrol() {
          {/* 11. ONAY */}
         <div className="border border-black flex">
             <div className="w-1/2 p-2 border-r border-black text-center">
-                 <div className="font-bold mb-8">Kontrolı Yapan</div>
+                 <div className="font-bold mb-8">Kontrolü Yapan</div>
                  <div>{commonData.kontrolYapanAd || "Ad Soyad Giriniz"}</div>
                  <div>{commonData.kontrolYapanUnvan}</div>
                  <div className="mt-4 border-t w-1/2 mx-auto pt-1">ımza</div>

@@ -26,7 +26,7 @@ import KabloFiyatData from './serer-kablo-fiyat.json';
 import HazirPaketler from './hazir-paketler.json';
 import faturaLogo from '../public/fatura_logo.png';
 
-// Fatura verilerini birleitir ve normalize et
+// Fatura verilerini birleştir ve normalize et
 const normalizedFatura1 = FaturaData.map(item => ({
   urun: item.iRiN || '',
   marka: item.MARKA || 'Genel',
@@ -44,12 +44,12 @@ const normalizedFatura2 = FaturaData2.map(item => ({
   birimFiyat: item["Birim fiyati"] || 0,
   miktar: item.Miktar || 0,
   olcu: 'Adet',
-  aciklama: item["irin/hizmet aiklamasi"] || '',
-  kdvOrani: item["KDV orani"] || 20,
+  aciklama: item["irin/hizmet açıklaması"] || '',
+  kdvOrani: item["KDV oranı"] || 20,
   kaynak: 'Fatura2'
 }));
 
-// Tim fatura verilerini birleitir
+// Tüm fatura verilerini birleştir
 const CombinedFaturaData = [...normalizedFatura1, ...normalizedFatura2];
 
 // EMO 2026 Bölgesel Azaltma Katsayilari Listesi (Sabit Veri)
@@ -86,7 +86,7 @@ const REGION_LIST = [
   { name: "Elazi", coeff: 0.75 },
   { name: "Erzincan", coeff: 0.60 },
   { name: "Erzurum (Biyüküehir)", coeff: 0.75 },
-  { name: "Eski┼şiehir (Merkez)", coeff: 1.00 },
+  { name: "Eskişehir (Merkez)", coeff: 1.00 },
   { name: "Gaziantep (Merkez)", coeff: 1.00 },
   { name: "Güçresun", coeff: 0.75 },
   { name: "Güçmihane", coeff: 0.75 },
@@ -95,9 +95,9 @@ const REGION_LIST = [
   { name: "Iidir", coeff: 0.75 },
   { name: "Isparta", coeff: 1.00 },
   { name: "istanbul", coeff: 1.00 },
-  { name: "─░zmir (Merkez il├ğeler)", coeff: 1.00 },
-  { name: "─░zmir (Alia─şa/Kemalpa┼şa/├ûdemi┼ş)", coeff: 1.00 },
-  { name: "─░zmir (Di─şer il├ğeler)", coeff: 0.75 },
+  { name: "İzmir (Merkez ilçeler)", coeff: 1.00 },
+  { name: "İzmir (Aliağa/Kemalpaşa/Ödemiş)", coeff: 1.00 },
+  { name: "İzmir (Diğer ilçeler)", coeff: 0.75 },
   { name: "K.Marai", coeff: 0.75 },
   { name: "Karabik", coeff: 0.75 },
   { name: "Karaman", coeff: 0.75 },
@@ -142,36 +142,36 @@ const REGION_LIST = [
   { name: "Dier (Varsayilan)", coeff: 1.00 }
 ];
 
-// EMO 2026 Periyodik Kontrol Fiyat Sabitleri (Kisim V - Test ve ilim Hizmetleri)
+// EMO 2026 Periyodik Kontrol Fiyat Sabitleri (Kısım V - Test ve Ölçüm Hizmetleri)
 const PERIODIC_PRICES = {
-  // YG/TM Güçzle Kontrol (Kisim V, Sira 16) - Bina Tipi 2 Hicreli Baz Alindi
+  // YG/TM Gözle Kontrol (Kısım V, Sira 16) - Bina Tipi 2 Hücreli Baz Alındı
   yg_base_limit: 400, // kVA
   yg_base_price: 53997.00,
   yg_tier1_limit: 5000, // kVA
   yg_tier1_increment: 16.37, // 401-5000 arasi arti
   yg_tier2_increment: 7.27,  // 5000 izeri arti
 
-  // AG i Tesisat (Kisim V, Sira 1.5 - 5. Sinif Yapilar)
+  // AG i Tesisat (Kısım V, Sira 1.5 - 5. Sinif Yapilar)
   ag_area_limit: 500, // m2
   ag_base_price: 42748.00,
   ag_increment: 7.89, // m2 baiçina arti
 
-  // Topraklama (Kisim V, Sira 2.2 - AG Tesisleri)
+  // Topraklama (Kısım V, Sira 2.2 - AG Tesisleri)
   topraklama_base_limit: 3, // nokta
   topraklama_base_price: 7041.00,
   topraklama_increment: 645.00, // nokta baiçina (50'ye kadar)
 
-  // Yildirimdan Korunma (Kisim V, Sira 11)
+  // Yıldırımdan Korunma (Kısım V, Sira 11)
   paratoner_base_limit: 1, // tesisat
   paratoner_base_price: 10832.00,
   paratoner_increment: 5282.00,
 
-  // RCD Testleri (Kisim V, Sira 9)
+  // RCD Testleri (Kısım V, Sira 9)
   rcd_base_limit: 3, // adet
   rcd_base_price: 6960.00,
   rcd_increment: 410.00, 
 
-  // Keif Bedeli
+  // Keşif Bedeli
   kesif_bedeli: 6500.00
 };
 
@@ -239,18 +239,18 @@ const App = () => {
     contactName: '',
     powerStr: '',
     type: 'bina', // 'bina' or 'direk'
-    region: '─░zmir (Alia─şa/Kemalpa┼şa/├ûdemi┼ş)', // Varsay─▒lan g├Âr├╝nt├╝lenen isim
+    region: 'İzmir (Aliağa/Kemalpaşa/Ödemiş)', // Varsayılan görüntülenen isim
     regionCoeff: 1.00, // Varsayilan katsayi
-    customDiscount: 70 // Kullaniciya izel İskonto
+    customDiscount: 70 // Kullanıcıya özel İskonto
   });
 
   // Default Parameters (EMO 2026)
   const [params, setParams] = useState({
-    baseFee: 8802.00,        // 400 kVA (2 hicre) Sabit
+    baseFee: 8802.00,        // 400 kVA (2 hücre) Sabit
     rate1: 5.34,             // 401-5000 kVA birim fiyat
     rate2: 4.10,             // >5000 kVA birim fiyat
     
-    // Direk Tipi / Kiik Güçler (EMO 2026 Kisim III - Madde 3.1)
+    // Direk Tipi / Kiik Güçler (EMO 2026 Kısım III - Madde 3.1)
     poleFee1: 3887.00,       // 0-50 kVA
     poleFee2: 4921.00,       // 51-160 kVA
     poleFee3: 6770.00,       // 161-400 kVA
@@ -314,7 +314,7 @@ const App = () => {
   const [productQuantity, setProductQuantity] = useState(1);
   const [showProductDropdown, setShowProductDropdown] = useState(false);
   
-  // irin Tipi: 'normal', 'kablo' veya 'hizmet'
+  // Ürün Tipi: 'normal', 'kablo' veya 'hizmet'
   const [productType, setProductType] = useState('normal');
   const [selectedCategoryForKesif, setSelectedCategoryForKesif] = useState('');
   const [selectedCableForKesif, setSelectedCableForKesif] = useState(null);
@@ -332,7 +332,7 @@ const App = () => {
   const [selectedHazirPaket, setSelectedHazirPaket] = useState(null);
   const [paketKarMarji, setPaketKarMarji] = useState(30); // %30 varsayilan kar marji
 
-  // Hizli Teklif izellikleri States
+  // Hizli Teklif özellikleri States
   const [favoriteProducts, setFavoriteProducts] = useState(() => {
     const saved = localStorage.getItem('favoriteProducts');
     return saved ? JSON.parse(saved) : [];
@@ -352,7 +352,7 @@ const App = () => {
   });
   const [showSavedQuotations, setShowSavedQuotations] = useState(false);
 
-  // Merkezi Teklif Kaydetme Sistemi - Tim Teklif Tirleri
+  // Merkezi Teklif Kaydetme Sistemi - Tüm Teklif Tirleri
   const [allSavedProposals, setAllSavedProposals] = useState({
     yg: [],
     periodic: [],
@@ -365,7 +365,7 @@ const App = () => {
   // GES Teklifi States
   const [gesForm, setGesForm] = useState({
     customerName: 'MUHAMMET BiLBiL',
-    location: 'Kemalpa┼şa / ─░ZM─░R',
+    location: 'Kemalpaşa / İZMİR',
     usdRate: 34.50,
     offerDate: new Date().toISOString().split('T')[0],
     autoPower: 25, // kW
@@ -496,7 +496,7 @@ const App = () => {
     }
   };
 
-  // Gelimi irin Filtreleme States
+  // Gelişmiş Ürün Filtreleme States
   const [markaFilter, setMarkaFilter] = useState('tumu');
   const [kategoriFilter, setKategoriFilter] = useState('tumu');
   const [kaynakFilter, setKaynakFilter] = useState('tumu'); // Yeni: Veri kaynai filtresi
@@ -504,7 +504,7 @@ const App = () => {
   const [siralama, setSiralama] = useState('alfabetik'); // 'alfabetik', 'fiyat-artan', 'fiyat-azalan', 'populer'
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
-  // irin istatistikleri ve Analizleri
+  // Ürün istatistikleri ve Analizleri
   const productStats = useMemo(() => {
     // Marka sayilari
     const markaCounts = {};
@@ -513,7 +513,7 @@ const App = () => {
       markaCounts[marka] = (markaCounts[marka] || 0) + 1;
     });
 
-    // En popiler irinler (keifte en iok kullanilanlar)
+    // En popiler Ürünler (keşifte en çok kullanilanlar)
     const urunKullanimSayilari = {};
     kesifProducts.forEach(kp => {
       urunKullanimSayilari[kp.urun] = (urunKullanimSayilari[kp.urun] || 0) + 1;
@@ -567,7 +567,7 @@ const App = () => {
     };
   }, [kesifProducts]);
 
-  // Gelimi irin Filtreleme
+  // Gelişmiş Ürün Filtreleme
   const filteredProducts = useMemo(() => {
     if (!productSearch && markaFilter === 'tumu' && kategoriFilter === 'tumu' && kaynakFilter === 'tumu') return [];
     
@@ -613,12 +613,12 @@ const App = () => {
         filtered.sort((a, b) => (b.birimFiyat || 0) - (a.birimFiyat || 0));
         break;
       case 'populer':
-        // En iok kullanilan irinleri ine ikar
-        const kullanimlar = {};
+        // En çok kullanilan Ürünleri ine ikar
+        const kullanımlar = {};
         kesifProducts.forEach(kp => {
-          kullanimlar[kp.urun] = (kullanimlar[kp.urun] || 0) + 1;
+          kullanımlar[kp.urun] = (kullanımlar[kp.urun] || 0) + 1;
         });
-        filtered.sort((a, b) => (kullanimlar[b.urun] || 0) - (kullanimlar[a.urun] || 0));
+        filtered.sort((a, b) => (kullanımlar[b.urun] || 0) - (kullanımlar[a.urun] || 0));
         break;
       default: // alfabetik
         filtered.sort((a, b) => (a.urun || '').localeCompare(b.urun || '', 'tr'));
@@ -665,7 +665,7 @@ const App = () => {
       return saved;
     } catch (error) {
       console.error('Teklif kaydetme hatasi:', error);
-      alert('? Teklif kaydedi┼şlemedi!');
+      alert('? Teklif kaydedilemedi!');
       return null;
     }
   };
@@ -706,7 +706,7 @@ const App = () => {
   };
 
   const deleteProposal = async (type, id) => {
-    if (!confirm('Bu teklifi silmek istediçinize emin misiniz?')) return;
+    if (!confirm('Bu teklifi silmek istedışınıze emin misiniz?')) return;
     
     try {
       // Supabase'den sil
@@ -771,11 +771,11 @@ const App = () => {
   // Keşif Metraj Teklifi Kaydetme (güncelleme)
   const saveKesifProposal = () => {
     if (kesifProducts.length === 0) {
-      alert('Kaydedilecek irin yok!');
+      alert('Kaydedilecek Ürün yok!');
       return;
     }
 
-    const name = prompt('Teklif adi girin:', `${kesifCustomer.name || 'Keif'} - Malzeme Teklifi`);
+    const name = prompt('Teklif adi girin:', `${kesifCustomer.name || 'Keşif'} - Malzeme Teklifi`);
     if (!name) return;
 
     const data = {
@@ -813,7 +813,7 @@ const App = () => {
   // GES Fonksiyonlari
   const loadDefaultGESPackage = () => {
     const kw = parseFloat(gesForm.autoPower) || 12;
-    const panelCount = Math.ceil((kw * 1000) / 600); // 600W panel kullanimi
+    const panelCount = Math.ceil((kw * 1000) / 600); // 600W panel kullanımi
     
     const items = [
       { brand: gesDB.panels.set_600w.brand, desc: gesDB.panels.set_600w.name, qty: panelCount, price: gesDB.panels.set_600w.price },
@@ -910,7 +910,7 @@ const App = () => {
     
     const pages = document.querySelectorAll('.ges-pdf-page');
     if (!pages || pages.length === 0) {
-      alert('ierik bulunamadi.');
+      alert('içerik bulunamadi.');
       return;
     }
     
@@ -1151,7 +1151,7 @@ const App = () => {
       }
       
       if (parts.length < 2) {
-        errors.push(`Satir ${idx + 1}: Yetersiz veri (en az irin ve Miktar gerekli)`);
+        errors.push(`Satir ${idx + 1}: Yetersiz veri (en az Ürün ve Miktar gerekli)`);
         return;
       }
       
@@ -1162,16 +1162,16 @@ const App = () => {
       const marka = parts.length >= 5 ? parts[4] : '';
       
       if (!urunAdi || urunAdi === '') {
-        errors.push(`Satir ${idx + 1}: irin adi boi`);
+        errors.push(`Satir ${idx + 1}: Ürün adi boi`);
         return;
       }
       
       if (miktar <= 0 || isNaN(miktar)) {
-        errors.push(`Satir ${idx + 1}: Geiersiz miktar (${parts[1]})`);
+        errors.push(`Satir ${idx + 1}: Geçersiz miktar (${parts[1]})`);
         return;
       }
       
-      // irini katalogda akilli ara
+      // Ürüni katalogda akilli ara
       const foundProduct = CombinedFaturaData.find(p => {
         const urunLower = p.urun?.toLowerCase() || '';
         const aramaLower = urunAdi.toLowerCase();
@@ -1218,7 +1218,7 @@ const App = () => {
 
   const handleQuickAdd = () => {
     if (!quickAddText.trim()) {
-      alert('?? Lütfen irin bilgilerini girin!');
+      alert('?? Lütfen Ürün bilgilerini girin!');
       return;
     }
     
@@ -1230,16 +1230,16 @@ const App = () => {
       setQuickAddMode(false);
       
       let message = `? HIZLI GüçRi BAiARILI!\n\n`;
-      message += `?? ${products.length} irin eklendi`;
+      message += `?? ${products.length} Ürün eklendi`;
       if (profitMargin > 0) {
         message += `\n?? %${profitMargin} kar marji uygulandi`;
       }
       if (errors.length > 0) {
-        message += `\n\n?? ${errors.length} satirda hata:\n${errors.slice(0, 5).join('\n')}`;
+        message += `\n\n?? ${errors.length} satırda hata:\n${errors.slice(0, 5).join('\n')}`;
       }
       alert(message);
     } else {
-      alert(`? Hibir irin eklenemedi!\n\n${errors.slice(0, 10).join('\n')}\n\nDoiru format:\nirin | Miktar | Fiyat\nirin, Miktar, Fiyat\nExcel'den kopyala-yapıştır`);
+      alert(`? Hiçbir Ürün eklenemedi!\n\n${errors.slice(0, 10).join('\n')}\n\nDoğru format:\nirin | Miktar | Fiyat\nirin, Miktar, Fiyat\nExcel'den kopyala-yapıştır`);
     }
   };
 
@@ -1268,7 +1268,7 @@ const App = () => {
         const jsonData = XLSX.utils.sheet_to_json(firstSheet);
 
         if (jsonData.length === 0) {
-          alert('?? Excel dosyasi boi!');
+          alert('?? Excel dosyası boi!');
           return;
         }
 
@@ -1277,7 +1277,7 @@ const App = () => {
         const columns = Object.keys(firstRow);
         
         // Situn isimleri için olası varyasyonlar
-        const urunVariants = ['irin', 'urun', 'iRiN', 'Urun Adi', 'Malzeme', 'Product', 'irin Adi'];
+        const urunVariants = ['Ürün', 'urun', 'iRiN', 'Urun Adi', 'Malzeme', 'Product', 'Ürün Adi'];
         const miktarVariants = ['Miktar', 'miktar', 'MIKTAR', 'Quantity', 'Adet', 'Amount'];
         const fiyatVariants = ['Fiyat', 'fiyat', 'FiYAT', 'Birim Fiyat', 'BirimFiyat', 'Price', 'Tutar'];
         const birimVariants = ['Birim', 'birim', 'BiRiM', 'Unit', 'ili', 'olcu'];
@@ -1300,7 +1300,7 @@ const App = () => {
         const markaCol = findColumn(markaVariants);
         
         if (!urunCol) {
-          alert('? Excel\'de "irin" situnu bulunamadi!\n\nGeierli situn isimleri: ' + urunVariants.join(', '));
+          alert('? Excel\'de "Ürün" situnu bulunamadi!\n\nGeierli situn isimleri: ' + urunVariants.join(', '));
           return;
         }
 
@@ -1319,13 +1319,13 @@ const App = () => {
           // Validasyon
           if (!urunAdi || urunAdi.trim() === '') {
             skippedCount++;
-            errors.push(`Satir ${idx + 2}: irin adi boi`);
+            errors.push(`Satir ${idx + 2}: Ürün adi boi`);
             return;
           }
 
           if (miktar <= 0 || isNaN(miktar)) {
             skippedCount++;
-            errors.push(`Satir ${idx + 2}: Geiersiz miktar (${miktar})`);
+            errors.push(`Satir ${idx + 2}: Geçersiz miktar (${miktar})`);
             return;
           }
 
@@ -1377,7 +1377,7 @@ const App = () => {
           
           let message = `? EXCEL iMPORT BAiARILI!\n\n`;
           message += `?? Toplam Satir: ${jsonData.length}\n`;
-          message += `? Başarılı: ${successCount} irin\n`;
+          message += `? Başarılı: ${successCount} Ürün\n`;
           if (skippedCount > 0) {
             message += `?? Atlanan: ${skippedCount} satir\n`;
           }
@@ -1392,11 +1392,11 @@ const App = () => {
           
           alert(message);
         } else {
-          alert(`? Hibir irin eklenemedi!\n\n${errors.slice(0, 5).join('\n')}`);
+          alert(`? Hiçbir Ürün eklenemedi!\n\n${errors.slice(0, 5).join('\n')}`);
         }
       } catch (error) {
         console.error('Excel import hatasi:', error);
-        alert(`? Excel dosyasi okunamadi!\n\nHata: ${error.message}\n\nLütfen dosya formatini kontrol edin:\n- ilk satirda bailiklar olmali\n- "irin", "Miktar", "Fiyat" situnlari gerekli`);
+        alert(`? Excel dosyası okunamadı!\n\nHata: ${error.message}\n\nLütfen dosya formatını kontrol edin:\n- ilk satırda başlıklar olmalı\n- "Ürün", "Miktar", "Fiyat" sütunları gerekli`);
       }
     };
     reader.readAsArrayBuffer(file);
@@ -1422,21 +1422,21 @@ const App = () => {
 
   // Kaydedilmi Teklifi Sil
   const deleteSavedQuotation = (id) => {
-    if (!confirm('Bu teklifi silmek istediçinize emin misiniz?')) return;
+    if (!confirm('Bu teklifi silmek istedışınıze emin misiniz?')) return;
     const updated = savedQuotations.filter(q => q.id !== id);
     setSavedQuotations(updated);
     localStorage.setItem('savedQuotations', JSON.stringify(updated));
   };
 
-  // Tum fiyatlara kar marji uygula
+  // Tüm fiyatlara kar marji uygula
   const applyProfitMarginToAll = () => {
     if (kesifProducts.length === 0) {
-      alert('?? Listede irin yok!');
+      alert('?? Listede Ürün yok!');
       return;
     }
     
     const margin = prompt(
-      `?? KAR MARJI UYGULA\n\niu anda ${kesifProducts.length} irin listenizde.\n\nUygulamak istediçiniz kar marjini % olarak girin:`,
+      `?? KAR MARJI UYGULA\n\niu anda ${kesifProducts.length} Ürün listenizde.\n\nUygulamak istedışınız kar marjini % olarak girin:`,
       profitMargin.toString()
     );
     
@@ -1444,12 +1444,12 @@ const App = () => {
     
     const marginValue = parseFloat(margin);
     if (isNaN(marginValue)) {
-      alert('? Geiersiz kar marji deieri!');
+      alert('? Geçersiz kar marji değeri!');
       return;
     }
     
     if (marginValue < 0) {
-      if (!confirm(`?? Negatif kar marji (%${marginValue}) uygulamak istediçinizden emin misiniz? Bu fiyatlari diirecektir.`)) {
+      if (!confirm(`?? Negatif kar marji (%${marginValue}) uygulamak istedışınızden emin misiniz? Bu fiyatlari diirecektir.`)) {
         return;
       }
     }
@@ -1475,7 +1475,7 @@ const App = () => {
     
     alert(
       `? KAR MARJI UYGULANDILAR!\n\n` +
-      `?? irin Sayisi: ${kesifProducts.length}\n` +
+      `?? Ürün Sayisi: ${kesifProducts.length}\n` +
       `?? Uygulanan Marj: %${marginValue}\n` +
       `?? Toplam Artı: ${totalIncrease.toFixed(2)} TL`
     );
@@ -1484,9 +1484,9 @@ const App = () => {
   // Keşif Metraj Fonksiyonlari - iYiLEiTiRiLMi
   const addProductToKesif = () => {
     if (productType === 'normal') {
-      // Normal irin ekleme
+      // Normal Ürün ekleme
       if (!selectedProduct || productQuantity <= 0) {
-        alert('?? Lütfen bir irin seiçin ve miktar girin!');
+        alert('?? Lütfen bir Ürün seiçin ve miktar girin!');
         return;
       }
       
@@ -1523,7 +1523,7 @@ const App = () => {
       // Baiari mesaji
       const toast = document.createElement('div');
       toast.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
-      toast.textContent = '? irin eklendi!';
+      toast.textContent = '? Ürün eklendi!';
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 2000);
     } else if (productType === 'kablo') {
@@ -1615,11 +1615,11 @@ const App = () => {
   // Toplu duzenleme
   const applyBulkPriceAdjustment = (percentage) => {
     if (percentage === 0) {
-      alert('?? Lütfen bir yizde deieri girin!');
+      alert('?? Lütfen bir yüzde değeri girin!');
       return;
     }
     
-    if (!confirm(`Tim irinlere %${percentage} ${percentage > 0 ? 'zam' : 'indirim'} uygulamak istediçinizden emin misiniz?`)) {
+    if (!confirm(`Tüm Ürünlere %${percentage} ${percentage > 0 ? 'zam' : 'indirim'} uygulamak istedışınızden emin misiniz?`)) {
       return;
     }
     
@@ -1633,24 +1633,24 @@ const App = () => {
       };
     });
     setKesifProducts(updated);
-    alert(`? ${kesifProducts.length} irine %${percentage} ayarlama uygulandi!`);
+    alert(`? ${kesifProducts.length} Ürüne %${percentage} ayarlama uygulandi!`);
   };
   
   // TOPLU SiLME
   const removeSelectedProducts = (selectedIds) => {
     if (selectedIds.length === 0) {
-      alert('?? Lütfen silinecek irinleri seiçin!');
+      alert('?? Lütfen silinecek Ürünleri seiçin!');
       return;
     }
     
-    if (!confirm(`${selectedIds.length} irini silmek istediçinizden emin misiniz?`)) {
+    if (!confirm(`${selectedIds.length} Ürüni silmek istedışınızden emin misiniz?`)) {
       return;
     }
     
     const updated = kesifProducts.filter(p => !selectedIds.includes(p.id));
     const reNumbered = updated.map((p, idx) => ({ ...p, sira: idx + 1 }));
     setKesifProducts(reNumbered);
-    alert(`? ${selectedIds.length} irin silindi!`);
+    alert(`? ${selectedIds.length} Ürün silindi!`);
   };
   
   // TOPLU iOiALTMA
@@ -1665,7 +1665,7 @@ const App = () => {
     };
     
     setKesifProducts([...kesifProducts, newProduct]);
-    alert('? irin kopyalandi!');
+    alert('? Ürün kopyalandi!');
   };
 
   // Hazir Paket Ekleme Fonksiyonu
@@ -1679,7 +1679,7 @@ const App = () => {
     const newProducts = [];
 
     paket.urunler.forEach((paketUrun) => {
-      // CombinedFaturaData'dan irini ara
+      // CombinedFaturaData'dan Ürüni ara
       const foundProduct = CombinedFaturaData.find(fp => 
         fp.urun?.toLowerCase().includes(paketUrun.urun.toLowerCase()) ||
         paketUrun.urun.toLowerCase().includes(fp.urun?.toLowerCase())
@@ -1706,7 +1706,7 @@ const App = () => {
         newProducts.push(newProduct);
         addedCount++;
       } else {
-        // irin bulunamadiysa, varsayilan fiyat ile ekle
+        // Ürün bulunamadiysa, varsayilan fiyat ile ekle
         const defaultPrice = 100 * (1 + paketKarMarji / 100);
         const newProduct = {
           id: Date.now() + addedCount,
@@ -1729,7 +1729,7 @@ const App = () => {
     setKesifProducts([...kesifProducts, ...newProducts]);
     setShowHazirPaketModal(false);
     setSelectedHazirPaket(null);
-    alert(`${paket.ad} paketi eklendi! ${addedCount} irin listeye eklendi.`);
+    alert(`${paket.ad} paketi eklendi! ${addedCount} Ürün listeye eklendi.`);
   };
 
   const calculateKesifTotals = () => {
@@ -1785,7 +1785,7 @@ const App = () => {
         if (response.status === 429) {
           throw new Error("API rate limit aildi. Lütfen birkai dakika bekleyin.");
         } else if (response.status === 401) {
-          throw new Error("API key geiersiz. Lütfen ayarlari kontrol edin.");
+          throw new Error("API key geçersiz. Lütfen ayarlari kontrol edin.");
         } else if (response.status === 404) {
           throw new Error("API endpoint bulunamadi. Model adi güncel olmayabilir.");
         } else {
@@ -1804,13 +1804,13 @@ const App = () => {
     } catch (error) {
       console.error("Gemini API Error:", error);
       if (error.message) {
-        throw error; // izel hata mesajini koru
+        throw error; // özel hata mesajini koru
       }
-      throw new Error("API bailantisi kurulamadi. internet bailantinizi kontrol edin.");
+      throw new Error("API bağlantısı kurulamadi. internet bağlantınızı kontrol edin.");
     }
   };
 
-  // AI Keif Sihirbazi - Proje tanimindan otomatik irin listesi oluşturma
+  // AI Keşif Sihirbazi - Proje tanimindan otomatik Ürün listesi oluşturma
   const handleAiWizard = async () => {
     if (!aiWizardPrompt.trim()) {
       setAiError("Lütfen proje tanimi girin!");
@@ -1821,22 +1821,22 @@ const App = () => {
     setAiError(null);
     
     try {
-      // Katalog verilerini hazirla - daha ki┼şik irnek
+      // Katalog verilerini hazırla - daha kişik irnek
       const catalogSample = CombinedFaturaData.slice(0, 200).map(d => ({
         urun: d.urun,
         marka: d.marka,
         olcu: d.olcu
       }));
       
-      const systemPrompt = `Sen uzman bir elektrik mihendisisin. Kullanicinin proje tanimina göre gerekli malzeme listesi oluştur.
+      const systemPrompt = `Sen uzman bir elektrik mühendisisin. Kullanıcının proje tanımına göre gerekli malzeme listesi oluştur.
 
 Katalog irnekleri: ${JSON.stringify(catalogSample.slice(0, 50))}
 
 KURALLAR:
-1. Katalogdaki irin isimlerine benzer irinler iner (NYY, NYM, NVV, kablo, sigorta, priz, anahtar vb.)
-2. Gerieki┼şi miktarlar tahmin et
+1. Katalogdaki Ürün isimlerine benzer Ürünler iner (NYY, NYM, NVV, kablo, sigorta, priz, anahtar vb.)
+2. Geriekişi miktarlar tahmin et
 3. SADECE bu JSON formatinda yanit ver: [{"urun": "3x2.5 NYY", "miktar": 50, "birim": "metre", "aciklama": "Ana hat"}]
-4. 5-15 irin iner
+4. 5-15 Ürün iner
 5. Yanit baika bir iey iermemeli, sadece JSON array`;
 
       console.log("AI Wizard - Prompt gönderiliyor...");
@@ -1856,7 +1856,7 @@ KURALLAR:
       }
 
       if (!Array.isArray(suggestedItems)) {
-        throw new Error("AI geiersiz format dindirdi");
+        throw new Error("AI geçersiz format dindirdi");
       }
       
       let addedCount = 0;
@@ -1895,9 +1895,9 @@ KURALLAR:
         setKesifProducts(prev => [...prev, ...newProducts]);
         setAiWizardPrompt("");
         setIsAiWizardOpen(false);
-        alert(`? ${addedCount} irin AI Sihirbazi tarafından eklendi!`);
+        alert(`? ${addedCount} Ürün AI Sihirbazi tarafından eklendi!`);
       } else {
-        setAiError("Katalogda eileien irin bulunamadi. Daha genel terimler kullanin.");
+        setAiError("Katalogda eileien Ürün bulunamadi. Daha genel terimler kullanin.");
       }
       
     } catch (error) {
@@ -1911,7 +1911,7 @@ KURALLAR:
   // AI Teklif Mektubu Oluiturucu
   const handleGenerateProposalEmail = async () => {
     if (kesifProducts.length === 0) {
-      alert("Lütfen ince keif listesine irin ekleyin!");
+      alert("Lütfen ince keşif listesine Ürün ekleyin!");
       return;
     }
     
@@ -1926,24 +1926,24 @@ KURALLAR:
       ).join("\n");
       
       const systemPrompt = `
-        Sen profesyonel bir elektrik mihendisisin ve miterilere teklif sunuyorsun.
+        Sen profesyonel bir elektrik mühendisisin ve miterilere teklif sunuyorsun.
         Aşağıdaki bilgilere göre profesyonel, ikna edici ve detaylı bir teklif mektubu oluştur.
         
         KURALLLAR:
         1. Resmi ve profesyonel bir dil kullan
-        2. Firma adi: ${kesifCustomer.name || 'Deierli Miterimiz'}
+        2. Firma adi: ${kesifCustomer.name || 'Deierli Müşterimiz'}
         3. Mail konusu ile baila
         4. Malzeme listesini tablo formatinda gister
         5. Fiyat detaylarini aikla (ara toplam, İskonto, KDV, genel toplam)
         6. Geçerlilik süresi, ödeme koşulları ve garanti bilgilerini ekle
-        7. Tirkie yaz
+        7. Türkçe yaz
       `;
       
       const userPrompt = `
         FiRMA BiLGüçLERi:
-        - Firma Adi: ${kesifCustomer.name || 'Belirtilmemi┼ş'}
-        - Adres: ${kesifCustomer.address || 'Belirtilmemi┼ş'}
-        - ileti┼şim: ${kesifCustomer.contactPerson || 'Belirtilmemi┼ş'}
+        - Firma Adi: ${kesifCustomer.name || 'Belirtilmemiş'}
+        - Adres: ${kesifCustomer.address || 'Belirtilmemiş'}
+        - iletişim: ${kesifCustomer.contactPerson || 'Belirtilmemiş'}
         
         MALZEME LiSTESi:
         ${productList}
@@ -1963,7 +1963,7 @@ KURALLAR:
       
     } catch (error) {
       console.error(error);
-      setGeneratedEmail("? E-posta oluşturulamadi. Lütfen tekrar deneyin.");
+      setGeneratedEmail("? E-posta oluşturulamadı. Lütfen tekrar deneyin.");
     } finally {
       setAiLoading(false);
     }
@@ -1972,7 +1972,7 @@ KURALLAR:
   const handleKesifSubmit = (e) => {
     e.preventDefault();
     if (kesifProducts.length === 0) {
-      alert('Lütfen en az bir irin ekleyin!');
+      alert('Lütfen en az bir Ürün ekleyin!');
       return;
     }
     setSelectedCompany({
@@ -1987,7 +1987,7 @@ KURALLAR:
 
   // Periyodik Kontrol Hesaplama Motoru
   const calculatePeriodicPrices = () => {
-    // 1. YG/TM Kontroli
+    // 1. YG/TM Kontrolü
     let ygTotal = 0;
     let ygDesc = "";
     if (periodicInputs.trafoGucu <= PERIODIC_PRICES.yg_base_limit) {
@@ -2080,7 +2080,7 @@ KURALLAR:
   const handleCurrencyChange = (newCurrency) => {
     if (newCurrency === previousCurrency) return;
     
-    // Diniim oranini hesapla
+    // Diniim oranıni hesapla
     let conversionRate = 1;
     if (previousCurrency === 'TRY' && newCurrency === 'USD') {
       conversionRate = 1 / exchangeRates.USD;
@@ -2096,7 +2096,7 @@ KURALLAR:
       conversionRate = exchangeRates.EUR / exchangeRates.USD;
     }
     
-    // Tim params fiyatlarini dinitir
+    // Tüm params fiyatlarini dinitir
     setParams(prev => ({
       ...prev,
       baseFee: parseFloat((prev.baseFee * conversionRate).toFixed(2)),
@@ -2142,7 +2142,7 @@ KURALLAR:
       
       // EMO 2026 Hesaplama Mantii
       if (companyData.type === 'direk' || (totalKVA < 400 && companyData.type !== 'bina')) {
-          // Direk Tipi Trafo Merkezleri (EMO 2026 Kisim III - Madde 3.1)
+          // Direk Tipi Trafo Merkezleri (EMO 2026 Kısım III - Madde 3.1)
           if (totalKVA <= 50) {
               nominalFee = params.poleFee1;
           } else if (totalKVA <= 160) {
@@ -2154,9 +2154,9 @@ KURALLAR:
               nominalFee = params.baseFee + ((totalKVA - 400) * params.rate1);
           }
       } else {
-          // Bina Tipi Trafo Merkezleri (EMO 2026 - Kisim III - Madde 5.2)
+          // Bina Tipi Trafo Merkezleri (EMO 2026 - Kısım III - Madde 5.2)
           if (totalKVA <= 400) {
-             // Madde 5.2.1: ilk 400 kVA (2 hicre)
+             // Madde 5.2.1: ilk 400 kVA (2 hücre)
              nominalFee = params.baseFee;
           } else if (totalKVA <= 5000) {
              // Madde 5.2.2: 401 kVA - 5 MVA arasi artan her kVA için
@@ -2205,7 +2205,7 @@ KURALLAR:
     
     const pages = document.querySelectorAll('.pdf-page');
     if (!pages || pages.length === 0) {
-      alert('ierik bulunamadi.');
+      alert('içerik bulunamadi.');
       return;
     }
     
@@ -2301,7 +2301,7 @@ KURALLAR:
         // Güçrseli PDF'e ekle
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, '', 'FAST');
         
-        // Logoyu yiksek kalitede ekle (sol ist ki┼şie, aspect ratio korunarak)
+        // Logoyu yüksek kalitede ekle (sol ist kişie, aspect ratio korunarak)
         pdf.addImage(logoInfo.data, 'PNG', 10, 10, logoWidth, logoHeight, '', 'FAST');
 
         // Logolari tekrar gister
@@ -2418,7 +2418,7 @@ KURALLAR:
               spacing: { after: 400 }
             }),
             
-            // 1. Bilim: Tesis Bilgileri
+            // 1. Bölüm: Tesis Bilgileri
             new Paragraph({
               text: "1. Tesis Bilgileri ve Toplam Kurulu Güç",
               heading: HeadingLevel.HEADING_2,
@@ -2437,7 +2437,7 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: `i Bölge/Katsayi: ${selectedCompany.region || 'Belirtilmemi┼ş'} (x${(selectedCompany.regionCoeff || 1.0).toFixed(2)})`,
+              text: `i Bölge/Katsayi: ${selectedCompany.region || 'Belirtilmemiş'} (x${(selectedCompany.regionCoeff || 1.0).toFixed(2)})`,
               spacing: { after: 100 }
             }),
             new Paragraph({
@@ -2445,7 +2445,7 @@ KURALLAR:
               spacing: { after: 400 }
             }),
             
-            // 2. Bilim: Hesaplama
+            // 2. Bölüm: Hesaplama
             new Paragraph({
               text: `2. EMO ${params.year} Yılı Aylık Asgari icret Hesaplamasi`,
               heading: HeadingLevel.HEADING_2,
@@ -2486,14 +2486,14 @@ KURALLAR:
             
             new Paragraph({ text: "", spacing: { after: 400 } }),
             
-            // 3. Bilim: İskonto ve Teklif
+            // 3. Bölüm: İskonto ve Teklif
             new Paragraph({
               text: "3. Uygulanan İskonto ve Nihai Teklif",
               heading: HeadingLevel.HEADING_2,
               spacing: { before: 200, after: 200 }
             }),
             new Paragraph({
-              text: `Piyasa koşullarına uyum sailamak amaciyla, işletmenize izel %${selectedCompany.appliedDiscountRate || params.discountRate} İskonto uygulanmitir.`,
+              text: `Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel %${selectedCompany.appliedDiscountRate || params.discountRate} İskonto uygulanmıştır.`,
               spacing: { after: 300 }
             }),
             
@@ -2529,23 +2529,23 @@ KURALLAR:
               spacing: { before: 400, after: 200 }
             }),
             new Paragraph({
-              text: `1. Bu teklif ${params.year} yılı boyunca geçerli olmak üzere aylik periyotlarla hazırlanmıştır.`,
+              text: `1. Bu teklif ${params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.`,
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "2. işletme sorumluluğu hizmetinin SMM tarafından istlenilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.",
+              text: "2. işletme sorumluluğu hizmetinin SMM tarafından işletilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.",
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "3. Enerji tiketüminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.",
+              text: "3. Enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.",
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "4. EMO tarafından hazirlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrilmaz bir parçasıdır.",
+              text: "4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır.",
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "5. işveren olarak sizin yükümliliçiniz, işletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatlari/hizmetleri sailamak, talep edilen güvenlik malzemelerini almak ve uyarilarina riayet etmektir.",
+              text: "5. işveren olarak sizin yükümlülüğünüz, işletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.",
               spacing: { after: 400 }
             }),
             
@@ -2564,7 +2564,7 @@ KURALLAR:
               spacing: { after: 50 }
             }),
             new Paragraph({
-              text: "Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye"
+              text: "Tel: +90 545 434 67 35 | İzmir, Türkiye"
             })
           ]
         }]
@@ -2592,8 +2592,8 @@ KURALLAR:
         contactName: manualForm.contactName,
         type: manualForm.type,
         region: manualForm.region, // Bölge adi
-        regionCoeff: manualForm.regionCoeff, // Manuel formdan gelen izel katsayi
-        discountRate: manualForm.customDiscount // Manuel formdan gelen izel İskonto
+        regionCoeff: manualForm.regionCoeff, // Manuel formdan gelen özel katsayi
+        discountRate: manualForm.customDiscount // Manuel formdan gelen özel İskonto
     };
     const calculated = calculateCompanyFees(manualCompany);
     generateProposal(calculated);
@@ -2632,25 +2632,25 @@ KURALLAR:
     setAiActiveFeature(type);
     setAiOutput("");
 
-    const systemPrompt = "Sen VoltGuard irketinin deneyimli bir sati mihendisisin. Dilin Tirkie, kurumsal, nazik ve profesyonel olmali.";
+    const systemPrompt = "Sen VoltGuard şirketinin deneyimli bir satış mühendisisin. Dilin Türkçe, kurumsal, nazik ve profesyonel olmalı.";
     let userPrompt = "";
 
     if (type === 'email') {
         userPrompt = `
-          Aşağıdaki bilgilerle miteriye gönderilmek üzere bir e-posta taslai hazirla.
-          Miteri Firma: ${selectedCompany.name}
-          Yetkili Kii: ${selectedCompany.contactName || 'ilgili Yetkili'}
+          Aşağıdaki bilgilerle müşteriye gönderilmek üzere bir e-posta taslak hazırla.
+          Müşteri Firma: ${selectedCompany.name}
+          Yetkili Kişi: ${selectedCompany.contactName || 'ilgili Yetkili'}
           Hizmet: Yüksek Gerilim işletme Sorumluluğu
           Toplam Güç: ${selectedCompany.totalKVA} kVA
           Teklif Tutari: ${formatCurrency(selectedCompany.offerPrice)} + KDV (Aylık)
           
-          E-posta, teklifin ekte sunulduiunu belirtmeli, VoltGuard'in uzmanliçina vurgu yapmali ve ibirlii temennisiyle bitmeli. Konu satiri da ekle.
+          E-posta, teklifin ekte sunulduğunu belirtmeli, VoltGuard'in uzmanlığına vurgu yapmali ve işbirliği temennisiyle bitmeli. Konu satiri da ekle.
         `;
     } else if (type === 'tips') {
         userPrompt = `
-          ${selectedCompany.sector} sektirinde faaliyet gisteren ve ${selectedCompany.totalKVA} kVA trafo gücüne sahip bir işletme için;
-          Yüksek Gerilim işletme güvenliği, enerji verimlilii ve bakim konularinda 3 adet kisa, iarpici ve teknik tavsiye maddesi yaz.
-          Bu tavsiyeler miteriye katma deier sailadiimizi hissettirmeli.
+          ${selectedCompany.sector} sektöründe faaliyet gösteren ve ${selectedCompany.totalKVA} kVA trafo gücüne sahip bir işletme için;
+          Yüksek Gerilim işletme güvenliği, enerji verimliliği ve bakım konularında 3 adet kısa, çarpıcı ve teknik tavsiye maddesi yaz.
+          Bu tavsiyeler müşteriye katma değer sağladığımızı hissettirmeli.
         `;
     }
 
@@ -2667,7 +2667,7 @@ KURALLAR:
         if (!response.ok) throw new Error('API Hatasi');
 
         const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "ierik oluşturulamadi.";
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "içerik oluşturulamadı.";
         setAiOutput(text);
     } catch (error) {
         console.error("AI Error:", error);
@@ -2702,7 +2702,7 @@ KURALLAR:
       ['Yetkili:', selectedCompany.contactName],
       ['Sektör:', selectedCompany.sector],
       ['Tesis Tipi:', selectedCompany.type === 'direk' ? 'Direk Tipi' : 'Bina Tipi'],
-      ['Bölge:', selectedCompany.region || 'Belirtilmemi┼ş'],
+      ['Bölge:', selectedCompany.region || 'Belirtilmemiş'],
       ['Bölge Katsayisi:', selectedCompany.regionCoeff],
       [],
       ['Güç BiLGüçLERi'],
@@ -2718,7 +2718,7 @@ KURALLAR:
       [],
       ['VoltGuard'],
       ['voltguard.com.tr | info@voltguard.com.tr'],
-      ['Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye']
+      ['Tel: +90 545 434 67 35 | İzmir, Türkiye']
     ];
     
     const worksheet = XLSX.utils.aoa_to_sheet(proposalData);
@@ -2748,7 +2748,7 @@ KURALLAR:
     if (!recipientEmail) return;
     
     try {
-      // EmailJS yapilandirmasi - Kullanicinin kendi hesabini oluşturmasi gerekir
+      // EmailJS yapilandirmasi - Kullanıcının kendi hesabini oluşturmasi gerekir
       const serviceID = 'service_xxxxxxx'; // EmailJS Service ID
       const templateID = 'template_xxxxxxx'; // EmailJS Template ID
       const userID = 'user_xxxxxxxxxx'; // EmailJS User ID
@@ -2767,7 +2767,7 @@ KURALLAR:
       alert('E-posta baiariyla gönderildi!');
     } catch (error) {
       console.error('Email Error:', error);
-      alert('E-posta gönderi┼şlemedi. Lütfen EmailJS yapilandirmasini kontrol edin.');
+      alert('E-posta gönderilemedi. Lütfen EmailJS yapilandirmasini kontrol edin.');
     }
   };
 
@@ -2814,7 +2814,7 @@ KURALLAR:
     
     const pages = document.querySelectorAll('.periodic-pdf-page');
     if (!pages || pages.length === 0) {
-      alert('ierik bulunamadi.');
+      alert('içerik bulunamadi.');
       return;
     }
     
@@ -2910,7 +2910,7 @@ KURALLAR:
         // Güçrseli PDF'e ekle
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, '', 'FAST');
         
-        // Logoyu yiksek kalitede ekle (sol ist ki┼şie, aspect ratio korunarak)
+        // Logoyu yüksek kalitede ekle (sol ist kişie, aspect ratio korunarak)
         pdf.addImage(logoInfo.data, 'PNG', 10, 10, logoWidth, logoHeight, '', 'FAST');
 
         // Logolari tekrar gister
@@ -2930,7 +2930,7 @@ KURALLAR:
     }
   };
 
-  // --- Gelimi PDF Export ---
+  // --- Gelişmiş PDF Export ---
   const handleAdvancedPDFExport = () => {
     if (!selectedCompany) return;
     
@@ -2967,11 +2967,11 @@ KURALLAR:
     // Tablo
     doc.autoTable({
       startY: yPos,
-      head: [['izellik', 'Deier']],
+      head: [['özellik', 'Deier']],
       body: [
         ['Toplam Kurulu Güç', `${selectedCompany.totalKVA} kVA`],
         ['Tesis Tipi', selectedCompany.type === 'direk' ? 'Direk Tipi' : 'Bina Tipi'],
-        ['Bölge', selectedCompany.region || 'Belirtilmemi┼ş'],
+        ['Bölge', selectedCompany.region || 'Belirtilmemiş'],
         ['Sektör', selectedCompany.sector],
         ['EMO Nominal icret', formatCurrency(selectedCompany.nominalFee)],
         ['İskonto Orani', `%${selectedCompany.appliedDiscountRate || params.discountRate}`],
@@ -2992,7 +2992,7 @@ KURALLAR:
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.text('VoltGuard', pageWidth / 2, pageHeight - 15, { align: 'center' });
-    doc.text('voltguard.com.tr | info@voltguard.com.tr | Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text('voltguard.com.tr | info@voltguard.com.tr | Tel: +90 545 434 67 35 | İzmir, Türkiye', pageWidth / 2, pageHeight - 10, { align: 'center' });
     
     // Kaydet
     const fileName = `YG_Teklif_${selectedCompany.name.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('tr-TR').replace(/\./g, '-')}.pdf`;
@@ -3082,7 +3082,7 @@ KURALLAR:
             <Calculator className="h-6 w-6 md:h-8 md:w-8 text-yellow-400" />
             <div>
               <h1 className="text-base md:text-xl font-bold">VoltGuard</h1>
-              <p className="text-[10px] md:text-xs text-blue-200">Enerji cozumlerinde guvenilir is ortaginiz</p>
+              <p className="text-[10px] md:text-xs text-blue-200">Enerji çözümlerinde güvenilir is ortağıniz</p>
             </div>
           </div>
           <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
@@ -3159,7 +3159,7 @@ KURALLAR:
                   />
                   <span className="absolute right-3 top-2 text-gray-400 text-sm">x</span>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">├ûrn: ─░zmir: 1.00, Adana: 0.75 (Liste d─▒┼ş─▒ için)</p>
+                <p className="text-xs text-gray-400 mt-1">Örn: İzmir: 1.00, Adana: 0.75 (Liste dışı için)</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">Global İskonto</label>
@@ -3216,7 +3216,7 @@ KURALLAR:
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-yellow-600 mt-1">?? Para birimini deiitirdiçinizde tüm fiyatlar otomatik dinitirilecektir.</p>
+                <p className="text-xs text-yellow-600 mt-1">?? Para birimini deiitirdışınızde tüm fiyatlar otomatik dinitirilecektir.</p>
               </div>
               {/* Direk Tipi Ayarlari */}
               <div className="md:col-span-3 border-t pt-4 mt-2">
@@ -3514,7 +3514,7 @@ KURALLAR:
                   <div className="grid grid-cols-2 gap-3">
                     <input 
                       type="text" 
-                      placeholder="Miteri Adi"
+                      placeholder="Müşteri Adi"
                       value={gesForm.customerName}
                       onChange={(e) => setGesForm({...gesForm, customerName: e.target.value})}
                       className="px-3 py-2 text-sm border rounded w-full"
@@ -3606,11 +3606,11 @@ KURALLAR:
                     </button>
                   </div>
 
-                  {/* Hizli irin Ekleme */}
+                  {/* Hizli Ürün Ekleme */}
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200 mb-3">
                     <h4 className="text-xs font-bold text-blue-800 mb-2 flex items-center">
                       <Sparkles className="w-3 h-3 mr-1"/>
-                      Hizli irin Ekle (Veritabanindan)
+                      Hizli Ürün Ekle (Veritabanindan)
                     </h4>
                     <div className="grid grid-cols-2 gap-2">
                       <select 
@@ -3806,7 +3806,7 @@ KURALLAR:
                       </select>
                     </div>
                     <p className="text-xs text-blue-600 mt-2">
-                      ?? Veritabanindan seitiçiniz irinler otomatik olarak marka, aiklama ve fiyat bilgileriyle eklenir
+                      ?? Veritabanindan seitiçiniz Ürünler otomatik olarak marka, aiklama ve fiyat bilgileriyle eklenir
                     </p>
                   </div>
 
@@ -3823,7 +3823,7 @@ KURALLAR:
                           />
                           <input 
                             type="text" 
-                            placeholder="irin Aiklamasi"
+                            placeholder="Ürün Aiklamasi"
                             value={item.desc}
                             onChange={(e) => updateGESItem(idx, 'desc', e.target.value)}
                             className="w-3/4 border px-2 py-1 rounded text-xs focus:ring-2 focus:ring-yellow-300 outline-none"
@@ -4006,11 +4006,11 @@ KURALLAR:
                       className="px-2 py-1 border border-gray-300 rounded text-sm"
                     >
                       <option value="">Yazi Boyutu</option>
-                      <option value="1">iok Kiik</option>
+                      <option value="1">çok Kiik</option>
                       <option value="2">Kiik</option>
                       <option value="3">Normal</option>
-                      <option value="4">Biyik</option>
-                      <option value="5">iok Biyik</option>
+                      <option value="4">Büyük</option>
+                      <option value="5">çok Büyük</option>
                     </select>
                   </div>
                 </div>
@@ -4026,7 +4026,7 @@ KURALLAR:
                 const totals = calculateGESTotals();
                 const dateObj = new Date(gesForm.offerDate);
                 
-                // Dinamik sayfalama: Her sayfada maksimum 18 irin
+                // Dinamik sayfalama: Her sayfada maksimum 18 Ürün
                 const ITEMS_PER_PAGE = 18;
                 const totalPages = Math.ceil(gesItems.length / ITEMS_PER_PAGE) + 1; // +1 iartlar sayfasi
                 const itemPages = [];
@@ -4037,7 +4037,7 @@ KURALLAR:
                 
                 return (
                   <>
-                    {/* DiNAMiK SAYFA(LAR) - irin Listesi */}
+                    {/* DiNAMiK SAYFA(LAR) - Ürün Listesi */}
                     {itemPages.map((pageItems, pageIndex) => {
                       const isFirstPage = pageIndex === 0;
                       const isLastItemPage = pageIndex === itemPages.length - 1;
@@ -4061,12 +4061,12 @@ KURALLAR:
                             </div>
                           </div>
 
-                          {/* Miteri Bilgisi (Sadece ilk sayfada) */}
+                          {/* Müşteri Bilgisi (Sadece ilk sayfada) */}
                           {isFirstPage && (
                             <div className="mb-4 bg-blue-50 p-4 rounded-lg border border-blue-200">
                               <div className="flex justify-between items-end">
                                 <div>
-                                  <span className="text-xs text-blue-600 uppercase font-semibold">Sayın Yetkili / Miteri</span>
+                                  <span className="text-xs text-blue-600 uppercase font-semibold">Sayın Yetkili / Müşteri</span>
                                   <h3 className="text-lg font-bold text-gray-800">{gesForm.customerName}</h3>
                                   <p className="text-gray-600 text-sm">{gesForm.location}</p>
                                 </div>
@@ -4108,7 +4108,7 @@ KURALLAR:
                             </tbody>
                           </table>
 
-                          {/* özet Hesaplar (Sadece son irin sayfasinda) */}
+                          {/* özet Hesaplar (Sadece son Ürün sayfasinda) */}
                           {isLastItemPage && (
                             <div className="flex justify-end mt-auto mb-8">
                       <div className="w-1/2">
@@ -4176,7 +4176,7 @@ KURALLAR:
                           <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                             <div className="text-[9pt] text-gray-600">
                               <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                              <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                              <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                               <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                               <p className="text-gray-400 mt-1 text-right">Sayfa {currentPageNum}/{totalPages}</p>
                             </div>
@@ -4202,12 +4202,12 @@ KURALLAR:
                       </div>
                     </div>
 
-                    {/* Miteri özeti */}
+                    {/* Müşteri özeti */}
                     <div className="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
                       <h3 className="text-[11pt] font-bold text-blue-900 mb-2">Teklif özeti</h3>
                       <div className="grid grid-cols-2 gap-3 text-[9pt]">
                         <div>
-                          <span className="text-gray-600">Miteri:</span>
+                          <span className="text-gray-600">Müşteri:</span>
                           <p className="font-semibold text-gray-800">{gesForm.customerName}</p>
                         </div>
                         <div>
@@ -4235,7 +4235,7 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">1.</span> Teklif Geçerlilik Siresi
                           </h4>
                           <p className="text-[9pt] text-gray-700 pl-5">
-                            Bu teklif <strong>30 (otuz) gin</strong> sireyle geçerlidir. Belirtilen sire sonunda fiyatlar diviz kuru ve hammadde deiikliklerine baili olarak güncellenecektir.
+                            Bu teklif <strong>30 (otuz) gün</strong> süreyle geçerlidir. Belirtilen süre sonunda fiyatlar döviz kuru ve hammadde değişikliklerine bağlı olarak güncellenecektir.
                           </p>
                         </div>
 
@@ -4244,11 +4244,11 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">2.</span> Kapsam ve Hizmetler
                           </h4>
                           <ul className="list-disc list-inside text-[9pt] text-gray-700 pl-5 space-y-1">
-                            <li>Tim ekipmanlarin tedariki (panel, inverter, aki, kablo, bailanti malzemeleri)</li>
-                            <li>Proje kapsaminda gerekli tüm teknik hirdavat ve bailanti malzemeleri dahildir</li>
+                            <li>Tüm ekipmanlarin tedariki (panel, inverter, akü, kablo, bağlantı malzemeleri)</li>
+                            <li>Proje kapsamında gerekli tüm teknik hırdavat ve bağlantı malzemeleri dahildir</li>
                             <li>Profesyonel montaj ve kurulum hizmetleri</li>
-                            <li>Sistem devreye alma ve test i┼şlemleri</li>
-                            <li>Montaj sonrasi sistem eitümi ve kullanim kilavuzu</li>
+                            <li>Sistem devreye alma ve test işlemleri</li>
+                            <li>Montaj sonrasi sistem eitümi ve kullanım kilavuzu</li>
                           </ul>
                         </div>
 
@@ -4257,7 +4257,7 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">3.</span> Ekipman Kalitesi ve Belgeler
                           </h4>
                           <p className="text-[9pt] text-gray-700 pl-5">
-                            Tim ekipmanlar <strong>orijinal, sifir ve CE belgeli</strong> olup, gerekli kalite sertifikalari, test raporlari ve kullanim kilavuzlari ile birlikte teslim edilir. Ekipmanlar uluslararasi kalite standartlarina uygundur.
+                            Tüm ekipmanlar <strong>orijinal, sıfır ve CE belgeli</strong> olup, gerekli kalite sertifikaları, test raporları ve kullanım kılavuzları ile birlikte teslim edilir. Ekipmanlar uluslararasi kalite standartlarina uygundur.
                           </p>
                         </div>
 
@@ -4275,7 +4275,7 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">5.</span> Teslimat Siresi
                           </h4>
                           <p className="text-[9pt] text-gray-700 pl-5">
-                            Sipari onayi ve avans ödemesi alindiktan sonra <strong>15-20 i gini</strong> ierisinde sistem kurulumu tamamlanacak ve devreye alinacaktir. izel durumlar ve yiksek talep dinemlerinde teslimat sireleri uzayabilir.
+                            Sipariş onayı ve avans ödemesi alındıktan sonra <strong>15-20 i günü</strong> içerisinde sistem kurulumu tamamlanacak ve devreye alınacaktır. özel durumlar ve yüksek talep dönemlerinde teslimat süreleri uzayabilir.
                           </p>
                         </div>
 
@@ -4288,7 +4288,7 @@ KURALLAR:
                       <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                         <div className="text-[9pt] text-gray-600">
                           <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                          <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                          <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                           <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                           <p className="text-gray-400 mt-1 text-right">Sayfa {totalPages}/{totalPages}</p>
                         </div>
@@ -4310,7 +4310,7 @@ KURALLAR:
                 <Save className="mr-3 h-8 w-8"/>
                 Kaydedilen Teklifler
               </h1>
-              <p className="text-purple-100">Tim kaydedilmi tekliflerinizi görüntüleyin ve yükleyin</p>
+              <p className="text-purple-100">Tüm kaydedilmi tekliflerinizi görüntüleyin ve yükleyin</p>
             </div>
 
             {/* Filtre Butonlari */}
@@ -4488,7 +4488,7 @@ KURALLAR:
                       {proposal.data.products && (
                         <>
                           <div className="flex items-center justify-between">
-                            <span>irin Sayisi:</span>
+                            <span>Ürün Sayisi:</span>
                             <span className="font-semibold">{proposal.data.products.length} kalem</span>
                           </div>
                           {proposal.data.totals && (
@@ -4536,7 +4536,7 @@ KURALLAR:
                       {proposal.data.form && (
                         <>
                           <div className="flex items-center justify-between">
-                            <span>Miteri:</span>
+                            <span>Müşteri:</span>
                             <span className="font-semibold truncate max-w-[150px]">{proposal.data.form.customerName}</span>
                           </div>
                           <div className="flex items-center justify-between">
@@ -4667,8 +4667,8 @@ KURALLAR:
           <div className="space-y-6">
             {/* Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-8 text-white">
-              <h1 className="text-3xl font-bold mb-2">?? irin ve Fiyat Veritabani Dashboard</h1>
-              <p className="text-indigo-100">Tim irin, kablo ve fiyat verilerinizin detaylı analizi</p>
+              <h1 className="text-3xl font-bold mb-2">?? Ürün ve Fiyat Veritabani Dashboard</h1>
+              <p className="text-indigo-100">Tüm Ürün, kablo ve fiyat verilerinizin detaylı analizi</p>
             </div>
 
             {/* Genel istatistikler */}
@@ -4676,7 +4676,7 @@ KURALLAR:
               <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold">Toplam irin</p>
+                    <p className="text-gray-600 text-sm font-semibold">Toplam Ürün</p>
                     <p className="text-3xl font-bold text-blue-600 mt-2">{productStats.toplamUrun}</p>
                     <p className="text-xs text-gray-500 mt-1">
                       F1: {normalizedFatura1.length} i F2: {normalizedFatura2.length}
@@ -4709,7 +4709,7 @@ KURALLAR:
               <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-orange-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold">Ort. irin Fiyati</p>
+                    <p className="text-gray-600 text-sm font-semibold">Ort. Ürün Fiyati</p>
                     <p className="text-3xl font-bold text-orange-600 mt-2">{productStats.ortalamaFiyat.toFixed(2)} ?</p>
                   </div>
                   <TrendingDown className="w-12 h-12 text-orange-500 opacity-20"/>
@@ -4776,7 +4776,7 @@ KURALLAR:
                         <span className="text-lg font-bold text-gray-400">#{idx + 1}</span>
                         <span className="text-sm text-gray-700 font-medium">{marka}</span>
                       </div>
-                      <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">{adet} irin</span>
+                      <span className="text-sm font-bold text-green-600 bg-green-100 px-3 py-1 rounded-full">{adet} Ürün</span>
                     </div>
                   ))}
                 </div>
@@ -4785,11 +4785,11 @@ KURALLAR:
 
             {/* Fiyat Analizi */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* En Pahali irinler */}
+              {/* En Pahali Ürünler */}
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <TrendingDown className="w-6 h-6 mr-2 text-red-600"/>
-                  En Pahali 10 irin
+                  En Pahali 10 Ürün
                 </h3>
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {productStats.enPahali.map((urun, idx) => (
@@ -4804,11 +4804,11 @@ KURALLAR:
                 </div>
               </div>
 
-              {/* En Ucuz irinler */}
+              {/* En Ucuz Ürünler */}
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <TrendingDown className="w-6 h-6 mr-2 text-green-600"/>
-                  En Ekonomik 10 irin
+                  En Ekonomik 10 Ürün
                 </h3>
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {productStats.enUcuz.map((urun, idx) => (
@@ -4864,12 +4864,12 @@ KURALLAR:
               </div>
             </div>
 
-            {/* Keif Projelerinde Kullanim */}
+            {/* Keşif Projelerinde Kullanim */}
             {kesifProducts.length > 0 && (
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <Hammer className="w-6 h-6 mr-2 text-orange-600"/>
-                  Mevcut Keif Projesindeki irÖn Analizi
+                  Mevcut Keşif Projesindeki irÖn Analizi
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="bg-orange-50 p-4 rounded-lg">
@@ -4887,7 +4887,7 @@ KURALLAR:
                 </div>
                 {productStats.enCokKullanilanlar.length > 0 && (
                   <div>
-                    <h4 className="font-bold text-gray-700 mb-3">En iok Kullanilan irinler:</h4>
+                    <h4 className="font-bold text-gray-700 mb-3">En çok Kullanilan Ürünler:</h4>
                     <div className="space-y-2">
                       {productStats.enCokKullanilanlar.map(([urun, adet]) => (
                         <div key={urun} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition">
@@ -4964,7 +4964,7 @@ KURALLAR:
                              <option value="bina">Bina Tipi (Sanayi Tesisleri)</option>
                              <option value="direk">Direk Tipi</option>
                          </select>
-                         <p className="text-xs text-gray-500 mt-1">Not: 400 kVA alti bina tipi merkezler, direk tipi olarak da deierlendirilebilir.</p>
+                         <p className="text-xs text-gray-500 mt-1">Not: 400 kVA alti bina tipi merkezler, direk tipi olarak da değerlendirilebilir.</p>
                     </div>
 
                     <div>
@@ -5067,9 +5067,9 @@ KURALLAR:
               </h2>
               
               <div className="space-y-4">
-                {/* Miteri Bilgileri */}
+                {/* Müşteri Bilgileri */}
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                  <h3 className="text-sm font-semibold text-blue-800 mb-2">Miteri Bilgileri</h3>
+                  <h3 className="text-sm font-semibold text-blue-800 mb-2">Müşteri Bilgileri</h3>
                   <div className="grid gap-3">
                     <input 
                       type="text" 
@@ -5087,7 +5087,7 @@ KURALLAR:
                     />
                     <input 
                       type="text" 
-                      placeholder="Yetkili Kii" 
+                      placeholder="Yetkili Kişi" 
                       value={periodicCustomer.contactName} 
                       onChange={e => setPeriodicCustomer({...periodicCustomer, contactName: e.target.value})} 
                       className="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none" 
@@ -5115,7 +5115,7 @@ KURALLAR:
                     className="w-full border p-2 rounded mb-3 focus:ring-2 focus:ring-green-500 outline-none" 
                   />
 
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Topraklama ilim Sayisi</label>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Topraklama Ölçüm Sayısı</label>
                   <input 
                     type="number" 
                     value={periodicInputs.topraklamaAdet} 
@@ -5176,7 +5176,7 @@ KURALLAR:
                   </button>
                 </div>
 
-                {/* i┼şlem Butonlari */}
+                {/* işlem Butonlari */}
                 <div className="space-y-3">
                   <button 
                     onClick={togglePeriodicEditorMode}
@@ -5205,7 +5205,7 @@ KURALLAR:
               </div>
               
               <div className="mt-6 text-xs text-gray-400">
-                * Hesaplamalar EMO 2026 Kisim V Test ve ilim Hizmetleri tarifesine göre yapilmaktadir. KDV Haritir.
+                * Hesaplamalar EMO 2026 Kısım V Test ve Ölçüm Hizmetleri tarifesine göre yapılmaktadır. KDV Hariçtir.
               </div>
             </div>
 
@@ -5252,12 +5252,12 @@ KURALLAR:
                     <p className="text-gray-500 text-sm mt-1">Periyodik Kontrol ve Test Hizmetleri</p>
                   </div>
                   <div className="text-right w-48">
-                    <p className="text-xs text-gray-500">─░zmir, T├╝rkiye</p>
+                    <p className="text-xs text-gray-500">İzmir, Türkiye</p>
                     <p className="text-xs text-gray-500 mt-1">Tarih: {periodicCustomer.date}</p>
                   </div>
                 </div>
 
-                {/* Miteri Bailii */}
+                {/* Müşteri Bağlılığı */}
                 <div className="mb-8">
                   <h3 className="text-md font-bold text-gray-800 mb-2">
                     Sayın {periodicCustomer.contactName ? `${periodicCustomer.contactName} - ` : ''}{periodicCustomer.name || '[Firma Adi]'} Yetkilisi,
@@ -5293,7 +5293,7 @@ KURALLAR:
 
                 {/* Fiyat Tablosu */}
                 <div className="mb-8">
-                  <h4 className="text-sm font-bold text-gray-700 border-b border-gray-200 mb-2 pb-1">2. Hizmet Bedelleri (EMO 2026 Kisim V)</h4>
+                  <h4 className="text-sm font-bold text-gray-700 border-b border-gray-200 mb-2 pb-1">2. Hizmet Bedelleri (EMO 2026 Kısım V)</h4>
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className="bg-gray-100 text-gray-600">
@@ -5304,22 +5304,22 @@ KURALLAR:
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       <tr>
-                        <td className="p-2 font-medium">1. YG/TM Güçzle Kontroli</td>
+                        <td className="p-2 font-medium">1. YG/TM Gözle Kontrolü</td>
                         <td className="p-2 text-xs text-gray-500">{periodicResults.yg.desc || 'Heniz hesaplanmadi'}</td>
                         <td className="p-2 text-right">{formatCurrency(periodicResults.yg.total)}</td>
                       </tr>
                       <tr>
-                        <td className="p-2 font-medium">2. AG i Tesisat Kontroli</td>
+                        <td className="p-2 font-medium">2. AG i Tesisat Kontrolü</td>
                         <td className="p-2 text-xs text-gray-500">{periodicResults.ag.desc || 'Heniz hesaplanmadi'}</td>
                         <td className="p-2 text-right">{formatCurrency(periodicResults.ag.total)}</td>
                       </tr>
                       <tr>
-                        <td className="p-2 font-medium">3. Topraklama ilimi</td>
+                        <td className="p-2 font-medium">3. Topraklama Ölçümü</td>
                         <td className="p-2 text-xs text-gray-500">{periodicResults.topraklama.desc || 'Heniz hesaplanmadi'}</td>
                         <td className="p-2 text-right">{formatCurrency(periodicResults.topraklama.total)}</td>
                       </tr>
                       <tr>
-                        <td className="p-2 font-medium">4. Yildirimdan Korunma</td>
+                        <td className="p-2 font-medium">4. Yıldırımdan Korunma</td>
                         <td className="p-2 text-xs text-gray-500">{periodicResults.paratoner.desc || 'Heniz hesaplanmadi'}</td>
                         <td className="p-2 text-right">{formatCurrency(periodicResults.paratoner.total)}</td>
                       </tr>
@@ -5333,7 +5333,7 @@ KURALLAR:
                         <td className="p-2 text-right">{formatCurrency(periodicResults.subTotal)}</td>
                       </tr>
                       <tr>
-                        <td className="p-2 font-medium">Test ilim Keif Bedeli</td>
+                        <td className="p-2 font-medium">Test Ölçüm Keşif Bedeli</td>
                         <td className="p-2 text-xs text-gray-500">Sabit Bedel</td>
                         <td className="p-2 text-right">{formatCurrency(periodicResults.kesif)}</td>
                       </tr>
@@ -5365,7 +5365,7 @@ KURALLAR:
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
                     <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                     <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                     <p className="mt-1 text-gray-400">Sayfa 1/2</p>
                   </div>
@@ -5397,27 +5397,27 @@ KURALLAR:
                   </p>
                   <div className="space-y-3">
                     <div className="bg-white p-3 rounded border-l-4 border-blue-500">
-                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">1. Stratejik Miteri iliei</h5>
+                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">1. Stratejik Müşteri İlişkisi</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        {periodicCustomer.name || 'Miteriniz'}, sanayi tesisi olarak büyük bir potansiyele sahiptir. VoltGuard'in {periodicCustomer.city || 'bilgedeki'} konumlanmasi ve bilgedeki büyük endistriyel miterilere odaklanma hedefi, bu iliekteki bir firmayla uzun vadeli i birlii için yiksek indirim oranini hakli kilmaktadir.
+                        {periodicCustomer.name || 'Müşteriniz'}, sanayi tesisi olarak büyük bir potansiyele sahiptir. VoltGuard'in {periodicCustomer.city || 'bölgedeki'} konumlanması ve bölgedeki büyük endistriyel miterilere odaklanma hedefi, bu iliekteki bir firmayla uzun vadeli i birlii için yüksek indirim oranıni hakli kilmaktadir.
                       </p>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-green-500">
-                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">2. Yasal Uyum ve Güçvenlik</h5>
+                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">2. Yasal Uyum ve Güvenlik</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        Teklif kapsamindaki tüm hizmetler (Topraklama, RCD Testleri, Yildirimdan Korunma ve i Tesisat Güçzle Kontroli), i Ekipmanlarinin Kullaniminda Sailik ve Güçvenlik iartlari Yönetmeliği uyarinca zorunlu olan yillik periyodik kontrol gerekliliklerini eksiksiz yerine getirecektir.
+                        Teklif kapsamındaki tüm hizmetler (Topraklama, RCD Testleri, Yıldırımdan Korunma ve i Tesisat Gözle Kontrolü), i Ekipmanlarının Kullanımında Sağlık ve Güvenlik şartları Yönetmeliği uyarınca zorunlu olan yıllık periyodik kontrol gerekliliklerini eksiksiz yerine getirecektir.
                       </p>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-purple-500">
                       <h5 className="text-[9pt] font-bold text-gray-800 mb-1">3. Tekrar Eden Hizmet Olanaklari</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        EMO mevzuati, tekrarlanan ilim ve denetüm hizmetlerinde bedellerin %50'sinin uygulanabileceiçini belirtmektedir. Sizin talep ettiğiniz %{periodicInputs.İskonto} İskonto orani, bu yasal alt sinirin iok izerinde, VoltGuard'in rekabeti konumlanmasini göstermektedir.
+                        EMO mevzuatı, tekrarlanan ölçüm ve denetim hizmetlerinde bedellerin %50'sinin uygulanabileceğini belirtmektedir. Sizin talep ettiğiniz %{periodicInputs.İskonto} İskonto oranı, bu yasal alt sınırın çok üzerinde, VoltGuard'in rekabetçi konumlanmasını göstermektedir.
                       </p>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-yellow-500">
-                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">4. Enerji Verimlilii Odakli Yaklaim</h5>
+                      <h5 className="text-[9pt] font-bold text-gray-800 mb-1">4. Enerji Verimliliği Odakli Yaklaşım</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        VoltGuard'in temel uzmanlii enerji verimlilii ve sanayideki bu potansiyeli ortaya ikarmaktir. Fabrikanizda yapilacak bu kontroller, sadece yasal zorunluluiu değil, aynı zamanda enerji tasarruf potansiyeli olan alanlarin belirlenmesine de in ayak olacaktir, zira VoltGuard bu alanda Enerji Bakanlii'na baili olarak enerji etitleri yapmaktadir.
+                        VoltGuard'in temel uzmanlığı enerji verimliliği ve sanayideki bu potansiyeli ortaya çıkarmaktır. Fabrikanizda yapılacak bu kontroller, sadece yasal zorunluluğu değil, aynı zamanda enerji tasarruf potansiyeli olan alanların belirlenmesine de in ayak olacaktır, zira VoltGuard bu alanda Enerji Bakanlığı'na bağlı olarak enerji etiketleri yapmaktadır.
                       </p>
                     </div>
                   </div>
@@ -5428,9 +5428,9 @@ KURALLAR:
                   <p className="mb-2"><strong>Notlar:</strong></p>
                   <ul className="list-disc pl-5 space-y-1">
                     <li>Fiyatlara KDV dahil değildir.</li>
-                    <li>Tim hizmetler EMO dokimanlarina (ZPKK01, ZPKK03, vb.) uygun raporlanacaktir.</li>
+                    <li>Tüm hizmetler EMO dokimanlarina (ZPKK01, ZPKK03, vb.) uygun raporlanacaktir.</li>
                     <li>VoltGuard, MiSiAD Enerji ve ievre Sektör Kurulu iyesidir.</li>
-                    <li>Enerji Yinetüm Sistemi (ISO 50001) ve VAP konularinda ayrica destek sailanabilir.</li>
+                    <li>Enerji Yinetüm Sistemi (ISO 50001) ve VAP konularında ayrica destek sailanabilir.</li>
                   </ul>
                 </div>
 
@@ -5438,7 +5438,7 @@ KURALLAR:
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
                     <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                     <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                     <p className="mt-1 text-gray-400">Sayfa 2/2</p>
                   </div>
@@ -5458,7 +5458,7 @@ KURALLAR:
         {activeTab === 'kesif' && (
           <KesifMetraj 
             onCustomerUpdate={(customerData) => {
-              // Keif miteri bilgilerini güncelle
+              // Keşif miteri bilgilerini güncelle
               setKesifCustomer({
                 name: customerData.musteriAdi || '',
                 address: customerData.adres || '',
@@ -5497,7 +5497,7 @@ KURALLAR:
                 <Hammer className="mr-2 h-5 w-5"/>
                 Keşif Metraj Fiyat Teklifi
               </h2>
-              <p className="text-orange-100 text-xs mt-1">Elektrik malzemesi ve kablo için ke┼şif metraj listesi olu┼şturun. Kablo fiyatlar─▒: Serer Kablo (─░zmir)</p>
+              <p className="text-orange-100 text-xs mt-1">Elektrik malzemesi ve kablo için keşif metraj listesi oluşturun. Kablo fiyatları: Serer Kablo (İzmir)</p>
             </div>
 
             <form onSubmit={handleKesifSubmit} className="p-8 space-y-6">
@@ -5508,7 +5508,7 @@ KURALLAR:
                   <div className="flex items-start">
                     <Cable className="w-5 h-5 mr-2 text-purple-600 mt-0.5"/>
                     <div>
-                      <h3 className="text-sm font-bold text-purple-800 mb-1">Kablo Fiyatlar─▒: Serer Kablo (─░zmir)</h3>
+                      <h3 className="text-sm font-bold text-purple-800 mb-1">Kablo Fiyatları: Serer Kablo (İzmir)</h3>
                       <div className="grid grid-cols-3 gap-2 text-xs text-gray-700">
                         <div><span className="font-semibold">Tel:</span> {KabloFiyatData.telefon}</div>
                         <div><span className="font-semibold">Web:</span> {KabloFiyatData.web}</div>
@@ -5519,11 +5519,11 @@ KURALLAR:
                 </div>
               )}
 
-              {/* Miteri Bilgileri */}
+              {/* Müşteri Bilgileri */}
               <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
                 <h3 className="text-md font-bold text-gray-800 mb-4 flex items-center">
                   <Users className="w-5 h-5 mr-2 text-orange-600"/>
-                  Miteri Bilgileri
+                  Müşteri Bilgileri
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -5634,11 +5634,11 @@ KURALLAR:
                       onChange={handleExcelImport}
                       className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Situnlar: irin, Miktar, Fiyat, Birim</p>
+                    <p className="text-xs text-gray-500 mt-1">Situnlar: Ürün, Miktar, Fiyat, Birim</p>
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">?? Tim irinlere Kar Marji Ekle</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">?? Tüm Ürünlere Kar Marji Ekle</label>
                     <button
                       type="button"
                       onClick={applyProfitMarginToAll}
@@ -5662,12 +5662,12 @@ KURALLAR:
                       Hizli Güçri Modu
                     </h4>
                     <p className="text-xs text-gray-600 mb-3">
-                      Her satira bir irin: "irin adi, miktar, fiyat" formatinda yazin
+                      Her satira bir Ürün: "Ürün adi, miktar, fiyat" formatinda yazin
                     </p>
                     <textarea
                       value={quickAddText}
                       onChange={(e) => setQuickAddText(e.target.value)}
-                      placeholder="?? i FARKLI FORMAT:&#10;&#10;1?? BASIT: irin Adi | Miktar | Fiyat&#10;   NYY Kablo 3x2.5 | 100 | 45.50&#10;   Priz Toprakli | 20 | 12&#10;&#10;2?? DETAYLI: irin | Miktar | Fiyat | Birim | Marka&#10;   NYM Kablo | 50 | 38.75 | metre | Nexans&#10;&#10;3?? EXCEL KOPYALA-YAPIiTIR: Doirudan Excel'den kopyalayin (TAB ile ayrilmi)"
+                      placeholder="?? i FARKLI FORMAT:&#10;&#10;1?? BASIT: Ürün Adi | Miktar | Fiyat&#10;   NYY Kablo 3x2.5 | 100 | 45.50&#10;   Priz Toprakli | 20 | 12&#10;&#10;2?? DETAYLI: Ürün | Miktar | Fiyat | Birim | Marka&#10;   NYM Kablo | 50 | 38.75 | metre | Nexans&#10;&#10;3?? EXCEL KOPYALA-YAPIiTIR: Doğrudan Excel'den kopyalayin (TAB ile ayrilmi)"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition text-sm font-mono"
                       rows={6}
                     />
@@ -5749,7 +5749,7 @@ KURALLAR:
                   <div className="mt-4">
                     <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                       <Star className="w-4 h-4 mr-2 text-yellow-500 fill-yellow-500"/>
-                      Favori irinler ({favoriteProducts.length})
+                      Favori Ürünler ({favoriteProducts.length})
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {favoriteProducts.slice(0, 6).map((product, idx) => (
@@ -5777,7 +5777,7 @@ KURALLAR:
                   <div className="mt-4">
                     <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                       <Clock className="w-4 h-4 mr-2 text-blue-500"/>
-                      Son Kullanilan irinler
+                      Son Kullanilan Ürünler
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                       {recentProducts.slice(0, 6).map((product, idx) => (
@@ -5823,7 +5823,7 @@ KURALLAR:
                             <div className="flex-1">
                               <div className="font-semibold text-gray-800 text-sm">{quotation.name}</div>
                               <div className="text-xs text-gray-600">
-                                {quotation.date} i {quotation.products.length} irin i {quotation.totals.grandTotal.toFixed(2)} TL
+                                {quotation.date} i {quotation.products.length} Ürün i {quotation.totals.grandTotal.toFixed(2)} TL
                               </div>
                             </div>
                             <div className="flex gap-2">
@@ -5865,7 +5865,7 @@ KURALLAR:
                 </p>
               </div>
 
-              {/* AI Akilli izellikler */}
+              {/* AI Akilli özellikler */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-lg border-2 border-purple-200">
                   <button
@@ -5874,7 +5874,7 @@ KURALLAR:
                     className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 px-6 rounded-lg font-bold transition shadow-lg flex items-center justify-center gap-2"
                   >
                     <Sparkles className="w-6 h-6 animate-pulse"/>
-                    ?? AI Keif Sihirbazi
+                    ?? AI Keşif Sihirbazi
                   </button>
                   <p className="text-xs text-center text-gray-600 mt-2">
                     Projenizi anlatin, AI otomatik malzeme listesi oluştursun
@@ -5896,19 +5896,19 @@ KURALLAR:
                     ?? AI Teklif Mektubu Oluitur
                   </button>
                   <p className="text-xs text-center text-gray-600 mt-2">
-                    Listedeki irinlerden profesyonel teklif mektubu oluştur
+                    Listedeki Ürünlerden profesyonel teklif mektubu oluştur
                   </p>
                 </div>
               </div>
 
-              {/* irin Tipi Seimi */}
+              {/* Ürün Tipi Seimi */}
               <div className="bg-gradient-to-r from-orange-50 to-purple-50 p-6 rounded-lg border border-orange-200">
                 <h3 className="text-md font-bold text-gray-800 mb-4 flex items-center">
                   <Plus className="w-5 h-5 mr-2 text-orange-600"/>
                   Malzeme/Kablo Ekle
                 </h3>
                 
-                {/* irin Tipi Seim Butonlari */}
+                {/* Ürün Tipi Seim Butonlari */}
                 <div className="mb-4 flex gap-4">
                   <button
                     type="button"
@@ -5962,27 +5962,27 @@ KURALLAR:
                   </button>
                 </div>
 
-                {/* Normal irin Ekleme Formu */}
+                {/* Normal Ürün Ekleme Formu */}
                 {productType === 'normal' && (
                 <div className="space-y-4">
-                  {/* irin istatistikleri özeti */}
+                  {/* Ürün istatistikleri özeti */}
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-200">
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-bold text-gray-800 text-sm flex items-center">
                         <FileSpreadsheet className="w-4 h-4 mr-2 text-blue-600"/>
-                        irin Veritabani istatistikleri
+                        Ürün Veritabani istatistikleri
                       </h4>
                       <button
                         type="button"
                         onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
                         className="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full font-semibold transition"
                       >
-                        {showAdvancedFilters ? 'i Filtreleri Güçzle' : '? Gelimi Filtreler'}
+                        {showAdvancedFilters ? 'i Filtreleri Gizle' : '? Gelişmiş Filtreler'}
                       </button>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="bg-white p-2 rounded shadow-sm">
-                        <div className="text-gray-600">Toplam irin</div>
+                        <div className="text-gray-600">Toplam Ürün</div>
                         <div className="text-lg font-bold text-blue-600">{productStats.toplamUrun}</div>
                       </div>
                       <div className="bg-white p-2 rounded shadow-sm">
@@ -6000,7 +6000,7 @@ KURALLAR:
                     </div>
                   </div>
 
-                  {/* Gelimi Filtreler */}
+                  {/* Gelişmiş Filtreler */}
                   {showAdvancedFilters && (
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -6012,7 +6012,7 @@ KURALLAR:
                             onChange={(e) => setMarkaFilter(e.target.value)}
                             className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                           >
-                            <option value="tumu">Tim Markalar</option>
+                            <option value="tumu">Tüm Markalar</option>
                             {productStats.enPopulerMarkalar.map(([marka, adet]) => (
                               <option key={marka} value={marka}>{marka} ({adet})</option>
                             ))}
@@ -6027,7 +6027,7 @@ KURALLAR:
                             onChange={(e) => setKategoriFilter(e.target.value)}
                             className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                           >
-                            <option value="tumu">Tim Kategoriler</option>
+                            <option value="tumu">Tüm Kategoriler</option>
                             {productStats.kategoriSayilari.map(({ ad, adet }) => (
                               <option key={ad} value={ad}>{ad} ({adet})</option>
                             ))}
@@ -6042,7 +6042,7 @@ KURALLAR:
                             onChange={(e) => setKaynakFilter(e.target.value)}
                             className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition"
                           >
-                            <option value="tumu">Tim Kaynaklar</option>
+                            <option value="tumu">Tüm Kaynaklar</option>
                             <option value="Fatura1">?? Fatura1 ({normalizedFatura1.length})</option>
                             <option value="Fatura2">?? Fatura2 ({normalizedFatura2.length})</option>
                           </select>
@@ -6101,10 +6101,10 @@ KURALLAR:
                         </div>
                       </div>
 
-                      {/* En iok Kullanilan irinler */}
+                      {/* En çok Kullanilan Ürünler */}
                       {productStats.enCokKullanilanlar.length > 0 && (
                         <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
-                          <h5 className="text-xs font-bold text-yellow-800 mb-2">? Bu Projede En iok Kullanilan irinler:</h5>
+                          <h5 className="text-xs font-bold text-yellow-800 mb-2">? Bu Projede En çok Kullanilan Ürünler:</h5>
                           <div className="flex flex-wrap gap-2">
                             {productStats.enCokKullanilanlar.slice(0, 5).map(([urun, adet]) => (
                               <button
@@ -6125,16 +6125,16 @@ KURALLAR:
                     </div>
                   )}
 
-                  {/* irin Arama ve Ekleme */}
+                  {/* Ürün Arama ve Ekleme */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div className="md:col-span-2 relative">
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        irin Ara ({filteredProducts.length > 0 ? `${filteredProducts.length} sonui` : 'arama yapin'})
+                        Ürün Ara ({filteredProducts.length > 0 ? `${filteredProducts.length} sonui` : 'arama yapin'})
                       </label>
                       <div className="relative">
                         <input 
                           type="text" 
-                          placeholder="irin adi veya marka ile arayin..."
+                          placeholder="Ürün adi veya marka ile arayin..."
                           value={productSearch}
                           onChange={(e) => {
                             setProductSearch(e.target.value);
@@ -6151,7 +6151,7 @@ KURALLAR:
                         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-xl max-h-96 overflow-y-auto">
                           <div className="sticky top-0 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2 border-b border-blue-200">
                             <div className="text-xs font-semibold text-gray-700">
-                              {filteredProducts.length} irin bulundu
+                              {filteredProducts.length} Ürün bulundu
                               {markaFilter !== 'tumu' && <span className="ml-2 text-blue-600">i Marka: {markaFilter}</span>}
                               {kategoriFilter !== 'tumu' && <span className="ml-2 text-purple-600">i Kategori: {kategoriFilter}</span>}
                               {kaynakFilter !== 'tumu' && <span className="ml-2 text-green-600">i Kaynak: {kaynakFilter}</span>}
@@ -6447,7 +6447,7 @@ KURALLAR:
                 )}
               </div>
 
-              {/* irin Listesi */}
+              {/* Ürün Listesi */}
               {kesifProducts.length > 0 && (
                 <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                   <div className="bg-gray-800 px-4 py-3 flex justify-between items-center">
@@ -6462,7 +6462,7 @@ KURALLAR:
                           const totals = calculateKesifTotals();
                           let text = `?? KEŞİF METRAJ LİSTESİ\n`;
                           text += `================================\n\n`;
-                          text += `Firma: ${kesifCustomer.name || 'Belirtilmemi┼ş'}\n`;
+                          text += `Firma: ${kesifCustomer.name || 'Belirtilmemiş'}\n`;
                           text += `Tarih: ${new Date().toLocaleDateString('tr-TR')}\n\n`;
                           text += `MALZEME LiSTESi:\n`;
                           text += `--------------------------------\n`;
@@ -6491,13 +6491,13 @@ KURALLAR:
                       <button 
                         type="button"
                         onClick={() => {
-                          const percentage = prompt('Yizde deieri girin (+arti, -indirim):', '10');
+                          const percentage = prompt('Yüzde değeri girin (+arti, -indirim):', '10');
                           if (percentage !== null && percentage !== '') {
                             applyBulkPriceAdjustment(parseFloat(percentage));
                           }
                         }}
                         className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-3 py-1 rounded text-xs font-semibold transition flex items-center gap-1"
-                        title="izel yizde ile toplu fiyat ayarlama"
+                        title="özel yüzde ile toplu fiyat ayarlama"
                       >
                         <Percent className="w-3 h-3"/>
                         Toplu %
@@ -6506,7 +6506,7 @@ KURALLAR:
                         type="button"
                         onClick={() => applyBulkPriceAdjustment(10)}
                         className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold transition"
-                        title="Tum fiyatlara %10 zam"
+                        title="Tüm fiyatlara %10 zam"
                       >
                         +10%
                       </button>
@@ -6514,7 +6514,7 @@ KURALLAR:
                         type="button"
                         onClick={() => applyBulkPriceAdjustment(20)}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold transition"
-                        title="Tum fiyatlara %20 zam"
+                        title="Tüm fiyatlara %20 zam"
                       >
                         +20%
                       </button>
@@ -6522,20 +6522,20 @@ KURALLAR:
                         type="button"
                         onClick={() => applyBulkPriceAdjustment(-10)}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold transition"
-                        title="Tum fiyatlara %10 indirim"
+                        title="Tüm fiyatlara %10 indirim"
                       >
                         -10%
                       </button>
                       <button 
                         type="button"
                         onClick={() => {
-                          if (confirm(`${kesifProducts.length} irinin tamamini silmek istediçinizden emin misiniz?`)) {
+                          if (confirm(`${kesifProducts.length} Ürünin tamamini silmek istedışınızden emin misiniz?`)) {
                             setKesifProducts([]);
-                            alert('? Tim irinler silindi!');
+                            alert('? Tüm Ürünler silindi!');
                           }
                         }}
                         className="bg-gray-700 hover:bg-gray-800 text-white px-3 py-1 rounded text-xs font-semibold transition flex items-center gap-1"
-                        title="Tim listeyi temizle"
+                        title="Tüm listeyi temizle"
                       >
                         <Trash2 className="w-3 h-3"/>
                         Timini Sil
@@ -6778,7 +6778,7 @@ KURALLAR:
 
                 {aiLoading && (
                     <div className="text-center py-4 text-gray-500 text-sm animate-pulse">
-                        Gemini diçiniyor...
+                        Gemini dışınıyor...
                     </div>
                 )}
 
@@ -6804,7 +6804,7 @@ KURALLAR:
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200 mt-4">
                     <h3 className="font-bold text-gray-900 mb-3 flex items-center">
                       <Download className="w-4 h-4 mr-2"/>
-                      Export & i┼şlemler
+                      Export & işlemler
                     </h3>
                     
                     {/* Editor Mode Toggle */}
@@ -6979,11 +6979,11 @@ KURALLAR:
                       className="px-2 py-1 border border-gray-300 rounded text-sm"
                     >
                       <option value="">Yazi Boyutu</option>
-                      <option value="1">iok Kiik</option>
+                      <option value="1">çok Kiik</option>
                       <option value="2">Kiik</option>
                       <option value="3">Normal</option>
-                      <option value="4">Biyik</option>
-                      <option value="5">iok Biyik</option>
+                      <option value="4">Büyük</option>
+                      <option value="5">çok Büyük</option>
                       <option value="6">Dev</option>
                     </select>
                     <select 
@@ -7063,11 +7063,11 @@ KURALLAR:
                                   </div>
                                 </div>
 
-                                {/* Miteri Bilgileri - Sadece ilk Sayfa */}
+                                {/* Müşteri Bilgileri - Sadece ilk Sayfa */}
                                 {pageIndex === 0 && (
                                   <>
                                     <div className="mb-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                      <h3 className="text-[10pt] font-bold text-blue-800 mb-3 uppercase tracking-wide">Miteri Bilgileri</h3>
+                                      <h3 className="text-[10pt] font-bold text-blue-800 mb-3 uppercase tracking-wide">Müşteri Bilgileri</h3>
                                       <div className="grid grid-cols-2 gap-3 text-[9pt]">
                                         <div><strong>Firma/Kurum:</strong> {selectedCompany.name}</div>
                                         {selectedCompany.contactName && <div><strong>Yetkili:</strong> {selectedCompany.contactName}</div>}
@@ -7080,13 +7080,13 @@ KURALLAR:
                                       <strong>Sayın {selectedCompany.contactName ? `${selectedCompany.contactName} - ` : ''}{selectedCompany.name} Yetkilisi,</strong>
                                     </p>
                                     <p className="mb-6 text-justify text-[9.5pt] leading-tight">
-                                      Talep ettiginiz elektrik malzemeleri ve kablolara iliskin kesif metraj fiyat teklifimiz asagida detaylandirilmistir. 
-                                      Tum fiyatlar guncel piyasa kosullari goz onunde bulundurularak hazirlanmistir.
+                                      Talep ettiğiniz elektrik malzemeleri ve kablolara ilişkin kesif metraj fiyat teklifimiz aşağıda detaylandırılmıştır. 
+                                      Tüm fiyatlar güncel piyasa koşulları göz önünde bulundurularak hazırlanmistir.
                                     </p>
                                   </>
                                 )}
 
-                                {/* irin Tablosu */}
+                                {/* Ürün Tablosu */}
                                 <h3 className="text-[10pt] font-bold text-gray-800 mb-3 uppercase tracking-wide">
                                   {pageIndex === 0 ? 'Malzeme Listesi ve Fiyatlandirma' : 'Malzeme Listesi (Devam)'}
                                 </h3>
@@ -7166,11 +7166,11 @@ KURALLAR:
                                     <div className="mt-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
                                       <h3 className="text-[10pt] font-bold text-gray-800 mb-3">Genel iartlar ve Notlar</h3>
                                       <ul className="list-disc list-inside text-[9pt] leading-relaxed space-y-2">
-                                        <li>Teklif geçerlilik süresi: 15 gindir.</li>
+                                        <li>Teklif geçerlilik süresi: 15 gündür.</li>
                                         <li>Fiyatlara KDV dahil edilmitir.</li>
-                                        <li>Teslimat süresi: Sipari onayindan sonra 7-10 i ginidir.</li>
-                                        <li>ödeme iartlari: Güçriilerek belirlenecektir.</li>
-                                        <li>Fiyatlar hammadde ve diviz kurundaki deiikliklere baili olarak revize edilebilir.</li>
+                                        <li>Teslimat süresi: Sipariş onayından sonra 7-10 i ginidir.</li>
+                                        <li>Ödeme şartları: Görüşülerek belirlenecektir.</li>
+                                        <li>Fiyatlar hammadde ve döviz kurundaki değişikliklere bağlı olarak revize edilebilir.</li>
                                         <li>Malzemeler kaliteli ve orijinaldir, gerekli belge ve sertifikalarla birlikte teslim edilir.</li>
                                       </ul>
                                     </div>
@@ -7183,7 +7183,7 @@ KURALLAR:
                               <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                                 <div className="text-[9pt] text-gray-600">
                                   <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                                  <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                                  <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                                   <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                   <p className="text-gray-400 mt-1 text-right">Sayfa {pageIndex + 1}/{totalPages}</p>
                                 </div>
@@ -7218,7 +7218,7 @@ KURALLAR:
                     <p className="mb-4 text-justify text-[9.5pt] leading-tight">
                       Tesisinize yönelik <strong>YG işletme Sorumluluğu</strong> hizmeti fiyat teklifi, talep ettiğiniz trafo kurulu gücü ve 
                       TMMOB Elektrik Mühendisleri Odası'nin (EMO) {params.year} yılı Ücret Tanımları (KISIM III) esas alınarak, 
-                      rekabeti piyasa koşulları doğrultusunda tekliflerimizde uyguladiimiz indirim oraniyla aşağıda sunulmuştur.
+                      rekabeti piyasa koşulları doğrultusunda tekliflerimizde uyguladiimiz indirim oranıyla aşağıda sunulmuştur.
                     </p>
 
                     <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">1. Tesis Bilgileri ve Toplam Kurulu Güç</h3>
@@ -7228,13 +7228,13 @@ KURALLAR:
                         <li>Trafo Güçleri Dağılımı: <strong>{selectedCompany.powerStr} kVA</strong></li>
                         <li>Toplam Kurulu Güç: <strong>{selectedCompany.totalKVA || 0} kVA ({((selectedCompany.totalKVA || 0) / 1000).toFixed(2)} MVA)</strong></li>
                         <li>Tesis Tipi: <strong>{selectedCompany.type === 'direk' ? 'Direk Tipi Trafo Merkezi' : 'Bina Tipi Trafo Merkezi'}</strong></li>
-                        <li>Bölge/Katsayi: <strong>{selectedCompany.region || 'Belirtilmemi┼ş'} (x{(selectedCompany.regionCoeff || 1.0).toFixed(2)})</strong></li>
+                        <li>Bölge/Katsayi: <strong>{selectedCompany.region || 'Belirtilmemiş'} (x{(selectedCompany.regionCoeff || 1.0).toFixed(2)})</strong></li>
                         <li>Sektör: <strong>{selectedCompany.sector}</strong></li>
                       </ul>
                     </div>
 
                     <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">2. EMO {params.year} Yılı Aylık Asgari icret Hesaplamasi</h3>
-                    <p className="mb-2 text-[9.5pt] leading-tight">EMO {params.year} Yılı Ücret Tanımları'nda (Kisim III), bina ve direk tipi trafo merkezleri için aylik işletme sorumluluğu bedelleri kapasiteye göre belirlenmektedir.</p>
+                    <p className="mb-2 text-[9.5pt] leading-tight">EMO {params.year} Yılı Ücret Tanımları'nda (Kısım III), bina ve direk tipi trafo merkezleri için aylık işletme sorumluluğu bedelleri kapasiteye göre belirlenmektedir.</p>
                     
                     <table className="w-full text-[9pt] border-collapse border border-gray-300 mb-3">
                       <thead style={{backgroundColor: '#bbdefb'}}>
@@ -7314,7 +7314,7 @@ KURALLAR:
                     </table>
 
                     <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">3. Uygulanan İskonto ve Nihai Teklif</h3>
-                    <p className="mb-4 text-[9.5pt] leading-tight">Piyasa koşullarına uyum sailamak amaciyla, işletmenize izel <strong>%{selectedCompany.appliedDiscountRate || params.discountRate}</strong> İskonto uygulanmitir.</p>
+                    <p className="mb-4 text-[9.5pt] leading-tight">Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel <strong>%{selectedCompany.appliedDiscountRate || params.discountRate}</strong> İskonto uygulanmıştır.</p>
                     
                     <div className="rounded p-4 border-2 mb-1" style={{backgroundColor: '#c8e6c9', borderColor: '#81c784'}}>
                       <div className="flex justify-between items-center mb-1.5 text-[9.5pt]" style={{color: '#2e7d32'}}>
@@ -7334,11 +7334,11 @@ KURALLAR:
                     <div className="text-[9pt] text-gray-600 border-t pt-1 mt-0" style={{pageBreakInside: 'avoid'}}>
                       <h4 className="font-bold mb-1 text-[9.5pt]">Açıklamalar:</h4>
                       <ul className="list-disc list-inside space-y-0.5 text-[9pt] leading-tight">
-                        <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylik periyotlarla hazırlanmıştır.</li>
-                        <li>2. işletme sorumluluğu hizmetinin SMM tarafından istlenilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
-                        <li>3. Enerji tiketüminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.</li>
-                        <li>4. EMO tarafından hazirlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrilmaz bir parçasıdır. YG işletme Sorumluluğunu istlenecek mühendisin EMO tarafından verilen YGTiS belgesine sahip olması gerekir.</li>
-                        <li>5. işveren olarak sizin yükümliliçiniz, işletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatlari/hizmetleri sailamak, talep edilen güvenlik malzemelerini almak ve uyarilarina riayet etmektir.</li>
+                        <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.</li>
+                        <li>2. işletme sorumluluğu hizmetinin SMM tarafından işletilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
+                        <li>3. Enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.</li>
+                        <li>4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır. YG işletme Sorumluluğunu işletilecek mühendisin EMO tarafından verilen YGTİS belgesine sahip olması gerekir.</li>
+                        <li>5. işveren olarak sizin yükümlülüğünüz, işletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.</li>
                       </ul>
                     </div>
                     </div>
@@ -7347,7 +7347,7 @@ KURALLAR:
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                       <div className="text-[9pt] text-gray-600">
                         <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                         <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 1/2</p>
                       </div>
@@ -7368,57 +7368,57 @@ KURALLAR:
 
                       <h3 className="text-[10pt] font-bold text-gray-800 mb-2 uppercase tracking-wide border-b border-gray-300 pb-2">VoltGuard için Artı Değer Katacak ücretsiz Hizmetler</h3>
                       <p className="mb-3 text-justify text-[9.5pt] leading-tight">
-                        YG işletme Sorumluluğu hizmeti kapsaminda enerji tiketüminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi sorumluluğunuzun dışında tutulmuitur. Ancak, VoltGuard olarak satın alma birimi için maliyet kontrolü ve operasyonel güvenliği artıracak bu kritik alanlarda ücretsiz ek hizmetler sunabiliriz:
+                        YG işletme Sorumluluğu hizmeti kapsamında enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi sorumluluğunuzun dışında tutulmuştur. Ancak, VoltGuard olarak satın alma birimi için maliyet kontrolü ve operasyonel güvenliği artıracak bu kritik alanlarda ücretsiz ek hizmetler sunabiliriz:
                       </p>
 
                       <div className="space-y-2 pb-8">
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
-                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">1. Ariza Onleme Odakli Termal Goruntuleme</h4>
+                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">1. Ariza Onleme Odakli Termal Görüntüleme</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
-                              Uretim surekliliginin kritik oldugu buyuk tesislerde, YG tesisatinda (trafolar, OG hucreleri ve bara baglantilari) meydana gelebilecek gevsek baglantilar, asiri isinmaya ve ciddi arizalara neden olabilir.
+                              Uretim sürekliliğinin kritik oldugu büyük tesislerde, YG tesisatında (trafolar, OG hücreleri ve bara bağlantıları) meydana gelebilecek gevşek bağlantılar, aşırı ısınmaya ve ciddi arızalara neden olabilir.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>Ucretsiz Hizmet:</strong> Yil icinde 12 kez (ornegin aylik periyotlarla) transformatorlerin ve yuksek gerilim hucrelerinin termal kamera ile kontrol edilmesi ve bu kontrollerin raporlanmasi.</li>
-                              <li><strong>Arti Deger:</strong> Bu denetim, YG ekipmanlarinda ariza potansiyeli olan asiri isinmalari ve kontak gevsekliklerini (seri ark) erkenden belirleyerek, uretim kesintisi kaynakli buyuk ekonomik kayiplarin onune gecer.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Yıl içinde 12 kez (örneğin aylık periyotlarla) transformatörlerin ve yüksek gerilim hücrelerinin termal kamera ile kontrol edilmesi ve bu kontrollerin raporlanması.</li>
+                              <li><strong>Artı Deger:</strong> Bu denetim, YG ekipmanlarında arıza potansiyeli olan aşırı ısınmaları ve kontak gevşekliklerini (seri ark) erkenden belirleyerek, üretim kesintisi kaynakli büyük ekonomik kayıpların onune gecer.</li>
                             </ul>
                           </div>
 
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
                             <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">2. Reaktif Güç ve Enerji Kalitesi Takibi</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
-                              Yüksek enerji tiketicisi olan sanayi firmalari için reaktif gi cezalari önemli bir maliyet kalemidir. EMO yinetmelikleri bu takibi kapsamaz.
+                              Yüksek enerji tüketicisi olan sanayi firmaları için reaktif güç cezaları önemli bir maliyet kalemidir. EMO yönetmelikleri bu takibi kapsamaz.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>ücretsiz Hizmet:</strong> Tesisin reaktif gi durumunun ve gi faktirinin (PF) uzaktan izlenmesi ve çeyreklik dönemlerde (her ayda bir) kompanzasyon sisteminin durumu ve olası ceza riskleri hakkinda özet rapor sunulmasi.</li>
-                              <li><strong>Artı Değer:</strong> Yasal sınırların (genellikle 0.95 seviyesine yakin) diçina çıkılmasını önleyerek, yiksek kompanzasyon cezasi riskini ortadan kaldirmaya yardimci olur ve görünür gi talebini iyileştirir.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Tesisin reaktif gi durumunun ve güç faktörünün (PF) uzaktan izlenmesi ve çeyreklik dönemlerde (her ayda bir) kompanzasyon sisteminin durumu ve olası ceza riskleri hakkında özet rapor sunulması.</li>
+                              <li><strong>Artı Değer:</strong> Yasal sınırların (genellikle 0.95 seviyesine yakın) dışına çıkılmasını önleyerek, yüksek kompanzasyon cezası riskini ortadan kaldırmaya yardımcı olur ve görünür gi talebini iyileştirir.</li>
                             </ul>
                           </div>
 
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
-                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">3. Enerji Verimlilii ve Sürdürülebilirlik Ön Analizi</h4>
+                            <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">3. Enerji Verimliliği ve Sürdürülebilirlik Ön Analizi</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
-                              Biyik firmalar GES ve enerji verimlilii (IE3/IE4 motorlar, VSD uygulamalari) konusunda aktif yatirimlar yapmaktadir.
+                              Büyük firmalar GES ve enerji verimliliği (IE3/IE4 motorlar, VSD uygulamaları) konusunda aktif yatırımlar yapmaktadır.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>ücretsiz Hizmet:</strong> Tesisinizdeki enerji yoğun alanlarin (fanlar, pompalar, motorlar) in analizi ve Yüksek Verimli Motorlar (IE3/IE4/IE5) veya Değişken Hızlı Sürücü (VSD) kullanim potansiyelinin belirlenmesi için başlangıç danışmanlığı.</li>
-                              <li><strong>Artı Değer:</strong> Enerji (kW) tiketümini ve karbon ayak izini azaltma hedeflerine ulaşılmasına yardimci olurken, aynı zamanda motorlarin daha iyi gi faktirleri (PF) ile çalışmasını sailayarak trafo üzerindeki reaktif yükü azaltir ve kapasiteyi daha etkin kullanir.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki enerji yoğun alanların (fanlar, pompalar, motorlar) in analizi ve Yüksek Verimli Motorlar (IE3/IE4/IE5) veya Değişken Hızlı Sürücü (VSD) kullanım potansiyelinin belirlenmesi için başlangıç danışmanlığı.</li>
+                              <li><strong>Artı Değer:</strong> Enerji (kW) tüketimini ve karbon ayak izini azaltma hedeflerine ulaşılmasına yardımcı olurken, aynı zamanda motorların daha iyi güç faktörleri (PF) ile çalışmasını sağlayarak trafo üzerindeki reaktif yükü azaltir ve kapasiteyi daha etkin kullanir.</li>
                             </ul>
                           </div>
 
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
                             <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">4. Yedek Malzeme ve Kritik Stok Listesi Danışmanlığı</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
-                              Güçda sanayinde kritik arizalara hızlı müdahale esastir. Yedek parça yinetümi, ariza süresini (downtüme) doğrudan etkiler.
+                              Güçda sanayisinde kritik arızalara hızlı müdahale esastir. Yedek parça yönetimi, arıza süresini (downtime) doğrudan etkiler.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>ücretsiz Hizmet:</strong> Tesisinizdeki YG ve AG kritik ekipmanlar (trafo buiçingleri, parafudr, sekonder koruma röleleri, OG hicre mekanizmaları vb.) için risk ve tedarik sürelerine dayali acil durum yedek parça listesi ve önerilen minimum stok seviyelerinin belirlenmesi konusunda danimanlik sağlanması.</li>
-                              <li><strong>Artı Değer:</strong> Ariza durumunda gerekli yedek parçalarin hızlı teminini sailayarak ariza onarım süresini (MTTR) minimize eder ve işletme sirekliliçini destekler.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki YG ve AG kritik ekipmanlar (trafo buşingleri, parafudr, sekonder koruma röleleri, OG hücre mekanizmaları vb.) için risk ve tedarik sürelerine dayali acil durum yedek parça listesi ve önerilen minimum stok seviyelerinin belirlenmesi konusunda danimanlik sağlanması.</li>
+                              <li><strong>Artı Değer:</strong> Ariza durumunda gerekli yedek parçaların hızlı teminini sağlayarak arıza onarım süresini (MTTR) minimize eder ve işletme sürekliliğini destekler.</li>
                             </ul>
                           </div>
                       </div>
                       
                       <p className="mt-2 mb-16 text-[9pt] italic text-gray-600 border-t border-gray-300 pt-2 leading-tight">
-                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunluluklari karilayan bir tedariki┼şi değil, aynı zamanda maliyet optümizasyonuna ve operasyonel givenlie odaklanan stratejik bir iş ortağı olduğunu göstermektedir.
+                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunluluklari karşılayan bir tedarikişi değil, aynı zamanda maliyet optimizasyonuna ve operasyonel güvenliğe odaklanann stratejik bir iş ortağı olduğunu göstermektedir.
                       </p>
                     </div>
 
@@ -7426,7 +7426,7 @@ KURALLAR:
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2" style={{pageBreakInside: 'avoid'}}>
                       <div className="text-[9pt] text-gray-600">
                         <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                         <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 2/2</p>
                       </div>
@@ -7517,7 +7517,7 @@ KURALLAR:
                     <p className="text-xs text-gray-600 mb-3 line-clamp-2">{paket.aciklama}</p>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                       <FileSpreadsheet className="w-4 h-4"/>
-                      <span className="font-semibold">{paket.urunler.length} kalem irin</span>
+                      <span className="font-semibold">{paket.urunler.length} kalem Ürün</span>
                     </div>
                   </div>
                 ))}
@@ -7528,13 +7528,13 @@ KURALLAR:
             {selectedHazirPaket && (
               <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
                 <h3 className="text-sm font-bold text-gray-800 mb-3">
-                  ?? {HazirPaketler.paketler.find(p => p.id === selectedHazirPaket)?.ad} - irin Listesi
+                  ?? {HazirPaketler.paketler.find(p => p.id === selectedHazirPaket)?.ad} - Ürün Listesi
                 </h3>
                 <div className="max-h-48 overflow-y-auto bg-white rounded-lg border border-gray-200 p-3">
                   <table className="w-full text-xs">
                     <thead className="bg-gray-100 sticky top-0">
                       <tr>
-                        <th className="px-2 py-1 text-left">irin</th>
+                        <th className="px-2 py-1 text-left">Ürün</th>
                         <th className="px-2 py-1 text-center">Miktar</th>
                         <th className="px-2 py-1 text-left">Aiklama</th>
                       </tr>
@@ -7584,7 +7584,7 @@ KURALLAR:
         </div>
       )}
 
-      {/* AI Keif Sihirbazi Modal */}
+      {/* AI Keşif Sihirbazi Modal */}
       {isAiWizardOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden animate-fadeIn">
@@ -7592,7 +7592,7 @@ KURALLAR:
               <div className="flex items-center gap-3">
                 <Sparkles className="w-8 h-8 animate-pulse text-yellow-300"/>
                 <div>
-                  <h3 className="font-bold text-xl">?? AI Keif Sihirbazi</h3>
+                  <h3 className="font-bold text-xl">?? AI Keşif Sihirbazi</h3>
                   <p className="text-sm text-purple-100">Yapay zeka ile otomatik malzeme listesi oluştur</p>
                 </div>
               </div>
@@ -7608,7 +7608,7 @@ KURALLAR:
               <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg mb-6 border border-purple-200">
                 <p className="text-sm text-gray-700 leading-relaxed">
                   <span className="font-bold text-purple-700">?? Nasil kullanilir:</span><br/>
-                  Projenizi detayli bir sekilde anlatin. Ornegin: "150m2 3+1 daire icin komple elektrik tesisati", 
+                  Projenizi detayli bir şekilde anlatin. Ornegin: "150m2 3+1 daire icin komple elektrik tesisati", 
                   "Ofis binasi 5 kat için aydinlatma ve priz hatti", "Villa için di cephe ve bahie aydinlatmasi" vb.
                 </p>
               </div>
@@ -7673,7 +7673,7 @@ KURALLAR:
               {aiLoading ? (
                 <div className="h-96 flex flex-col items-center justify-center text-indigo-600">
                   <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-6"/>
-                  <p className="font-bold text-lg">Profesyonel teklifiniz hazirlaniyor...</p>
+                  <p className="font-bold text-lg">Profesyonel teklifiniz hazırlaniyor...</p>
                   <p className="text-sm text-gray-500 mt-2">Bu birkai saniye sirebilir</p>
                 </div>
               ) : (
@@ -7682,7 +7682,7 @@ KURALLAR:
                     <p className="text-sm text-gray-700 flex items-start gap-2">
                       <Lightbulb className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5"/>
                       <span>
-                        <span className="font-bold text-indigo-700">Duzenleme ipucu:</span> Metni istediginiz gibi duzenleyebilir, 
+                        <span className="font-bold text-indigo-700">Duzenleme ipucu:</span> Metni istediğiniz gibi düzenleyebilir, 
                         ardindan kopyalayip e-posta programiniza yapistirabilirsiniz.
                       </span>
                     </p>
@@ -7700,7 +7700,7 @@ KURALLAR:
 
             <div className="p-6 border-t border-gray-200 bg-gray-50 flex justify-between items-center gap-4 shrink-0">
               <div className="text-sm text-gray-600">
-                <span className="font-semibold text-gray-800">{kesifProducts.length}</span> irin i 
+                <span className="font-semibold text-gray-800">{kesifProducts.length}</span> Ürün i 
                 <span className="font-semibold text-indigo-600 ml-1">{calculateKesifTotals().grandTotal.toFixed(2)} TL</span>
               </div>
               <div className="flex gap-3">
