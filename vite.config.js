@@ -10,6 +10,7 @@ export default defineConfig({
     open: true
   },
   build: {
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
@@ -18,6 +19,15 @@ export default defineConfig({
         'beyaz-yaka': resolve(__dirname, 'beyaz-yaka.html'),
         kontrol: resolve(__dirname, 'kontrol.html'),
         osos: resolve(__dirname, 'osos.html')
+      },
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-charts': ['recharts'],
+          'vendor-pdf': ['jspdf', 'jspdf-autotable'],
+          'vendor-xlsx': ['xlsx'],
+          'vendor-docx': ['docx', 'file-saver'],
+        }
       }
     }
   }

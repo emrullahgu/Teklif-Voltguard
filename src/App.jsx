@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { Calculator, FileText, Settings, Search, Save, Download, Printer, X, Edit3, ChevronRight, CheckCircle, Lightbulb, Zap, Mail, TrendingDown, RefreshCw, UserPlus, Users, MapPin, Percent, UploadCloud, Sparkles, Copy, Type, Bold, Italic, AlignLeft, AlignCenter, AlignRight, FileSpreadsheet, Hammer, Plus, Trash2, Cable, Wrench, Clock, Star, Banknote, Menu, ExternalLink, Fuel, Briefcase, BarChart3, Package } from 'lucide-react';
 import { BordroWithPassword } from './bordro-main.jsx';
 import BeyazYakaBordro from './BeyazYakaBordro.tsx';
@@ -55,91 +55,91 @@ const CombinedFaturaData = [...normalizedFatura1, ...normalizedFatura2];
 // EMO 2026 Bölgesel Azaltma Katsayilari Listesi (Sabit Veri)
 const REGION_LIST = [
   { name: "Adana (Merkez)", coeff: 1.00 },
-  { name: "Adana (ievre ilieler)", coeff: 0.75 },
-  { name: "Adiyaman", coeff: 0.75 },
+  { name: "Adana (Çevre İlçeler)", coeff: 0.75 },
+  { name: "Adıyaman", coeff: 0.75 },
   { name: "Afyon", coeff: 0.60 },
-  { name: "Airi", coeff: 0.75 },
+  { name: "Ağrı", coeff: 0.75 },
   { name: "Aksaray", coeff: 0.60 },
   { name: "Amasya", coeff: 0.75 },
-  { name: "Ankara (Biyüküehir)", coeff: 1.00 },
+  { name: "Ankara (Büyükşehir)", coeff: 1.00 },
   { name: "Antalya (Merkez)", coeff: 1.00 },
   { name: "Alanya", coeff: 1.00 },
   { name: "Artvin", coeff: 0.75 },
-  { name: "Aydin (Merkez)", coeff: 1.00 },
-  { name: "Aydin (Dier ilieler)", coeff: 0.75 },
-  { name: "Balikesir", coeff: 0.75 },
-  { name: "Bartin", coeff: 0.75 },
+  { name: "Aydın (Merkez)", coeff: 1.00 },
+  { name: "Aydın (Diğer İlçeler)", coeff: 0.75 },
+  { name: "Balıkesir", coeff: 0.75 },
+  { name: "Bartın", coeff: 0.75 },
   { name: "Batman", coeff: 0.75 },
   { name: "Bayburt", coeff: 0.75 },
   { name: "Bilecik", coeff: 0.75 },
-  { name: "Bingil", coeff: 0.75 },
+  { name: "Bingöl", coeff: 0.75 },
   { name: "Bitlis", coeff: 0.75 },
   { name: "Bolu", coeff: 0.75 },
   { name: "Burdur", coeff: 0.75 },
   { name: "Bursa (Merkez)", coeff: 1.00 },
-  { name: "ianakkale", coeff: 0.75 },
-  { name: "iankiri", coeff: 0.60 },
-  { name: "iorum", coeff: 0.75 },
+  { name: "Çanakkale", coeff: 0.75 },
+  { name: "Çankırı", coeff: 0.60 },
+  { name: "Çorum", coeff: 0.75 },
   { name: "Denizli (Merkez)", coeff: 1.00 },
-  { name: "Diyarbakir (Merkez)", coeff: 1.00 },
-  { name: "Dizce", coeff: 0.75 },
-  { name: "Elazi", coeff: 0.75 },
+  { name: "Diyarbakır (Merkez)", coeff: 1.00 },
+  { name: "Düzce", coeff: 0.75 },
+  { name: "Elazığ", coeff: 0.75 },
   { name: "Erzincan", coeff: 0.60 },
-  { name: "Erzurum (Biyüküehir)", coeff: 0.75 },
-  { name: "Eski┼şiehir (Merkez)", coeff: 1.00 },
+  { name: "Erzurum (Büyükşehir)", coeff: 0.75 },
+  { name: "Eskişehir (Merkez)", coeff: 1.00 },
   { name: "Gaziantep (Merkez)", coeff: 1.00 },
-  { name: "Güçresun", coeff: 0.75 },
-  { name: "Güçmihane", coeff: 0.75 },
+  { name: "Giresun", coeff: 0.75 },
+  { name: "Gümüşhane", coeff: 0.75 },
   { name: "Hakkari", coeff: 0.75 },
   { name: "Hatay", coeff: 1.00 },
-  { name: "Iidir", coeff: 0.75 },
+  { name: "Iğdır", coeff: 0.75 },
   { name: "Isparta", coeff: 1.00 },
-  { name: "istanbul", coeff: 1.00 },
-  { name: "─░zmir (Merkez il├ğeler)", coeff: 1.00 },
-  { name: "─░zmir (Alia─şa/Kemalpa┼şa/├ûdemi┼ş)", coeff: 1.00 },
-  { name: "─░zmir (Di─şer il├ğeler)", coeff: 0.75 },
-  { name: "K.Marai", coeff: 0.75 },
-  { name: "Karabik", coeff: 0.75 },
+  { name: "İstanbul", coeff: 1.00 },
+  { name: "İzmir (Merkez İlçeler)", coeff: 1.00 },
+  { name: "İzmir (Aliağa/Kemalpaşa/Ödemiş)", coeff: 1.00 },
+  { name: "İzmir (Diğer İlçeler)", coeff: 0.75 },
+  { name: "K.Maraş", coeff: 0.75 },
+  { name: "Karabük", coeff: 0.75 },
   { name: "Karaman", coeff: 0.75 },
   { name: "Kars", coeff: 0.75 },
   { name: "Kastamonu", coeff: 0.60 },
-  { name: "Kayseri (Biyüküehir)", coeff: 0.75 },
-  { name: "Kirikkale", coeff: 0.60 },
-  { name: "Kiriehir", coeff: 0.60 },
+  { name: "Kayseri (Büyükşehir)", coeff: 0.75 },
+  { name: "Kırıkkale", coeff: 0.60 },
+  { name: "Kırşehir", coeff: 0.60 },
   { name: "Kilis", coeff: 0.75 },
   { name: "Kocaeli (Merkez)", coeff: 1.00 },
-  { name: "Konya (Biyüküehir)", coeff: 0.75 },
-  { name: "Kitahya", coeff: 0.75 },
+  { name: "Konya (Büyükşehir)", coeff: 0.75 },
+  { name: "Kütahya", coeff: 0.75 },
   { name: "Malatya", coeff: 0.75 },
   { name: "Manisa (Merkez/Akhisar)", coeff: 1.00 },
-  { name: "Manisa (Dier ilieler)", coeff: 0.75 },
+  { name: "Manisa (Diğer İlçeler)", coeff: 0.75 },
   { name: "Mardin", coeff: 0.75 },
   { name: "Mersin (Merkez)", coeff: 1.00 },
-  { name: "Muila", coeff: 1.00 },
-  { name: "Mui", coeff: 0.75 },
-  { name: "Neviehir", coeff: 0.60 },
-  { name: "Nide", coeff: 0.75 },
+  { name: "Muğla", coeff: 1.00 },
+  { name: "Muş", coeff: 0.75 },
+  { name: "Nevşehir", coeff: 0.60 },
+  { name: "Niğde", coeff: 0.75 },
   { name: "Ordu", coeff: 0.75 },
   { name: "Osmaniye", coeff: 0.75 },
   { name: "Rize", coeff: 0.75 },
   { name: "Sakarya", coeff: 0.75 },
   { name: "Samsun (Merkez)", coeff: 1.00 },
-  { name: "Sirt", coeff: 0.75 },
+  { name: "Siirt", coeff: 0.75 },
   { name: "Sinop", coeff: 0.75 },
   { name: "Sivas", coeff: 0.60 },
-  { name: "ianliurfa", coeff: 0.75 },
-  { name: "irnak", coeff: 0.75 },
-  { name: "Tekirdai (Trakya)", coeff: 0.75 },
+  { name: "Şanlıurfa", coeff: 0.75 },
+  { name: "Şırnak", coeff: 0.75 },
+  { name: "Tekirdağ (Trakya)", coeff: 0.75 },
   { name: "Tokat", coeff: 0.60 },
   { name: "Trabzon (Merkez)", coeff: 1.00 },
-  { name: "Trabzon (ilieler)", coeff: 0.75 },
+  { name: "Trabzon (İlçeler)", coeff: 0.75 },
   { name: "Tunceli", coeff: 0.75 },
-  { name: "Uiak (Merkez)", coeff: 1.00 },
+  { name: "Uşak (Merkez)", coeff: 1.00 },
   { name: "Van", coeff: 0.75 },
   { name: "Yalova", coeff: 0.75 },
   { name: "Yozgat", coeff: 0.60 },
   { name: "Zonguldak", coeff: 0.75 },
-  { name: "Dier (Varsayilan)", coeff: 1.00 }
+  { name: "Diğer (Varsayılan)", coeff: 1.00 }
 ];
 
 // EMO 2026 Periyodik Kontrol Fiyat Sabitleri (Kisim V - Test ve ilim Hizmetleri)
@@ -239,7 +239,7 @@ const App = () => {
     contactName: '',
     powerStr: '',
     type: 'bina', // 'bina' or 'direk'
-    region: '─░zmir (Alia─şa/Kemalpa┼şa/├ûdemi┼ş)', // Varsay─▒lan g├Âr├╝nt├╝lenen isim
+    region: 'İzmir (Aliağa/Kemalpaşa/Ödemiş)', // Varsayılan görüntülenen isim
     regionCoeff: 1.00, // Varsayilan katsayi
     customDiscount: 70 // Kullaniciya izel İskonto
   });
@@ -365,7 +365,7 @@ const App = () => {
   // GES Teklifi States
   const [gesForm, setGesForm] = useState({
     customerName: 'MUHAMMET BiLBiL',
-    location: 'Kemalpa┼şa / ─░ZM─░R',
+    location: 'Kemalpaşa / İZMİR',
     usdRate: 34.50,
     offerDate: new Date().toISOString().split('T')[0],
     autoPower: 25, // kW
@@ -665,7 +665,7 @@ const App = () => {
       return saved;
     } catch (error) {
       console.error('Teklif kaydetme hatasi:', error);
-      alert('? Teklif kaydedi┼şlemedi!');
+      alert('❌ Teklif kaydedilemedi!');
       return null;
     }
   };
@@ -1821,7 +1821,7 @@ const App = () => {
     setAiError(null);
     
     try {
-      // Katalog verilerini hazirla - daha ki┼şik irnek
+      // Katalog verilerini hazirla - daha kişisel örnek
       const catalogSample = CombinedFaturaData.slice(0, 200).map(d => ({
         urun: d.urun,
         marka: d.marka,
@@ -1830,11 +1830,11 @@ const App = () => {
       
       const systemPrompt = `Sen uzman bir elektrik mihendisisin. Kullanicinin proje tanimina göre gerekli malzeme listesi oluştur.
 
-Katalog irnekleri: ${JSON.stringify(catalogSample.slice(0, 50))}
+Katalog örnekleri: ${JSON.stringify(catalogSample.slice(0, 50))}
 
 KURALLAR:
 1. Katalogdaki irin isimlerine benzer irinler iner (NYY, NYM, NVV, kablo, sigorta, priz, anahtar vb.)
-2. Gerieki┼şi miktarlar tahmin et
+2. Gerçekçi miktarlar tahmin et
 3. SADECE bu JSON formatinda yanit ver: [{"urun": "3x2.5 NYY", "miktar": 50, "birim": "metre", "aciklama": "Ana hat"}]
 4. 5-15 irin iner
 5. Yanit baika bir iey iermemeli, sadece JSON array`;
@@ -1941,9 +1941,9 @@ KURALLAR:
       
       const userPrompt = `
         FiRMA BiLGüçLERi:
-        - Firma Adi: ${kesifCustomer.name || 'Belirtilmemi┼ş'}
-        - Adres: ${kesifCustomer.address || 'Belirtilmemi┼ş'}
-        - ileti┼şim: ${kesifCustomer.contactPerson || 'Belirtilmemi┼ş'}
+        - Firma Adi: ${kesifCustomer.name || 'Belirtilmemiş'}
+        - Adres: ${kesifCustomer.address || 'Belirtilmemiş'}
+        - iletişim: ${kesifCustomer.contactPerson || 'Belirtilmemiş'}
         
         MALZEME LiSTESi:
         ${productList}
@@ -2301,7 +2301,7 @@ KURALLAR:
         // Güçrseli PDF'e ekle
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, '', 'FAST');
         
-        // Logoyu yiksek kalitede ekle (sol ist ki┼şie, aspect ratio korunarak)
+        // Logoyu yüksek kalitede ekle (sol üst köşe, aspect ratio korunarak)
         pdf.addImage(logoInfo.data, 'PNG', 10, 10, logoWidth, logoHeight, '', 'FAST');
 
         // Logolari tekrar gister
@@ -2437,7 +2437,7 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: `i Bölge/Katsayi: ${selectedCompany.region || 'Belirtilmemi┼ş'} (x${(selectedCompany.regionCoeff || 1.0).toFixed(2)})`,
+              text: `i Bölge/Katsayi: ${selectedCompany.region || 'Belirtilmemiş'} (x${(selectedCompany.regionCoeff || 1.0).toFixed(2)})`,
               spacing: { after: 100 }
             }),
             new Paragraph({
@@ -2564,7 +2564,7 @@ KURALLAR:
               spacing: { after: 50 }
             }),
             new Paragraph({
-              text: "Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye"
+              text: "Tel: +90 545 434 67 35 | İzmir, Türkiye"
             })
           ]
         }]
@@ -2702,7 +2702,7 @@ KURALLAR:
       ['Yetkili:', selectedCompany.contactName],
       ['Sektör:', selectedCompany.sector],
       ['Tesis Tipi:', selectedCompany.type === 'direk' ? 'Direk Tipi' : 'Bina Tipi'],
-      ['Bölge:', selectedCompany.region || 'Belirtilmemi┼ş'],
+      ['Bölge:', selectedCompany.region || 'Belirtilmemiş'],
       ['Bölge Katsayisi:', selectedCompany.regionCoeff],
       [],
       ['Güç BiLGüçLERi'],
@@ -2718,7 +2718,7 @@ KURALLAR:
       [],
       ['VoltGuard'],
       ['voltguard.com.tr | info@voltguard.com.tr'],
-      ['Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye']
+      ['Tel: +90 545 434 67 35 | İzmir, Türkiye']
     ];
     
     const worksheet = XLSX.utils.aoa_to_sheet(proposalData);
@@ -2767,7 +2767,7 @@ KURALLAR:
       alert('E-posta baiariyla gönderildi!');
     } catch (error) {
       console.error('Email Error:', error);
-      alert('E-posta gönderi┼şlemedi. Lütfen EmailJS yapilandirmasini kontrol edin.');
+      alert('E-posta gönderilemedi. Lütfen EmailJS yapılandırmasını kontrol edin.');
     }
   };
 
@@ -2910,7 +2910,7 @@ KURALLAR:
         // Güçrseli PDF'e ekle
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, '', 'FAST');
         
-        // Logoyu yiksek kalitede ekle (sol ist ki┼şie, aspect ratio korunarak)
+        // Logoyu yüksek kalitede ekle (sol üst köşe, aspect ratio korunarak)
         pdf.addImage(logoInfo.data, 'PNG', 10, 10, logoWidth, logoHeight, '', 'FAST');
 
         // Logolari tekrar gister
@@ -2971,7 +2971,7 @@ KURALLAR:
       body: [
         ['Toplam Kurulu Güç', `${selectedCompany.totalKVA} kVA`],
         ['Tesis Tipi', selectedCompany.type === 'direk' ? 'Direk Tipi' : 'Bina Tipi'],
-        ['Bölge', selectedCompany.region || 'Belirtilmemi┼ş'],
+        ['Bölge', selectedCompany.region || 'Belirtilmemiş'],
         ['Sektör', selectedCompany.sector],
         ['EMO Nominal icret', formatCurrency(selectedCompany.nominalFee)],
         ['İskonto Orani', `%${selectedCompany.appliedDiscountRate || params.discountRate}`],
@@ -2992,7 +2992,7 @@ KURALLAR:
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.text('VoltGuard', pageWidth / 2, pageHeight - 15, { align: 'center' });
-    doc.text('voltguard.com.tr | info@voltguard.com.tr | Tel: +90 545 434 67 35 | ─░zmir, T├╝rkiye', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text('voltguard.com.tr | info@voltguard.com.tr | Tel: +90 545 434 67 35 | İzmir, Türkiye', pageWidth / 2, pageHeight - 10, { align: 'center' });
     
     // Kaydet
     const fileName = `YG_Teklif_${selectedCompany.name.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('tr-TR').replace(/\./g, '-')}.pdf`;
@@ -3159,7 +3159,7 @@ KURALLAR:
                   />
                   <span className="absolute right-3 top-2 text-gray-400 text-sm">x</span>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">├ûrn: ─░zmir: 1.00, Adana: 0.75 (Liste d─▒┼ş─▒ için)</p>
+                <p className="text-xs text-gray-400 mt-1">Örn: İzmir: 1.00, Adana: 0.75 (Liste dışı için)</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-1">Global İskonto</label>
@@ -4176,7 +4176,7 @@ KURALLAR:
                           <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                             <div className="text-[9pt] text-gray-600">
                               <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                              <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                              <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                               <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                               <p className="text-gray-400 mt-1 text-right">Sayfa {currentPageNum}/{totalPages}</p>
                             </div>
@@ -4247,7 +4247,7 @@ KURALLAR:
                             <li>Tim ekipmanlarin tedariki (panel, inverter, aki, kablo, bailanti malzemeleri)</li>
                             <li>Proje kapsaminda gerekli tüm teknik hirdavat ve bailanti malzemeleri dahildir</li>
                             <li>Profesyonel montaj ve kurulum hizmetleri</li>
-                            <li>Sistem devreye alma ve test i┼şlemleri</li>
+                            <li>Sistem devreye alma ve test İşlemleri</li>
                             <li>Montaj sonrasi sistem eitümi ve kullanim kilavuzu</li>
                           </ul>
                         </div>
@@ -4275,7 +4275,7 @@ KURALLAR:
                             <span className="text-blue-600 mr-2">5.</span> Teslimat Siresi
                           </h4>
                           <p className="text-[9pt] text-gray-700 pl-5">
-                            Sipari onayi ve avans ödemesi alindiktan sonra <strong>15-20 i gini</strong> ierisinde sistem kurulumu tamamlanacak ve devreye alinacaktir. izel durumlar ve yiksek talep dinemlerinde teslimat sireleri uzayabilir.
+                            Sipari onayi ve avans ödemesi alindiktan sonra <strong>15-20 i gini</strong> ierisinde sistem kurulumu tamamlanacak ve devreye alinacaktir. izel durumlar ve yüksek talep dinemlerinde teslimat sireleri uzayabilir.
                           </p>
                         </div>
 
@@ -4288,7 +4288,7 @@ KURALLAR:
                       <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                         <div className="text-[9pt] text-gray-600">
                           <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                          <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                          <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                           <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                           <p className="text-gray-400 mt-1 text-right">Sayfa {totalPages}/{totalPages}</p>
                         </div>
@@ -5176,7 +5176,7 @@ KURALLAR:
                   </button>
                 </div>
 
-                {/* i┼şlem Butonlari */}
+                {/* İşlem Butonları */}
                 <div className="space-y-3">
                   <button 
                     onClick={togglePeriodicEditorMode}
@@ -5252,7 +5252,7 @@ KURALLAR:
                     <p className="text-gray-500 text-sm mt-1">Periyodik Kontrol ve Test Hizmetleri</p>
                   </div>
                   <div className="text-right w-48">
-                    <p className="text-xs text-gray-500">─░zmir, T├╝rkiye</p>
+                    <p className="text-xs text-gray-500">İzmir, Türkiye</p>
                     <p className="text-xs text-gray-500 mt-1">Tarih: {periodicCustomer.date}</p>
                   </div>
                 </div>
@@ -5365,7 +5365,7 @@ KURALLAR:
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
                     <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                     <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                     <p className="mt-1 text-gray-400">Sayfa 1/2</p>
                   </div>
@@ -5399,7 +5399,7 @@ KURALLAR:
                     <div className="bg-white p-3 rounded border-l-4 border-blue-500">
                       <h5 className="text-[9pt] font-bold text-gray-800 mb-1">1. Stratejik Miteri iliei</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        {periodicCustomer.name || 'Miteriniz'}, sanayi tesisi olarak büyük bir potansiyele sahiptir. VoltGuard'in {periodicCustomer.city || 'bilgedeki'} konumlanmasi ve bilgedeki büyük endistriyel miterilere odaklanma hedefi, bu iliekteki bir firmayla uzun vadeli i birlii için yiksek indirim oranini hakli kilmaktadir.
+                        {periodicCustomer.name || 'Miteriniz'}, sanayi tesisi olarak büyük bir potansiyele sahiptir. VoltGuard'in {periodicCustomer.city || 'bilgedeki'} konumlanmasi ve bilgedeki büyük endistriyel miterilere odaklanma hedefi, bu iliekteki bir firmayla uzun vadeli i birlii için yüksek indirim oranini hakli kilmaktadir.
                       </p>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-green-500">
@@ -5438,7 +5438,7 @@ KURALLAR:
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
                     <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                    <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                     <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                     <p className="mt-1 text-gray-400">Sayfa 2/2</p>
                   </div>
@@ -5497,7 +5497,7 @@ KURALLAR:
                 <Hammer className="mr-2 h-5 w-5"/>
                 Keşif Metraj Fiyat Teklifi
               </h2>
-              <p className="text-orange-100 text-xs mt-1">Elektrik malzemesi ve kablo için ke┼şif metraj listesi olu┼şturun. Kablo fiyatlar─▒: Serer Kablo (─░zmir)</p>
+              <p className="text-orange-100 text-xs mt-1">Elektrik malzemesi ve kablo için keşif metraj listesi oluşturun. Kablo fiyatları: Serer Kablo (İzmir)</p>
             </div>
 
             <form onSubmit={handleKesifSubmit} className="p-8 space-y-6">
@@ -5508,7 +5508,7 @@ KURALLAR:
                   <div className="flex items-start">
                     <Cable className="w-5 h-5 mr-2 text-purple-600 mt-0.5"/>
                     <div>
-                      <h3 className="text-sm font-bold text-purple-800 mb-1">Kablo Fiyatlar─▒: Serer Kablo (─░zmir)</h3>
+                      <h3 className="text-sm font-bold text-purple-800 mb-1">Kablo Fiyatları: Serer Kablo (İzmir)</h3>
                       <div className="grid grid-cols-3 gap-2 text-xs text-gray-700">
                         <div><span className="font-semibold">Tel:</span> {KabloFiyatData.telefon}</div>
                         <div><span className="font-semibold">Web:</span> {KabloFiyatData.web}</div>
@@ -6462,7 +6462,7 @@ KURALLAR:
                           const totals = calculateKesifTotals();
                           let text = `?? KEŞİF METRAJ LİSTESİ\n`;
                           text += `================================\n\n`;
-                          text += `Firma: ${kesifCustomer.name || 'Belirtilmemi┼ş'}\n`;
+                          text += `Firma: ${kesifCustomer.name || 'Belirtilmemiş'}\n`;
                           text += `Tarih: ${new Date().toLocaleDateString('tr-TR')}\n\n`;
                           text += `MALZEME LiSTESi:\n`;
                           text += `--------------------------------\n`;
@@ -6804,7 +6804,7 @@ KURALLAR:
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200 mt-4">
                     <h3 className="font-bold text-gray-900 mb-3 flex items-center">
                       <Download className="w-4 h-4 mr-2"/>
-                      Export & i┼şlemler
+                      Export & İşlemler
                     </h3>
                     
                     {/* Editor Mode Toggle */}
@@ -7183,7 +7183,7 @@ KURALLAR:
                               <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                                 <div className="text-[9pt] text-gray-600">
                                   <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                                  <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                                  <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                                   <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                   <p className="text-gray-400 mt-1 text-right">Sayfa {pageIndex + 1}/{totalPages}</p>
                                 </div>
@@ -7228,7 +7228,7 @@ KURALLAR:
                         <li>Trafo Güçleri Dağılımı: <strong>{selectedCompany.powerStr} kVA</strong></li>
                         <li>Toplam Kurulu Güç: <strong>{selectedCompany.totalKVA || 0} kVA ({((selectedCompany.totalKVA || 0) / 1000).toFixed(2)} MVA)</strong></li>
                         <li>Tesis Tipi: <strong>{selectedCompany.type === 'direk' ? 'Direk Tipi Trafo Merkezi' : 'Bina Tipi Trafo Merkezi'}</strong></li>
-                        <li>Bölge/Katsayi: <strong>{selectedCompany.region || 'Belirtilmemi┼ş'} (x{(selectedCompany.regionCoeff || 1.0).toFixed(2)})</strong></li>
+                        <li>Bölge/Katsayi: <strong>{selectedCompany.region || 'Belirtilmemiş'} (x{(selectedCompany.regionCoeff || 1.0).toFixed(2)})</strong></li>
                         <li>Sektör: <strong>{selectedCompany.sector}</strong></li>
                       </ul>
                     </div>
@@ -7347,7 +7347,7 @@ KURALLAR:
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                       <div className="text-[9pt] text-gray-600">
                         <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                         <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 1/2</p>
                       </div>
@@ -7390,7 +7390,7 @@ KURALLAR:
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
                               <li><strong>ücretsiz Hizmet:</strong> Tesisin reaktif gi durumunun ve gi faktirinin (PF) uzaktan izlenmesi ve çeyreklik dönemlerde (her ayda bir) kompanzasyon sisteminin durumu ve olası ceza riskleri hakkinda özet rapor sunulmasi.</li>
-                              <li><strong>Artı Değer:</strong> Yasal sınırların (genellikle 0.95 seviyesine yakin) diçina çıkılmasını önleyerek, yiksek kompanzasyon cezasi riskini ortadan kaldirmaya yardimci olur ve görünür gi talebini iyileştirir.</li>
+                              <li><strong>Artı Değer:</strong> Yasal sınırların (genellikle 0.95 seviyesine yakin) diçina çıkılmasını önleyerek, yüksek kompanzasyon cezasi riskini ortadan kaldirmaya yardimci olur ve görünür gi talebini iyileştirir.</li>
                             </ul>
                           </div>
 
@@ -7418,7 +7418,7 @@ KURALLAR:
                       </div>
                       
                       <p className="mt-2 mb-16 text-[9pt] italic text-gray-600 border-t border-gray-300 pt-2 leading-tight">
-                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunluluklari karilayan bir tedariki┼şi değil, aynı zamanda maliyet optümizasyonuna ve operasyonel givenlie odaklanan stratejik bir iş ortağı olduğunu göstermektedir.
+                        Bu ücretsiz ek hizmetler, VoltGuard'in sadece yasal zorunluluklari karilayan bir tedarikçi değil, aynı zamanda maliyet optümizasyonuna ve operasyonel givenlie odaklanan stratejik bir iş ortağı olduğunu göstermektedir.
                       </p>
                     </div>
 
@@ -7426,7 +7426,7 @@ KURALLAR:
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2" style={{pageBreakInside: 'avoid'}}>
                       <div className="text-[9pt] text-gray-600">
                         <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpa┼şa/─░zmir</p>
+                        <p className="text-[9pt] mt-0.5">Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
                         <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 2/2</p>
                       </div>

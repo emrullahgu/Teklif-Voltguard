@@ -35,7 +35,7 @@ app.post('/api/kosbi/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     
-    console.log(`?? KOSBI Login denemesi: ${username}`);
+    console.log(`[LOGIN] KOSBI Login denemesi: ${username}`);
     
     // ılk olarak login sayfasını al (ViewState ve EventValidation için)
     const loginPageResponse = await axios.get(`${KOSBI_BASE_URL}/Login.aspx`, {
@@ -49,7 +49,7 @@ app.post('/api/kosbi/login', async (req, res) => {
     const eventValidation = $('input[name="__EVENTVALIDATION"]').val();
     const viewStateGenerator = $('input[name="__VIEWSTATEGENERATOR"]').val();
     
-    console.log('?? ViewState alındı');
+    console.log('[INFO] ViewState alındı');
     
     // Login formunu gınder
     const loginData = new URLSearchParams({
@@ -76,7 +76,7 @@ app.post('/api/kosbi/login', async (req, res) => {
     const cookies = loginResponse.headers['set-cookie'];
     
     if (!cookies || loginResponse.status !== 302) {
-      console.log('? Login başarısız - Yanlı kullanıcı adı veya şifre');
+      console.log('[FAIL] Login başarısız - Yanlış kullanıcı adı veya şifre');
       return res.status(401).json({ 
         success: false, 
         error: 'Kullanıcı adı veya şifre hatalı' 
@@ -91,7 +91,7 @@ app.post('/api/kosbi/login', async (req, res) => {
       loginTime: Date.now()
     });
     
-    console.log('? Login başarılı');
+    console.log('[OK] Login başarılı');
     
     res.json({
       success: true,
@@ -100,7 +100,7 @@ app.post('/api/kosbi/login', async (req, res) => {
     });
     
   } catch (error) {
-    console.error('? Login hatası:', error.message);
+    console.error('[ERR] Login hatası:', error.message);
     res.status(500).json({ 
       success: false, 
       error: error.message 
@@ -124,7 +124,7 @@ app.get('/api/kosbi/meters/:sessionId', async (req, res) => {
       });
     }
     
-    console.log(`?? Sayaç verileri çekiliyor: ${session.username}`);
+    console.log(`[INFO] Sayaç verileri çekiliyor: ${session.username}`);
     
     // Sayaç verilerini çek (sayfa adı değişebilir, kontrol edilmeli)
     const metersResponse = await axios.get(`${KOSBI_BASE_URL}/SayacOkumalari.aspx`, {
@@ -157,7 +157,7 @@ app.get('/api/kosbi/meters/:sessionId', async (req, res) => {
       }
     });
     
-    console.log(`? ${meters.length} sayaç verisi bulundu`);
+    console.log(`[OK] ${meters.length} sayaç verisi bulundu`);
     
     res.json({
       success: true,
@@ -166,7 +166,7 @@ app.get('/api/kosbi/meters/:sessionId', async (req, res) => {
     });
     
   } catch (error) {
-    console.error('? Sayaç verisi çekme hatası:', error.message);
+    console.error('[ERR] Sayaç verisi çekme hatası:', error.message);
     res.status(500).json({ 
       success: false, 
       error: error.message 
@@ -181,7 +181,7 @@ app.get('/api/kosbi/meters/:sessionId', async (req, res) => {
 app.delete('/api/kosbi/logout/:sessionId', (req, res) => {
   const { sessionId } = req.params;
   sessions.delete(sessionId);
-  console.log(`?? Session silindi: ${sessionId}`);
+  console.log(`[INFO] Session silindi: ${sessionId}`);
   res.json({ success: true });
 });
 
@@ -202,7 +202,7 @@ setInterval(() => {
   for (const [sessionId, session] of sessions.entries()) {
     if (now - session.loginTime > 2 * 60 * 60 * 1000) { // 2 saat
       sessions.delete(sessionId);
-      console.log(`?? Eski session temizlendi: ${sessionId}`);
+      console.log(`[INFO] Eski session temizlendi: ${sessionId}`);
     }
   }
 }, 60 * 60 * 1000); // Her 1 saatte bir
@@ -211,14 +211,14 @@ setInterval(() => {
 app.use('/api/osos', ososService.router);
 
 app.listen(PORT, () => {
-  console.log(`?? KOSBI Proxy Server çalışıyor: http://localhost:${PORT}`);
-  console.log(`?? CORS enabled for: http://localhost:3000, http://localhost:5173, https://voltguard.com.tr`);
-  console.log(`?? KOSBI Endpoints:`);
+  console.log(`[SERVER] KOSBI Proxy Server çalışıyor: http://localhost:${PORT}`);
+  console.log(`[INFO] CORS enabled for: http://localhost:3000, http://localhost:5173, https://voltguard.com.tr`);
+  console.log(`[INFO] KOSBI Endpoints:`);
   console.log(`   POST   /api/kosbi/login`);
   console.log(`   GET    /api/kosbi/meters/:sessionId`);
   console.log(`   DELETE /api/kosbi/logout/:sessionId`);
   console.log(`   GET    /health`);
-  console.log(`? OSOS Endpoints:`);
+  console.log(`[INFO] OSOS Endpoints:`);
   console.log(`   GET    /api/osos/live/:fabrikaAdi/:sayacNo`);
   console.log(`   POST   /api/osos/update-all`);
   console.log(`   POST   /api/osos/manual-collect`);
@@ -229,7 +229,7 @@ app.listen(PORT, () => {
   // Otomatik OSOS güncellemesini başlat (opsiyonel)
   if (process.env.OSOS_AUTO_START === 'true') {
     ososService.startAutoUpdate(5); // 5 dakika
-    console.log(`? OSOS otomatik güncelleme başlatıldı (5 dakika)`);
+    console.log(`[OK] OSOS otomatik güncelleme başlatıldı (5 dakika)`);
   }
 });
 

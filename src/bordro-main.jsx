@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import BordroTakip from './BordroTakip.jsx';
+import BordroTakip from './BordroTakip.tsx';
+import ErrorBoundary from './ErrorBoundary.jsx';
 import './index.css';
 
 export const BordroWithPassword = () => {
@@ -8,7 +9,7 @@ export const BordroWithPassword = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState('');
 
-  // Sayfa yüklendiçinde sessionStorage'ı kontrol et
+  // Sayfa yüklendiğinde sessionStorage'ı kontrol et
   useEffect(() => {
     const savedAuth = sessionStorage.getItem('bordro_authenticated');
     if (savedAuth === 'true') {
@@ -18,7 +19,12 @@ export const BordroWithPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === '687191') {
+    const bordroPassword = import.meta.env.VITE_BORDRO_PASSWORD;
+    if (!bordroPassword) {
+      setError('Sistem hatası: Bordro şifresi yapılandırılmamış.');
+      return;
+    }
+    if (password === bordroPassword) {
       setIsAuthenticated(true);
       sessionStorage.setItem('bordro_authenticated', 'true');
       setError('');
@@ -42,8 +48,8 @@ export const BordroWithPassword = () => {
             onClick={handleLogout}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg font-semibold transition flex items-center space-x-2"
           >
-            <span>??</span>
-            <span>ıkı Yap</span>
+            <span>🚪</span>
+            <span>Çıkış Yap</span>
           </button>
         </div>
         <BordroTakip />
@@ -61,7 +67,7 @@ export const BordroWithPassword = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              şifre
+              Şifre
             </label>
             <input
               id="password"
@@ -69,7 +75,7 @@ export const BordroWithPassword = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-              placeholder="şifrenizi girin"
+              placeholder="Şifrenizi girin"
               autoFocus
             />
           </div>
@@ -82,7 +88,7 @@ export const BordroWithPassword = () => {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg"
           >
-            Giri Yap
+            Giriş Yap
           </button>
         </form>
       </div>
@@ -92,7 +98,9 @@ export const BordroWithPassword = () => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BordroWithPassword />
+    <ErrorBoundary>
+      <BordroWithPassword />
+    </ErrorBoundary>
   </React.StrictMode>,
 );
 
