@@ -26,6 +26,20 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const isUsersTableMissingError = (error) => {
+    if (!error) return false;
+    const code = error.code || '';
+    const message = (error.message || '').toLowerCase();
+    const details = (error.details || '').toLowerCase();
+    return (
+      code === '42P01' ||
+      code === 'PGRST205' ||
+      message.includes("table 'public.users'") ||
+      message.includes('relation \"users\" does not exist') ||
+      details.includes("table 'public.users'")
+    );
+  };
+
   const initializeAdmin = async () => {
     try {
       const { data, error } = await supabase
@@ -33,6 +47,11 @@ export const AuthProvider = ({ children }) => {
         .select('*')
         .eq('email', ADMIN_EMAIL)
         .single();
+
+      if (isUsersTableMissingError(error)) {
+        console.error('users tablosu bulunamadı. users-migration.sql dosyasını Supabase SQL Editor\'da çalıştırın.');
+        return;
+      }
 
       if (error && error.code === 'PGRST116') {
         // Admin yok, oluştur
@@ -69,13 +88,21 @@ export const AuthProvider = ({ children }) => {
         .eq('password', password)
         .single();
 
+      if (isUsersTableMissingError(error)) {
+        throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
+      }
+
       if (error || !user) {
         // Ayrıntılı hata ayıklama
-        const { data: userByEmail } = await supabase
+        const { data: userByEmail, error: userByEmailError } = await supabase
           .from('users')
           .select('*')
           .eq('email', email)
           .single();
+
+        if (isUsersTableMissingError(userByEmailError)) {
+          throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
+        }
 
         if (userByEmail) {
           console.log('❌ E-posta bulundu ama şifre yanlış!');
@@ -126,11 +153,15 @@ export const AuthProvider = ({ children }) => {
       console.log('📝 Kayıt işlemi başlatılıyor:', userData);
 
       // E-posta kontrolü
-      const { data: existingUser } = await supabase
+      const { data: existingUser, error: existingUserError } = await supabase
         .from('users')
         .select('email')
         .eq('email', userData.email)
         .single();
+
+      if (isUsersTableMissingError(existingUserError)) {
+        throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
+      }
 
       if (existingUser) {
         throw new Error('Bu e-posta adresi zaten kullanılıyor!');

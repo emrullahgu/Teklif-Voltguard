@@ -2486,39 +2486,69 @@ KURALLAR:
             
             new Paragraph({ text: "", spacing: { after: 400 } }),
             
-            // 3. Bölüm: İskonto ve Teklif
-            new Paragraph({
-              text: "3. Uygulanan İskonto ve Nihai Teklif",
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: 200, after: 200 }
-            }),
-            new Paragraph({
-              text: `Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel %${selectedCompany.appliedDiscountRate || params.discountRate} İskonto uygulanmıştır.`,
-              spacing: { after: 300 }
-            }),
-            
-            // Nihai Teklif Tablosu
-            new Table({
-              rows: [
-                createTableRow('EMO Nominal Tarife:', formatCurrency(selectedCompany.nominalFee)),
-                createTableRow(`İskonto Tutari (%${selectedCompany.appliedDiscountRate || params.discountRate}):`, `- ${formatCurrency(selectedCompany.discountAmount)}`),
-                new TableRow({
-                  children: [
-                    new TableCell({
-                      children: [new Paragraph({ text: "AYLIK TEKLİF FİYATI:", bold: true })],
-                      shading: { fill: "c8e6c9" }
-                    }),
-                    new TableCell({
-                      children: [new Paragraph({ 
-                        children: [new TextRun({ text: `${formatCurrency(selectedCompany.offerPrice)} + KDV`, bold: true, color: "1b5e20" })]
-                      })],
-                      shading: { fill: "c8e6c9" }
+            ...(() => {
+              const appliedDiscountRate = selectedCompany.appliedDiscountRate ?? params.discountRate ?? 0;
+              const hasDiscount = Number(selectedCompany.discountAmount || 0) > 0 && Number(appliedDiscountRate) > 0;
+
+              if (hasDiscount) {
+                return [
+                  // 3. Bölüm: İskonto ve Teklif
+                  new Paragraph({
+                    text: "3. Uygulanan İskonto ve Nihai Teklif",
+                    heading: HeadingLevel.HEADING_2,
+                    spacing: { before: 200, after: 200 }
+                  }),
+                  new Paragraph({
+                    text: `Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel %${appliedDiscountRate} iskonto uygulanmıştır.`,
+                    spacing: { after: 300 }
+                  }),
+                  new Table({
+                    rows: [
+                      createTableRow('EMO Nominal Tarife:', formatCurrency(selectedCompany.nominalFee)),
+                      createTableRow(`İskonto Tutarı (%${appliedDiscountRate}):`, `- ${formatCurrency(selectedCompany.discountAmount)}`),
+                      new TableRow({
+                        children: [
+                          new TableCell({
+                            children: [new Paragraph({ text: "AYLIK TEKLİF FİYATI:", bold: true })],
+                            shading: { fill: "c8e6c9" }
+                          }),
+                          new TableCell({
+                            children: [new Paragraph({
+                              children: [new TextRun({ text: `${formatCurrency(selectedCompany.offerPrice)} + KDV`, bold: true, color: "1b5e20" })]
+                            })],
+                            shading: { fill: "c8e6c9" }
+                          })
+                        ]
+                      })
+                    ],
+                    width: { size: 100, type: WidthType.PERCENTAGE }
+                  })
+                ];
+              }
+
+              return [
+                new Table({
+                  rows: [
+                    createTableRow('EMO Nominal Tarife:', formatCurrency(selectedCompany.nominalFee)),
+                    new TableRow({
+                      children: [
+                        new TableCell({
+                          children: [new Paragraph({ text: "AYLIK TEKLİF FİYATI:", bold: true })],
+                          shading: { fill: "c8e6c9" }
+                        }),
+                        new TableCell({
+                          children: [new Paragraph({
+                            children: [new TextRun({ text: `${formatCurrency(selectedCompany.offerPrice)} + KDV`, bold: true, color: "1b5e20" })]
+                          })],
+                          shading: { fill: "c8e6c9" }
+                        })
+                      ]
                     })
-                  ]
+                  ],
+                  width: { size: 100, type: WidthType.PERCENTAGE }
                 })
-              ],
-              width: { size: 100, type: WidthType.PERCENTAGE }
-            }),
+              ];
+            })(),
             
             new Paragraph({ text: "", spacing: { after: 400 } }),
             
@@ -2529,7 +2559,7 @@ KURALLAR:
               spacing: { before: 400, after: 200 }
             }),
             new Paragraph({
-              text: `1. Bu teklif ${params.year} yılı boyunca geçerli olmak üzere aylik periyotlarla hazırlanmıştır.`,
+              text: `1. Bu teklif ${params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.`,
               spacing: { after: 100 }
             }),
             new Paragraph({
@@ -3082,7 +3112,7 @@ KURALLAR:
             <Calculator className="h-6 w-6 md:h-8 md:w-8 text-yellow-400" />
             <div>
               <h1 className="text-base md:text-xl font-bold">VoltGuard</h1>
-              <p className="text-[10px] md:text-xs text-blue-200">Enerji çözümlerinde güvenilir iÅŸ ortaÄŸınız</p>
+              <p className="text-[10px] md:text-xs text-blue-200">Enerji çözümlerinde güvenilir iş ortağınız</p>
             </div>
           </div>
           <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
@@ -7313,28 +7343,52 @@ KURALLAR:
                       </tbody>
                     </table>
 
-                    <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">3. Uygulanan İskonto ve Nihai Teklif</h3>
-                    <p className="mb-4 text-[9.5pt] leading-tight">Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel <strong>%{selectedCompany.appliedDiscountRate || params.discountRate}</strong> İskonto uygulanmıştır.</p>
-                    
-                    <div className="rounded p-4 border-2 mb-1" style={{backgroundColor: '#c8e6c9', borderColor: '#81c784'}}>
-                      <div className="flex justify-between items-center mb-1.5 text-[9.5pt]" style={{color: '#2e7d32'}}>
-                        <span>EMO Nominal Tarife:</span>
-                        <span>{formatCurrency(selectedCompany.nominalFee)}</span>
-                      </div>
-                      <div className="flex justify-between items-center mb-3 text-[9.5pt]" style={{color: '#2e7d32'}}>
-                        <span>İskonto Tutari (%{selectedCompany.appliedDiscountRate || params.discountRate}):</span>
-                        <span>- {formatCurrency(selectedCompany.discountAmount)}</span>
-                      </div>
-                      <div className="pt-3 flex justify-between items-center text-[11pt] font-bold" style={{borderTop: '1px solid #66bb6a', color: '#1b5e20'}}>
-                        <span>AYLIK TEKLİF FİYATI:</span>
-                        <span>{formatCurrency(selectedCompany.offerPrice)} + KDV</span>
-                      </div>
-                    </div>
+                    {(() => {
+                      const appliedDiscountRate = selectedCompany.appliedDiscountRate ?? params.discountRate ?? 0;
+                      const hasDiscount = Number(selectedCompany.discountAmount || 0) > 0 && Number(appliedDiscountRate) > 0;
+
+                      if (hasDiscount) {
+                        return (
+                          <>
+                            <h3 className="text-[10pt] font-bold text-gray-800 mt-5 mb-2 uppercase tracking-wide">3. Uygulanan İskonto ve Nihai Teklif</h3>
+                            <p className="mb-4 text-[9.5pt] leading-tight">Piyasa koşullarına uyum sağlamak amacıyla, işletmenize özel <strong>%{appliedDiscountRate}</strong> iskonto uygulanmıştır.</p>
+
+                            <div className="rounded p-4 border-2 mb-1" style={{backgroundColor: '#c8e6c9', borderColor: '#81c784'}}>
+                              <div className="flex justify-between items-center mb-1.5 text-[9.5pt]" style={{color: '#2e7d32'}}>
+                                <span>EMO Nominal Tarife:</span>
+                                <span>{formatCurrency(selectedCompany.nominalFee)}</span>
+                              </div>
+                              <div className="flex justify-between items-center mb-3 text-[9.5pt]" style={{color: '#2e7d32'}}>
+                                <span>İskonto Tutarı (%{appliedDiscountRate}):</span>
+                                <span>- {formatCurrency(selectedCompany.discountAmount)}</span>
+                              </div>
+                              <div className="pt-3 flex justify-between items-center text-[11pt] font-bold" style={{borderTop: '1px solid #66bb6a', color: '#1b5e20'}}>
+                                <span>AYLIK TEKLİF FİYATI:</span>
+                                <span>{formatCurrency(selectedCompany.offerPrice)} + KDV</span>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      }
+
+                      return (
+                        <div className="rounded p-4 border-2 mb-1" style={{backgroundColor: '#c8e6c9', borderColor: '#81c784'}}>
+                          <div className="flex justify-between items-center mb-1.5 text-[9.5pt]" style={{color: '#2e7d32'}}>
+                            <span>EMO Nominal Tarife:</span>
+                            <span>{formatCurrency(selectedCompany.nominalFee)}</span>
+                          </div>
+                          <div className="pt-3 flex justify-between items-center text-[11pt] font-bold" style={{borderTop: '1px solid #66bb6a', color: '#1b5e20'}}>
+                            <span>AYLIK TEKLİF FİYATI:</span>
+                            <span>{formatCurrency(selectedCompany.offerPrice)} + KDV</span>
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                     <div className="text-[9pt] text-gray-600 border-t pt-1 mt-0" style={{pageBreakInside: 'avoid'}}>
                       <h4 className="font-bold mb-1 text-[9.5pt]">Açıklamalar:</h4>
                       <ul className="list-disc list-inside space-y-0.5 text-[9pt] leading-tight">
-                        <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylik periyotlarla hazırlanmıştır.</li>
+                        <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.</li>
                         <li>2. işletme sorumluluğu hizmetinin SMM tarafından istlenilmesi halinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
                         <li>3. enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.</li>
                         <li>4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır. YG işletme Sorumluluğunu istlenecek mühendisin EMO tarafından verilen YGTiS belgesine sahip olması gerekir.</li>
