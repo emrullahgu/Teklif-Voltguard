@@ -28,7 +28,7 @@ import faturaLogo from '../public/fatura_logo.png';
 
 // Fatura verilerini birleştir ve normalize et
 const normalizedFatura1 = FaturaData.map(item => ({
-  urun: item.iRiN || '',
+  urun: item.ÜRÜN || '',
   marka: item.MARKA || 'Genel',
   birimFiyat: item["BİRİM FİYAT"] || 0,
   miktar: item.MiKTAR || 0,
@@ -388,7 +388,7 @@ const App = () => {
     panelMount: 25,
     transport: 250,
     
-    // Yeni Veritabani - Kategorize Edilmi Fiyatlar (%35 İskontolu)
+    // Yeni Veritabanı - Kategorize Edilmi Fiyatlar (%35 İskontolu)
     batteries: {
       'orbit_51v_100ah_hv': { name: 'ORBiT 51.2 V 100 Ah LiFePO4 Aki-High Voltage-Metal Kasa', price: 920.40, brand: 'ORBiT' },
       'orbit_51v_50ah_hv': { name: 'ORBiT 51.2 V 050 Ah LiFePO4 Aki-High Voltage-Metal Kasa', price: 651.96, brand: 'ORBiT' },
@@ -561,7 +561,7 @@ const App = () => {
       ortalamaFiyat: avgPrice,
       enPahali: [...CombinedFaturaData].sort((a, b) => (b.birimFiyat || 0) - (a.birimFiyat || 0)).slice(0, 10),
       enUcuz: [...CombinedFaturaData].filter(p => p.birimFiyat > 0).sort((a, b) => a.birimFiyat - b.birimFiyat).slice(0, 10),
-      enCokKullanilanlar: Object.entries(urunKullanimSayilari)
+      enCokKullanılanlar: Object.entries(urunKullanimSayilari)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
     };
@@ -1277,7 +1277,7 @@ const App = () => {
         const columns = Object.keys(firstRow);
         
         // Situn isimleri için olası varyasyonlar
-        const urunVariants = ['Ürün', 'urun', 'iRiN', 'Urun Adi', 'Malzeme', 'Product', 'Ürün Adi'];
+        const urunVariants = ['Ürün', 'urun', 'ÜRÜN', 'Urun Adi', 'Malzeme', 'Product', 'Ürün Adi'];
         const miktarVariants = ['Miktar', 'miktar', 'MIKTAR', 'Quantity', 'Adet', 'Amount'];
         const fiyatVariants = ['Fiyat', 'fiyat', 'FiYAT', 'Birim Fiyat', 'BirimFiyat', 'Price', 'Tutar'];
         const birimVariants = ['Birim', 'birim', 'BiRiM', 'Unit', 'ili', 'olcu'];
@@ -2748,7 +2748,7 @@ KURALLAR:
     if (!recipientEmail) return;
     
     try {
-      // EmailJS yapilandirmasi - Kullanıcının kendi hesabini oluşturmasi gerekir
+      // EmailJS yapılandırmasi - Kullanıcının kendi hesabini oluşturmasi gerekir
       const serviceID = 'service_xxxxxxx'; // EmailJS Service ID
       const templateID = 'template_xxxxxxx'; // EmailJS Template ID
       const userID = 'user_xxxxxxxxxx'; // EmailJS User ID
@@ -2767,7 +2767,7 @@ KURALLAR:
       alert('E-posta başarıyla gönderildi!');
     } catch (error) {
       console.error('Email Error:', error);
-      alert('E-posta gönderilemedi. Lütfen EmailJS yapilandirmasini kontrol edin.');
+      alert('E-posta gönderilemedi. Lütfen EmailJS yapılandırmasini kontrol edin.');
     }
   };
 
@@ -4667,8 +4667,87 @@ KURALLAR:
           <div className="space-y-6">
             {/* Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-8 text-white">
-              <h1 className="text-3xl font-bold mb-2">?? Ürün ve Fiyat Veritabani Dashboard</h1>
-              <p className="text-indigo-100">Tüm Ürün, kablo ve fiyat verilerinizin detaylı analizi</p>
+              <h1 className="text-3xl font-bold mb-2">📊 VoltGuard Dashboard & İstatistikler</h1>
+              <p className="text-indigo-100">Tüm ürün, kablo ve fiyat verilerinizin detaylı analizi</p>
+            </div>
+
+            {/* VoltGuard Yetkinlik Alanları */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <Zap className="w-6 h-6 mr-2 text-yellow-600"/>
+                VoltGuard Yetkinlik Alanları
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Elektrik Hizmetleri */}
+                <div className="border border-blue-200 rounded-lg p-4 bg-blue-50 hover:shadow-md transition">
+                  <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                    <Zap className="w-4 h-4"/>
+                    Elektrik Hizmetleri
+                  </h4>
+                  <ul className="text-xs text-gray-700 space-y-1">
+                    <li>• SMM (Serbest Müşavir Mühendislik)</li>
+                    <li>• Trafo İşletme Sorumluluğu</li>
+                    <li>• Periyodik Kontrol ve Ölçüm</li>
+                    <li>• Harmonik Analiz ve Filtreleme</li>
+                    <li>• Elektrik Pano Kurulumu ve Revizyonu</li>
+                    <li>• Tesis Kurulumu ve Arıza Giderme</li>
+                    <li>• Topraklama ve Yıldırımdan Korunma</li>
+                    <li>• Enerji Kalitesi Ölçümleri</li>
+                  </ul>
+                </div>
+
+                {/* Elektronik & Gömülü Sistemler */}
+                <div className="border border-green-200 rounded-lg p-4 bg-green-50 hover:shadow-md transition">
+                  <h4 className="font-bold text-green-800 mb-2 flex items-center gap-2">
+                    <Settings className="w-4 h-4"/>
+                    Elektronik & Gömülü Sistemler
+                  </h4>
+                  <ul className="text-xs text-gray-700 space-y-1">
+                    <li>• Gömülü Yazılım Geliştirme</li>
+                    <li>• Mikrodenetleyici Sistemler (STM, PIC, Arduino)</li>
+                    <li>• Özel Elektronik Kart Tasarımı (PCB)</li>
+                    <li>• Endüstriyel Elektronik Çözümler</li>
+                    <li>• Veri Toplama ve İzleme Sistemleri</li>
+                    <li>• IoT (Nesnelerin İnterneti) Uygulamaları</li>
+                    <li>• Sensör ve Ölçüm Entegrasyonu</li>
+                  </ul>
+                </div>
+
+                {/* Otomasyon Sistemleri */}
+                <div className="border border-purple-200 rounded-lg p-4 bg-purple-50 hover:shadow-md transition">
+                  <h4 className="font-bold text-purple-800 mb-2 flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4"/>
+                    Otomasyon Sistemleri
+                  </h4>
+                  <ul className="text-xs text-gray-700 space-y-1">
+                    <li>• PLC Yazılım Geliştirme (Siemens, Schneider)</li>
+                    <li>• SCADA Sistemleri Kurulumu</li>
+                    <li>• Endüstriyel Otomasyon Projelendirme</li>
+                    <li>• Makine Otomasyonu ve Proses Kontrolü</li>
+                    <li>• VFD ve Motor Kontrol Sistemleri</li>
+                    <li>• Uzaktan İzleme ve Kontrol</li>
+                    <li>• Sistem Entegrasyonu ve Devreye Alma</li>
+                  </ul>
+                </div>
+
+                {/* Mekanik Sistemler */}
+                <div className="border border-orange-200 rounded-lg p-4 bg-orange-50 hover:shadow-md transition">
+                  <h4 className="font-bold text-orange-800 mb-2 flex items-center gap-2">
+                    <Wrench className="w-4 h-4"/>
+                    Mekanik Sistemler
+                  </h4>
+                  <ul className="text-xs text-gray-700 space-y-1">
+                    <li>• Endüstriyel Makine Tasarımı ve İmalatı</li>
+                    <li>• Üretim Hatları Kurulumu ve Optimizasyonu</li>
+                    <li>• Konveyör Sistemleri Tasarımı</li>
+                    <li>• Hidrolik ve Pnömatik Çözümler</li>
+                    <li>• Basınçlı Hava Sistemleri</li>
+                    <li>• Pompa, Fan ve Motor Sistemleri</li>
+                    <li>• Çelik Konstrüksiyon ve Montaj</li>
+                    <li>• Makine Modernizasyonu (Retrofit)</li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             {/* Genel istatistikler */}
@@ -4689,7 +4768,7 @@ KURALLAR:
               <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold">Farkli Marka</p>
+                    <p className="text-gray-600 text-sm font-semibold">Farklı Marka</p>
                     <p className="text-3xl font-bold text-green-600 mt-2">{productStats.markalar.length}</p>
                   </div>
                   <Users className="w-12 h-12 text-green-500 opacity-20"/>
@@ -4709,7 +4788,7 @@ KURALLAR:
               <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-orange-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold">Ort. Ürün Fiyati</p>
+                    <p className="text-gray-600 text-sm font-semibold">Ort. Ürün Fiyatı</p>
                     <p className="text-3xl font-bold text-orange-600 mt-2">{productStats.ortalamaFiyat.toFixed(2)} ?</p>
                   </div>
                   <TrendingDown className="w-12 h-12 text-orange-500 opacity-20"/>
@@ -4720,7 +4799,7 @@ KURALLAR:
               <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg shadow-lg p-6 border-l-4 border-indigo-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-semibold">Veri Kaynai</p>
+                    <p className="text-gray-600 text-sm font-semibold">Veri Kaynağı</p>
                     <p className="text-lg font-bold text-indigo-600 mt-2">2 Fatura</p>
                     <div className="mt-2 space-y-1">
                       <div className="flex items-center gap-2">
@@ -4767,7 +4846,7 @@ KURALLAR:
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <Users className="w-6 h-6 mr-2 text-green-600"/>
-                  En Popiler Markalar
+                  En Popüler Markalar
                 </h3>
                 <div className="space-y-3">
                   {productStats.enPopulerMarkalar.map(([marka, adet], idx) => (
@@ -4785,17 +4864,17 @@ KURALLAR:
 
             {/* Fiyat Analizi */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* En Pahali Ürünler */}
+              {/* En Pahalı Ürünler */}
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <TrendingDown className="w-6 h-6 mr-2 text-red-600"/>
-                  En Pahali 10 Ürün
+                  En Pahalı 10 Ürün
                 </h3>
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {productStats.enPahali.map((urun, idx) => (
                     <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-100 transition">
                       <div className="flex-1">
-                        <p className="text-xs font-semibold text-gray-800">{urun.iRiN}</p>
+                        <p className="text-xs font-semibold text-gray-800">{urun.ÜRÜN}</p>
                         <p className="text-xs text-gray-500">{urun.MARKA}</p>
                       </div>
                       <span className="text-sm font-bold text-red-600">{urun["BİRİM FİYAT"]} ?</span>
@@ -4814,7 +4893,7 @@ KURALLAR:
                   {productStats.enUcuz.map((urun, idx) => (
                     <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-100 transition">
                       <div className="flex-1">
-                        <p className="text-xs font-semibold text-gray-800">{urun.iRiN}</p>
+                        <p className="text-xs font-semibold text-gray-800">{urun.ÜRÜN}</p>
                         <p className="text-xs text-gray-500">{urun.MARKA}</p>
                       </div>
                       <span className="text-sm font-bold text-green-600">{urun["BİRİM FİYAT"]} ?</span>
@@ -4846,7 +4925,7 @@ KURALLAR:
                   </div>
                   <div>
                     <p className="text-gray-600">KDV</p>
-                    <p className="font-bold text-red-600">{KabloFiyatData.kdvDahil ? 'Dahil' : `Hari (%${KabloFiyatData.kdvOrani})`}</p>
+                    <p className="font-bold text-red-600">{KabloFiyatData.kdvDahil ? 'Dahil' : `Hariç (%${KabloFiyatData.kdvOrani})`}</p>
                   </div>
                 </div>
               </div>
@@ -4856,7 +4935,7 @@ KURALLAR:
                     <h4 className="font-bold text-purple-800 mb-1">{kategori.ad}</h4>
                     <p className="text-xs text-gray-600 mb-3">{kategori.aciklama}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-700">{kategori.urunler.length} ieit kablo</span>
+                      <span className="text-sm text-gray-700">{kategori.urunler.length} çeşit kablo</span>
                       <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">ID: {kategori.id}</span>
                     </div>
                   </div>
@@ -4869,7 +4948,7 @@ KURALLAR:
               <div className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
                   <Hammer className="w-6 h-6 mr-2 text-orange-600"/>
-                  Mevcut Keşif Projesindeki irÖn Analizi
+                  Mevcut Keşif Projesindeki Ürün Analizi
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div className="bg-orange-50 p-4 rounded-lg">
@@ -4885,14 +4964,14 @@ KURALLAR:
                     <p className="text-2xl font-bold text-purple-600">{kesifProducts.filter(p => p.type === 'kablo').length}</p>
                   </div>
                 </div>
-                {productStats.enCokKullanilanlar.length > 0 && (
+                {productStats.enCokKullanılanlar.length > 0 && (
                   <div>
-                    <h4 className="font-bold text-gray-700 mb-3">En çok Kullanilan Ürünler:</h4>
+                    <h4 className="font-bold text-gray-700 mb-3">En çok Kullanılan Ürünler:</h4>
                     <div className="space-y-2">
-                      {productStats.enCokKullanilanlar.map(([urun, adet]) => (
+                      {productStats.enCokKullanılanlar.map(([urun, adet]) => (
                         <div key={urun} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition">
                           <span className="text-sm font-medium text-gray-800">{urun}</span>
-                          <span className="text-sm font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">{adet}x kullanildi</span>
+                          <span className="text-sm font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">{adet}x kullanıldı</span>
                         </div>
                       ))}
                     </div>
@@ -5772,12 +5851,12 @@ KURALLAR:
                   </div>
                 )}
 
-                {/* Son Kullanilanlar */}
+                {/* Son Kullanılanlar */}
                 {recentProducts.length > 0 && (
                   <div className="mt-4">
                     <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                       <Clock className="w-4 h-4 mr-2 text-blue-500"/>
-                      Son Kullanilan Ürünler
+                      Son Kullanılan Ürünler
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                       {recentProducts.slice(0, 6).map((product, idx) => (
@@ -5970,7 +6049,7 @@ KURALLAR:
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="font-bold text-gray-800 text-sm flex items-center">
                         <FileSpreadsheet className="w-4 h-4 mr-2 text-blue-600"/>
-                        Ürün Veritabani istatistikleri
+                        Ürün Veritabanı istatistikleri
                       </h4>
                       <button
                         type="button"
@@ -6034,9 +6113,9 @@ KURALLAR:
                           </select>
                         </div>
 
-                        {/* Veri Kaynai Filtresi */}
+                        {/* Veri Kaynağı Filtresi */}
                         <div>
-                          <label className="block text-xs font-semibold text-gray-700 mb-1">Veri Kaynai</label>
+                          <label className="block text-xs font-semibold text-gray-700 mb-1">Veri Kaynağı</label>
                           <select
                             value={kaynakFilter}
                             onChange={(e) => setKaynakFilter(e.target.value)}
@@ -6059,7 +6138,7 @@ KURALLAR:
                             <option value="alfabetik">Alfabetik (A-Z)</option>
                             <option value="fiyat-artan">Fiyat (Artan)</option>
                             <option value="fiyat-azalan">Fiyat (Azalan)</option>
-                            <option value="populer">En Popiler</option>
+                            <option value="populer">En Popüler</option>
                           </select>
                         </div>
                       </div>
@@ -6101,12 +6180,12 @@ KURALLAR:
                         </div>
                       </div>
 
-                      {/* En çok Kullanilan Ürünler */}
-                      {productStats.enCokKullanilanlar.length > 0 && (
+                      {/* En çok Kullanılan Ürünler */}
+                      {productStats.enCokKullanılanlar.length > 0 && (
                         <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
-                          <h5 className="text-xs font-bold text-yellow-800 mb-2">? Bu Projede En çok Kullanilan Ürünler:</h5>
+                          <h5 className="text-xs font-bold text-yellow-800 mb-2">? Bu Projede En çok Kullanılan Ürünler:</h5>
                           <div className="flex flex-wrap gap-2">
-                            {productStats.enCokKullanilanlar.slice(0, 5).map(([urun, adet]) => (
+                            {productStats.enCokKullanılanlar.slice(0, 5).map(([urun, adet]) => (
                               <button
                                 key={urun}
                                 type="button"
@@ -6548,7 +6627,7 @@ KURALLAR:
                         <tr>
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">SIRA</th>
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">TiP</th>
-                          <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">iRiN ADI</th>
+                          <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">ÜRÜN ADI</th>
                           <th className="px-4 py-3 text-left text-xs font-bold text-gray-700">DETAY</th>
                           <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">BİRİM FİYAT</th>
                           <th className="px-4 py-3 text-right text-xs font-bold text-gray-700">MiKTAR</th>
@@ -7096,7 +7175,7 @@ KURALLAR:
                                       <tr>
                                         <th className="border border-gray-300 p-2 text-center text-white font-semibold">SIRA</th>
                                         <th className="border border-gray-300 p-2 text-left text-white font-semibold">TiP</th>
-                                        <th className="border border-gray-300 p-2 text-left text-white font-semibold">iRiN/KABLO ADI</th>
+                                        <th className="border border-gray-300 p-2 text-left text-white font-semibold">ÜRÜN/KABLO ADI</th>
                                         <th className="border border-gray-300 p-2 text-left text-white font-semibold">DETAY/KESiT</th>
                                         <th className="border border-gray-300 p-2 text-right text-white font-semibold">BİRİM FİYAT</th>
                                         <th className="border border-gray-300 p-2 text-right text-white font-semibold">MiKTAR</th>

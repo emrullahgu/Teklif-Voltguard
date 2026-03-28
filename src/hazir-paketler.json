@@ -144,7 +144,7 @@
         {"urun": "TOPRAKLAMA KLEMENSİ ŞERİT-ŞERİT", "miktar": 20, "birim": "Adet", "aciklama": "şerit bağlantı"},
         {"urun": "TOPRAKLAMA KLEMENSİ ŞERİT-DEMİR", "miktar": 20, "birim": "Adet", "aciklama": "Demir bağlantı"},
         {"urun": "ŞERİTTEN DEMİRE APARAT", "miktar": 30, "birim": "Adet", "aciklama": "Aparatlar"},
-        {"urun": "TOPRAKLAMA GEM TOZU", "miktar": 3, "birim": "Adet", "aciklama": "ıletkenlik artırıcı"},
+        {"urun": "TOPRAKLAMA GEM TOZU", "miktar": 3, "birim": "Adet", "aciklama": "İletkenlik artırıcı"},
         {"urun": "KABLO BAŞI 8x380", "miktar": 2, "birim": "Paket", "aciklama": "Başlama malzemesi"}
       ]
     },

@@ -244,7 +244,7 @@ const UrunTakip = () => {
     setShowAddModal(false);
   };
 
-  // Benzersiz deıerleri al
+  // Benzersiz değerleri al
   const uniqueKategoriler = [...new Set(urunler.map(u => u.kategori).filter(Boolean))];
   const uniqueMarkalar = [...new Set(urunler.map(u => u.marka).filter(Boolean))];
   const uniqueLokasyonlar = [...new Set(urunler.map(u => u.lokasyon).filter(Boolean))];
