@@ -2156,7 +2156,7 @@ KURALLAR:
       } else {
           // Bina Tipi Trafo Merkezleri (EMO 2026 - Kısım III - Madde 5.2)
           if (totalKVA <= 400) {
-             // Madde 5.2.1: ilk 400 kVA (2 hicre)
+             // Madde 5.2.1: İlk 400 kVA (2 hücre)
              nominalFee = params.baseFee;
           } else if (totalKVA <= 5000) {
              // Madde 5.2.2: 401 kVA - 5 MVA arasi artan her kVA için
@@ -2347,7 +2347,7 @@ KURALLAR:
       const calculationRows = [];
       
       if (selectedCompany.type !== 'direk' && selectedCompany.totalKVA >= 400) {
-        calculationRows.push(createTableRow('ilk 400 kVA (Sabit)', formatCurrency(params.baseFee)));
+        calculationRows.push(createTableRow('İlk 400 kVA (Sabit)', formatCurrency(params.baseFee)));
         
         if (selectedCompany.totalKVA > 400 && selectedCompany.totalKVA <= 5000) {
           calculationRows.push(createTableRow(
@@ -2563,11 +2563,11 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "2. işletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.",
+              text: "2. İşletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.",
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "3. enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.",
+              text: "3. Enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin sorumluluk kapsamındadır.",
               spacing: { after: 100 }
             }),
             new Paragraph({
@@ -2575,7 +2575,7 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "5. işveren olarak sizin yükümlülüğünüz, İşletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.",
+              text: "5. İşveren olarak sizin yükümlülüğünüz, İşletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.",
               spacing: { after: 400 }
             }),
             
@@ -4275,7 +4275,7 @@ KURALLAR:
                           </h4>
                           <ul className="list-disc list-inside text-[9pt] text-gray-700 pl-5 space-y-1">
                             <li>Tüm ekipmanlarin tedariki (panel, inverter, aki, kablo, bailanti malzemeleri)</li>
-                            <li>Proje kapsaminda gerekli tüm teknik hirdavat ve bailanti malzemeleri dahildir</li>
+                            <li>Proje kapsamında gerekli tüm teknik hırdavat ve bağlantı malzemeleri dahildir.</li>
                             <li>Profesyonel montaj ve kurulum hizmetleri</li>
                             <li>Sistem devreye alma ve test işlemleri</li>
                             <li>Montaj sonrasi sistem eitümi ve kullanim kilavuzu</li>
@@ -5435,7 +5435,7 @@ KURALLAR:
                     <div className="bg-white p-3 rounded border-l-4 border-green-500">
                       <h5 className="text-[9pt] font-bold text-gray-800 mb-1">2. Yasal Uyum ve Güvenlik</h5>
                       <p className="text-[9pt] text-gray-600 leading-tight">
-                        Teklif kapsamindaki tüm hizmetler (Topraklama, RCD Testleri, Yildirimdan Korunma ve i Tesisat Gözetleme Kontrolü), i Ekipmanlarinin Kullanımında Sağlık ve Güvenlik Şartları Yönetmeliği uyarınca zorunlu olan yıllık periyodik kontrol gerekliliklerini eksiksiz yerine getirecektir.
+                        Teklif kapsamındaki tüm hizmetler (Topraklama, RCD Testleri, Yıldırımdan Korunma ve İç Tesisat Gözetleme Kontrolü), İş Ekipmanlarının Kullanımında Sağlık ve Güvenlik Şartları Yönetmeliği uyarınca zorunlu olan yıllık periyodik kontrol gerekliliklerini eksiksiz yerine getirecektir.
                       </p>
                     </div>
                     <div className="bg-white p-3 rounded border-l-4 border-purple-500">
@@ -7279,7 +7279,7 @@ KURALLAR:
                         {selectedCompany.type !== 'direk' && selectedCompany.totalKVA >= 400 && (
                           <>
                             <tr>
-                              <td className="border border-gray-300 p-2">ilk 400 kVA (Sabit)</td>
+                              <td className="border border-gray-300 p-2">İlk 400 kVA (Sabit)</td>
                               <td className="border border-gray-300 p-2">{formatCurrency(params.baseFee)}</td>
                               <td className="border border-gray-300 p-2 text-right">{formatCurrency(params.baseFee)}</td>
                             </tr>
@@ -7389,10 +7389,10 @@ KURALLAR:
                       <h4 className="font-bold mb-1 text-[9.5pt]">Açıklamalar:</h4>
                       <ul className="list-disc list-inside space-y-0.5 text-[9pt] leading-tight">
                         <li>1. Bu teklif {params.year} yılı boyunca geçerli olmak üzere aylık periyotlarla hazırlanmıştır.</li>
-                        <li>2. işletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
-                        <li>3. enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin SORUMLULUK KAPSAMINDADIR.</li>
-                        <li>4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri işletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır. YG işletme Sorumluluğunu istlenecek mühendisin EMO tarafından verilen YGTiS belgesine sahip olması gerekir.</li>
-                        <li>5. işveren olarak sizin yükümlülüğünüz, İşletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.</li>
+                        <li>2. İşletme sorumluluğu hizmetinin SMM tarafından üstlenilmesi hâlinde YG tesisi en az ayda bir kez denetlenmelidir.</li>
+                        <li>3. Enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi bu hizmetin sorumluluk kapsamındadır.</li>
+                        <li>4. EMO tarafından hazırlanan Elektrik Yüksek Gerilim Tesisleri İşletme Sorumluluğu Yönetmeliği bu sözleşmenin ayrılmaz bir parçasıdır. YG işletme sorumluluğunu üstlenecek mühendisin EMO tarafından verilen YGTİS belgesine sahip olması gerekir.</li>
+                        <li>5. İşveren olarak sizin yükümlülüğünüz, İşletme Sorumlusunun görevlerini yerine getirebilmesi için gerekli imalatları/hizmetleri sağlamak, talep edilen güvenlik malzemelerini almak ve uyarılarına riayet etmektir.</li>
                       </ul>
                     </div>
                     </div>
@@ -7422,7 +7422,7 @@ KURALLAR:
 
                       <h3 className="text-[10pt] font-bold text-gray-800 mb-2 uppercase tracking-wide border-b border-gray-300 pb-2">VoltGuard için Artı Değer Katacak Ücretsiz Hizmetler</h3>
                       <p className="mb-3 text-justify text-[9.5pt] leading-tight">
-                        YG işletme Sorumluluğu hizmeti kapsaminda enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışıp çalışmadığının denetlenmesi sorumluluğunuzun dışında tutulmuştur. Ancak, VoltGuard olarak satın alma birimi için maliyet kontrolü ve operasyonel güvenliği artıracak bu kritik alanlarda ücretsiz ek hizmetler sunabiliriz:
+                        YG işletme sorumluluğu hizmeti kapsamında enerji tüketiminin izlenmesi ve kompanzasyon tesisinin sağlıklı çalışmasının denetlenmesi yer almamaktadır. Ancak, VoltGuard olarak satın alma birimi için maliyet kontrolü ve operasyonel güvenliği artıracak bu kritik alanlarda ücretsiz ek hizmetler sunabiliriz:
                       </p>
 
                       <div className="space-y-2 pb-8">
@@ -7451,11 +7451,11 @@ KURALLAR:
                           <div className="bg-gray-50 p-2.5 rounded border-l-2 border-gray-400">
                             <h4 className="font-bold text-gray-800 text-[9.5pt] mb-1">3. Enerji Verimliliği ve Sürdürülebilirlik Ön Analizi</h4>
                             <p className="text-[9pt] text-gray-600 mb-0.5 leading-tight">
-                              Büyük firmalar GES ve enerji verimliliği (IE3/IE4 motorlar, VSD uygulamaları) konusunda aktif yatirimlar yapmaktadir.
+                              Büyük firmalar GES ve enerji verimliliği (IE3/IE4 motorlar, VSD uygulamaları) konusunda aktif yatırımlar yapmaktadır.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
                               <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki enerji yoğun alanların (fanlar, pompalar, motorlar) ön analizi ve Yüksek Verimli Motorlar (IE3/IE4/IE5) veya Değişken Hızlı Sürücü (VSD) kullanım potansiyelinin belirlenmesi için başlangıç danışmanlığı.</li>
-                              <li><strong>Artı Değer:</strong> Enerji (kW) tiketümini ve karbon ayak izini azaltma hedeflerine ulaşılmasına yardımcı olurken, aynı zamanda motorların daha iyi güç faktörleri (PF) ile çalışmasını sağlayarak trafo üzerindeki reaktif yükü azaltır ve kapasiteyi daha etkin kullanır.</li>
+                              <li><strong>Artı Değer:</strong> Enerji (kW) tüketimini ve karbon ayak izini azaltma hedeflerine ulaşılmasına yardımcı olurken, aynı zamanda motorların daha iyi güç faktörleri (PF) ile çalışmasını sağlayarak trafo üzerindeki reaktif yükü azaltır ve kapasiteyi daha etkin kullanır.</li>
                             </ul>
                           </div>
 
@@ -7465,7 +7465,7 @@ KURALLAR:
                               Güçlü sanayide kritik arızalara hızlı müdahale esastır. Yedek parça yönetimi, arıza süresini (downtime) doğrudan etkiler.
                             </p>
                             <ul className="list-disc list-inside text-[9pt] text-gray-600 pl-2 space-y-0.5 leading-tight">
-                              <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki YG ve AG kritik ekipmanlar (trafo bushingleri, parafudur, sekonder koruma röleleri, OG hücre mekanizmaları vb.) için risk ve tedarik sürelerine dayali acil durum yedek parça listesi ve önerilen minimum stok seviyelerinin belirlenmesi konusunda danışmanlık sağlanması.</li>
+                              <li><strong>Ücretsiz Hizmet:</strong> Tesisinizdeki YG ve AG kritik ekipmanlar (trafo bushingleri, parafudur, sekonder koruma röleleri, OG hücre mekanizmaları vb.) için risk ve tedarik sürelerine dayalı acil durum yedek parça listesi ve önerilen minimum stok seviyelerinin belirlenmesi konusunda danışmanlık sağlanması.</li>
                               <li><strong>Artı Değer:</strong> Arıza durumunda gerekli yedek parçaların hızlı teminini sağlayarak arıza onarım süresini (MTTR) minimize eder ve işletme sürekliliğini destekler.</li>
                             </ul>
                           </div>
