@@ -561,7 +561,7 @@ const App = () => {
       ortalamaFiyat: avgPrice,
       enPahali: [...CombinedFaturaData].sort((a, b) => (b.birimFiyat || 0) - (a.birimFiyat || 0)).slice(0, 10),
       enUcuz: [...CombinedFaturaData].filter(p => p.birimFiyat > 0).sort((a, b) => a.birimFiyat - b.birimFiyat).slice(0, 10),
-      enCokKullanılanlar: Object.entries(urunKullanimSayilari)
+      enCokKullanilanlar: Object.entries(urunKullanimSayilari)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
     };
@@ -614,11 +614,11 @@ const App = () => {
         break;
       case 'populer':
         // En çok kullanilan Ürünleri ine ikar
-        const kullanımlar = {};
+        const kullanimlar = {};
         kesifProducts.forEach(kp => {
-          kullanımlar[kp.urun] = (kullanımlar[kp.urun] || 0) + 1;
+          kullanimlar[kp.urun] = (kullanimlar[kp.urun] || 0) + 1;
         });
-        filtered.sort((a, b) => (kullanımlar[b.urun] || 0) - (kullanımlar[a.urun] || 0));
+        filtered.sort((a, b) => (kullanimlar[b.urun] || 0) - (kullanimlar[a.urun] || 0));
         break;
       default: // alfabetik
         filtered.sort((a, b) => (a.urun || '').localeCompare(b.urun || '', 'tr'));
@@ -1734,14 +1734,14 @@ const App = () => {
 
   const calculateKesifTotals = () => {
     const subTotal = kesifProducts.reduce((sum, p) => sum + p.toplam, 0);
-    const İskontoAmount = subTotal * (kesifSettings.İskonto / 100);
-    const afterDiscount = subTotal - İskontoAmount;
+    const iskontoAmount = subTotal * (kesifSettings.İskonto / 100);
+    const afterDiscount = subTotal - iskontoAmount;
     const kdvAmount = afterDiscount * (kesifSettings.kdvOrani / 100);
     const grandTotal = afterDiscount + kdvAmount;
 
     return {
       subTotal,
-      İskontoAmount,
+      iskontoAmount,
       afterDiscount,
       kdvAmount,
       grandTotal
@@ -1950,7 +1950,7 @@ KURALLAR:
         
         FiYAT DETAYLARI:
         - Ara Toplam: ${totals.subTotal.toFixed(2)} TL
-        - İskonto (%${kesifSettings.İskonto}): -${totals.İskontoAmount.toFixed(2)} TL
+        - İskonto (%${kesifSettings.İskonto}): -${totals.iskontoAmount.toFixed(2)} TL
         - İskonto Sonrasi: ${totals.afterDiscount.toFixed(2)} TL
         - KDV (%${kesifSettings.kdvOrani}): +${totals.kdvAmount.toFixed(2)} TL
         - GENEL TOPLAM: ${totals.grandTotal.toFixed(2)} TL
@@ -4964,11 +4964,11 @@ KURALLAR:
                     <p className="text-2xl font-bold text-purple-600">{kesifProducts.filter(p => p.type === 'kablo').length}</p>
                   </div>
                 </div>
-                {productStats.enCokKullanılanlar.length > 0 && (
+                {productStats.enCokKullanilanlar.length > 0 && (
                   <div>
                     <h4 className="font-bold text-gray-700 mb-3">En çok Kullanılan Ürünler:</h4>
                     <div className="space-y-2">
-                      {productStats.enCokKullanılanlar.map(([urun, adet]) => (
+                      {productStats.enCokKullanilanlar.map(([urun, adet]) => (
                         <div key={urun} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition">
                           <span className="text-sm font-medium text-gray-800">{urun}</span>
                           <span className="text-sm font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">{adet}x kullanıldı</span>
@@ -6181,11 +6181,11 @@ KURALLAR:
                       </div>
 
                       {/* En çok Kullanılan Ürünler */}
-                      {productStats.enCokKullanılanlar.length > 0 && (
+                      {productStats.enCokKullanilanlar.length > 0 && (
                         <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
                           <h5 className="text-xs font-bold text-yellow-800 mb-2">? Bu Projede En çok Kullanılan Ürünler:</h5>
                           <div className="flex flex-wrap gap-2">
-                            {productStats.enCokKullanılanlar.slice(0, 5).map(([urun, adet]) => (
+                            {productStats.enCokKullanilanlar.slice(0, 5).map(([urun, adet]) => (
                               <button
                                 key={urun}
                                 type="button"
@@ -6553,7 +6553,7 @@ KURALLAR:
                           });
                           text += `================================\n`;
                           text += `Ara Toplam: ${totals.subTotal.toFixed(2)} TL\n`;
-                          text += `İskonto (%${kesifSettings.İskonto}): -${totals.İskontoAmount.toFixed(2)} TL\n`;
+                          text += `İskonto (%${kesifSettings.İskonto}): -${totals.iskontoAmount.toFixed(2)} TL\n`;
                           text += `İskonto Sonrasi: ${totals.afterDiscount.toFixed(2)} TL\n`;
                           text += `KDV (%${kesifSettings.kdvOrani}): +${totals.kdvAmount.toFixed(2)} TL\n`;
                           text += `--------------------------------\n`;
@@ -6786,7 +6786,7 @@ KURALLAR:
                         {kesifSettings.İskonto > 0 && (
                           <div className="flex justify-between items-center py-2 border-b border-gray-300">
                             <span className="text-sm font-medium text-blue-700">İskonto (% {kesifSettings.İskonto}):</span>
-                            <span className="text-lg font-semibold text-blue-700">- {totals.İskontoAmount.toFixed(2)} TL</span>
+                            <span className="text-lg font-semibold text-blue-700">- {totals.iskontoAmount.toFixed(2)} TL</span>
                           </div>
                         )}
                         {kesifSettings.İskonto > 0 && (
@@ -7220,7 +7220,7 @@ KURALLAR:
                                             {selectedCompany.settings.İskonto > 0 && (
                                               <tr className="border-b border-gray-300 bg-blue-50">
                                                 <td className="p-3 font-semibold text-blue-700">İskonto (% {selectedCompany.settings.İskonto}):</td>
-                                                <td className="p-3 text-right font-bold text-blue-700">- {selectedCompany.totals.İskontoAmount.toFixed(2)} TL</td>
+                                                <td className="p-3 text-right font-bold text-blue-700">- {selectedCompany.totals.iskontoAmount.toFixed(2)} TL</td>
                                               </tr>
                                             )}
                                             {selectedCompany.settings.İskonto > 0 && (

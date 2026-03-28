@@ -77,7 +77,7 @@ export default function Osos() {
     kontrolTarihi: new Date().toISOString().split('T')[0],
     sonrakiKontrolTarihi: "",
     tesisGucuKW: "",
-    calisanSayısı: "",
+    calisanSayisi: "",
     aciklama: "",
     tespit: "",
     oneri: "",
@@ -193,7 +193,7 @@ export default function Osos() {
     setShowKayitliRaporlar(true);
   };
 
-  const kayıtlıRaporuAc = (rapor) => {
+  const kayitliRaporuAc = (rapor) => {
     setFormData(rapor.formData);
     setFabrikaVerileri(rapor.fabrikaVerileri);
     setMeasurements(rapor.measurements);
@@ -212,7 +212,7 @@ export default function Osos() {
     alert('✅ Rapor yüklendi!');
   };
 
-  const kayıtlıRaporuSil = (raporId) => {
+  const kayitliRaporuSil = (raporId) => {
     if (confirm('Bu raporu silmek istediğinizden emin misiniz?')) {
       const mevcutRaporlar = JSON.parse(localStorage.getItem('osos_raporlar') || '[]');
       const yeniRaporlar = mevcutRaporlar.filter(r => r.id !== raporId);
@@ -305,7 +305,7 @@ export default function Osos() {
         ['Kontrol Tarihi:', formData.kontrolTarihi],
         ['Sonraki Kontrol:', formData.sonrakiKontrolTarihi],
         ['Tesis Gücü:', formData.tesisGucuKW ? formData.tesisGucuKW + ' kW' : ''],
-        ['Çalışan Sayısı:', formData.calisanSayısı]
+        ['Çalışan Sayısı:', formData.calisanSayisi]
       ];
 
       kontrolBilgileri.forEach(([label, value]) => {
@@ -637,7 +637,7 @@ export default function Osos() {
         kontrolTarihi: new Date().toISOString().split('T')[0],
         sonrakiKontrolTarihi: "",
         tesisGucuKW: "",
-        calisanSayısı: "",
+        calisanSayisi: "",
         aciklama: "",
         tespit: "",
         oneri: "",
@@ -810,7 +810,7 @@ export default function Osos() {
       const fabrikaAdi = prompt('Fabrika/Tesis Adı:', formData.firmaAdi || 'Yeni Tesis');
       if (!fabrikaAdi) return;
 
-      let kaydedilenSayısı = 0;
+      let kaydedilenSayisi = 0;
       const hatalar = [];
 
       for (const row of jsonData) {
@@ -839,17 +839,17 @@ export default function Osos() {
           if (error) {
             hatalar.push(error.message);
           } else {
-            kaydedilenSayısı++;
+            kaydedilenSayisi++;
           }
         } catch (err) {
           hatalar.push(err.message);
         }
       }
 
-      if (kaydedilenSayısı > 0) {
+      if (kaydedilenSayisi > 0) {
         alert(`✅ OSOS Verileri Kaydedildi!\n\n` +
               `📊 Toplam: ${jsonData.length} kayıt\n` +
-              `✓ Başarılı: ${kaydedilenSayısı} kayıt\n` +
+              `✓ Başarılı: ${kaydedilenSayisi} kayıt\n` +
               `✗ Hatalı: ${hatalar.length} kayıt\n\n` +
               `🏭 Fabrika: ${fabrikaAdi}`);
         
@@ -864,8 +864,8 @@ export default function Osos() {
   };
 
   // Enerji tipi otomatik tespit
-  const tesbitEnerjiTipi = (toplamTuketim, kayitSayısı) => {
-    const ortalama = toplamTuketim / kayitSayısı;
+  const tesbitEnerjiTipi = (toplamTuketim, kayitSayisi) => {
+    const ortalama = toplamTuketim / kayitSayisi;
     
     // Tüketim seviyesine göre tahmin
     if (toplamTuketim > 5000) {
@@ -908,7 +908,7 @@ export default function Osos() {
       yuklemeTarihi: new Date().toISOString(),
       baslangicTarihi,
       bitisTarihi,
-      veriSayısı: jsonData.length,
+      veriSayisi: jsonData.length,
       istatistikler,
       aktifEnerji: aktifData,
       induktifEnerji: induktifData,
@@ -2414,7 +2414,7 @@ export default function Osos() {
                               </div>
                               <div>
                                 <p className="text-gray-500 text-xs">Veri Sayısı</p>
-                                <p className="font-semibold text-gray-700">{fabrika.veriSayısı} kayıt</p>
+                                <p className="font-semibold text-gray-700">{fabrika.veriSayisi} kayıt</p>
                               </div>
                               <div>
                                 <p className="text-gray-500 text-xs">Tarih Aralığı</p>
@@ -2602,8 +2602,8 @@ export default function Osos() {
                 <label className="block text-xs font-semibold text-gray-700 mb-1">Çalışan Sayısı</label>
                 <input
                   type="number"
-                  value={formData.calisanSayısı}
-                  onChange={(e) => handleInputChange('calisanSayısı', e.target.value)}
+                  value={formData.calisanSayisi}
+                  onChange={(e) => handleInputChange('calisanSayisi', e.target.value)}
                   className="w-full p-2 border rounded text-sm"
                   placeholder="Kişi"
                 />
@@ -3060,13 +3060,13 @@ export default function Osos() {
                         
                         <div className="flex gap-2">
                           <button
-                            onClick={() => kayıtlıRaporuAc(rapor)}
+                            onClick={() => kayitliRaporuAc(rapor)}
                             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-2"
                           >
                             <Upload size={16} /> Yükle
                           </button>
                           <button
-                            onClick={() => kayıtlıRaporuSil(rapor.id)}
+                            onClick={() => kayitliRaporuSil(rapor.id)}
                             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-2"
                           >
                             <X size={16} /> Sil
@@ -3110,7 +3110,7 @@ export default function Osos() {
             <div><strong>E-posta:</strong> {formData.email || '-'}</div>
             <div><strong>Vergi No:</strong> {formData.vergiNo || '-'}</div>
             <div><strong>Tesis Gücü:</strong> {formData.tesisGucuKW ? `${formData.tesisGucuKW} kW` : '-'}</div>
-            <div><strong>Çalışan Sayısı:</strong> {formData.calisanSayısı || '-'}</div>
+            <div><strong>Çalışan Sayısı:</strong> {formData.calisanSayisi || '-'}</div>
           </div>
         </div>
 
