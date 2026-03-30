@@ -2091,7 +2091,7 @@ export default function HaftalikRaporlama() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                             <div style={{ flex: 1 }}>
                               <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
-                              <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
+                              <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
                             {(() => {
@@ -2173,7 +2173,7 @@ export default function HaftalikRaporlama() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                             <div style={{ flex: 1 }}>
                               <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
-                              <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
+                              <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
                             {(() => {
@@ -2289,7 +2289,7 @@ export default function HaftalikRaporlama() {
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                                   <div style={{ flex: 1 }}>
                                     <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
-                                    <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
+                                    <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                                     <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                   </div>
                                   <p style={{ margin: '0', fontWeight: 'bold', color: excelSet.color, fontSize: '9px' }}>Sayfa {currentPageNum}/{totalPages}</p>
@@ -2380,7 +2380,7 @@ export default function HaftalikRaporlama() {
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                                 <div style={{ flex: 1 }}>
                                   <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
-                                  <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
+                                  <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                                   <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                                 </div>
                                 <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa {currentPageNum}/{totalPages}</p>
@@ -2420,7 +2420,7 @@ export default function HaftalikRaporlama() {
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', fontSize: '8px', color: '#555' }}>
                               <div style={{ flex: 1 }}>
                                 <p style={{ margin: '0', fontWeight: 'bold', fontSize: '9px' }}>VoltGuard</p>
-                                <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir</p>
+                                <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                                 <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                               </div>
                               <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa {currentPageNum}/{totalPages}</p>

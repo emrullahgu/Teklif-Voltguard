@@ -814,7 +814,7 @@ export default function AkaryakitTakip() {
                   <div style={{ textAlign: 'center' }}>
                     <p style={{ fontSize: '11px', fontWeight: 'bold', color: '#1f2937', margin: '0 0 8px 0' }}>VOLTGUARD</p>
                     <p style={{ fontSize: '10px', color: '#6b7280', margin: '3px 0' }}>
-                      Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir
+                      Kemalpaşa OSB/İzmir
                     </p>
                     <p style={{ fontSize: '10px', color: '#6b7280', margin: '3px 0' }}>
                       Tel: +90 545 434 67 35 | voltguard.com.tr

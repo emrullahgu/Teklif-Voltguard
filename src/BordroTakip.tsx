@@ -1916,7 +1916,7 @@ TÜM TAKSİT PLANINI silmek istiyor musunuz?
         doc.setFontSize(8);
         doc.setTextColor(150);
         doc.text('VOLTGUARD', 105, 285, { align: 'center' });
-        doc.text('Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir', 105, 290, { align: 'center' });
+        doc.text('Kemalpaşa OSB/İzmir', 105, 290, { align: 'center' });
         doc.text(`Sayfa ${i} / ${pageCount}`, 190, 290, { align: 'right' });
       }
 
@@ -2049,7 +2049,7 @@ TÜM TAKSİT PLANINI silmek istiyor musunuz?
       doc.setFontSize(8);
       doc.setTextColor(150);
       doc.text('VOLTGUARD', 105, finalY + 5, { align: 'center' });
-      doc.text('Mehmet Akif Ersoy Mahallesi 233/6 Sokak No:47 Kat:3 Daire:9 Kemalpaşa/İzmir', 105, finalY + 10, { align: 'center' });
+      doc.text('Kemalpaşa OSB/İzmir', 105, finalY + 10, { align: 'center' });
       doc.text('Tel: +90 545 434 67 35 | voltguard.com.tr', 105, finalY + 15, { align: 'center' });
 
       doc.save(`Bordro_Toplu_${currentYear}_${currentMonth + 1}.pdf`);
