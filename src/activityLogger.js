@@ -4,16 +4,17 @@ import { supabase } from './supabaseClient';
  * Aktivite log kaydı oluşturur
  * @param {string} actionType - İşlem tipi: 'create', 'update', 'delete', 'view', 'login', 'logout', 'export'
  * @param {string} actionDescription - İşlem açıklaması
- * @param {string} module - Modıl adı: 'bordro', 'teklif', 'fatura', 'login', 'admin'
+ * @param {string} module - Modül adı: 'bordro', 'teklif', 'fatura', 'login', 'admin'
  * @param {string} relatedId - ılgili kayıt ID (opsiyonel)
  */
 export const logActivity = async (actionType, actionDescription, module = 'system', relatedId = null) => {
   try {
-    // Kullanıcı bilgilerini al
-    const { data: { user } } = await supabase.auth.getUser();
+    // Kullanıcı bilgilerini localStorage'dan al (custom auth sistemi)
+    const stored = localStorage.getItem('currentUser');
+    const user = stored ? JSON.parse(stored) : null;
     
     if (!user) {
-      // Sessizce devam et - kullanıcı giri yapmamı olabilir
+      // Sessizce devam et - kullanıcı giriş yapmamış olabilir
       return;
     }
 
@@ -48,7 +49,7 @@ export const logActivity = async (actionType, actionDescription, module = 'syste
 };
 
 /**
- * ınceden tanımlanmı log fonksiyonları
+ * Önceden tanımlanmış log fonksiyonları
  */
 export const ActivityLogger = {
   // Login/Logout

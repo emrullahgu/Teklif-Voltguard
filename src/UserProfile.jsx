@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from './SimpleAuth';
+import { supabase } from './supabaseClient';
 import { User, Lock, Building2, Mail, Save, X, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
 
 const UserProfile = ({ onClose }) => {
-  const { currentUser, updateUser, signOut } = useAuth();
+  const { currentUser, updateUser, deleteAccount, signOut } = useAuth();
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     company: currentUser?.company || '',
@@ -32,21 +33,26 @@ const UserProfile = ({ onClose }) => {
     setLoading(true);
 
     try {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const userIndex = users.findIndex(u => u.id === currentUser.id);
-
-      if (userIndex === -1) {
-        throw new Error('Kullanıcı bulunamadı');
-      }
-
-      const user = users[userIndex];
+      const updates = {
+        name: formData.name,
+        company: formData.company,
+      };
 
       // Şifre değiştirme kontrolü
       if (formData.newPassword) {
         if (!formData.currentPassword) {
           throw new Error('Mevcut şifrenizi girmeniz gerekiyor');
         }
-        if (user.password !== formData.currentPassword) {
+        // Mevcut Şifreyi Supabase üzerinden doğrula
+        const { data: dbUser, error: pwError } = await supabase
+          .from('users')
+          .select('password')
+          .eq('id', currentUser.id)
+          .single();
+        if (pwError || !dbUser) {
+          throw new Error('Kullanıcı doğrulanamadı');
+        }
+        if (dbUser.password !== formData.currentPassword) {
           throw new Error('Mevcut şifre yanlış!');
         }
         if (formData.newPassword !== formData.confirmPassword) {
@@ -55,32 +61,19 @@ const UserProfile = ({ onClose }) => {
         if (formData.newPassword.length < 6) {
           throw new Error('Yeni şifre en az 6 karakter olmalı!');
         }
-        user.password = formData.newPassword;
+        updates.password = formData.newPassword;
       }
 
-      // Kullanıcı bilgilerini güncelle
-      user.name = formData.name;
-      user.company = formData.company;
-
-      users[userIndex] = user;
-      localStorage.setItem('users', JSON.stringify(users));
-
-      // Context'i güncelle
-      if (updateUser) {
-        updateUser(user);
-      }
+      await updateUser(currentUser.id, updates);
 
       setSuccess('Bilgileriniz başarıyla güncellendi!');
-      
-      // Formu temizle
-      setFormData({
-        ...formData,
+      setFormData(prev => ({
+        ...prev,
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
-      });
+      }));
 
-      // 2 saniye sonra kapat
       setTimeout(() => {
         onClose();
       }, 2000);
@@ -92,16 +85,9 @@ const UserProfile = ({ onClose }) => {
     }
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     try {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const updatedUsers = users.filter(u => u.id !== currentUser.id);
-      localStorage.setItem('users', JSON.stringify(updatedUsers));
-      
-      // Kullanıcıyı çıkış yap
-      localStorage.removeItem('currentUser');
-      alert('Hesabınız başarıyla silindi!');
-      signOut();
+      await deleteAccount(currentUser.id);
       onClose();
     } catch (error) {
       setError('Hesap silinirken bir hata oluştu!');
@@ -201,15 +187,15 @@ const UserProfile = ({ onClose }) => {
               </div>
             </div>
 
-            {/* şifre Değiştir */}
+            {/* Şifre Değiştir */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">
-                şifre Değiştir
+                Şifre Değiştir
               </h3>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mevcut şifre
+                  Mevcut Şifre
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -226,7 +212,7 @@ const UserProfile = ({ onClose }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Yeni şifre
+                  Yeni Şifre
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -244,7 +230,7 @@ const UserProfile = ({ onClose }) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Yeni şifre Tekrar
+                  Yeni Şifre Tekrar
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />

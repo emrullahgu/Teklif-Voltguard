@@ -79,8 +79,6 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     try {
-      console.log('🔐 Login denemesi:', { email, password });
-
       const { data: user, error } = await supabase
         .from('users')
         .select('*')
@@ -104,12 +102,8 @@ export const AuthProvider = ({ children }) => {
           throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
         }
 
-        if (userByEmail) {
-          console.log('❌ E-posta bulundu ama şifre yanlış!');
-          console.log('Girilen şifre:', password);
-          console.log('Kayıtlı şifre:', userByEmail.password);
-        } else {
-          console.log('❌ E-posta bulunamadı!');
+        if (!userByEmail) {
+          console.error('❌ E-posta bulunamadı!');
         }
         throw new Error('E-posta veya şifre hatalı!');
       }
@@ -117,8 +111,6 @@ export const AuthProvider = ({ children }) => {
       if (!user.approved) {
         throw new Error('Hesabınız henüz onaylanmamış. Lütfen admin onayını bekleyin.');
       }
-
-      console.log('✅ Giriş başarılı!', user);
 
       // Şifreyi saklama (güvenlik için)
       const userToStore = { ...user };

@@ -144,7 +144,7 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
       loadUsers();
     } catch (error) {
       console.error('Onay iptali hatası:', error);
-      alert('Onay iptal edişlemedi!');
+      alert('Onay iptal edilemedi!');
     }
   };
 
@@ -161,7 +161,7 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
       loadUsers();
     } catch (error) {
       console.error('Rol değiştirme hatası:', error);
-      alert('Rol değiştirişlemedi!');
+      alert('Rol değiştirilemedi!');
     }
   };
 
@@ -188,7 +188,6 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
       }
 
       console.log('📧 Login bilgileri gönderiliyor:', user.email);
-      console.log('📧 Gönderilecek şifre:', user.password);
 
       await emailjs.send(
         'service_5l9ghli',
@@ -204,11 +203,11 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
       );
 
       console.log('✅ Email başarıyla gönderildi');
-      alert(`✅ Login bilgileri ${user.email} adresine gönderildi!\n\nE-posta: ${user.email}\nŞifre: ${user.password}`);
+      alert(`✅ Login bilgileri ${user.email} adresine gönderildi!`);
 
     } catch (error) {
       console.error('❌ Email gönderme hatası:', error);
-      alert('❌ E-posta gönderişlemedi! Konsolu kontrol edin.');
+      alert('❌ E-posta gönderilemedi! Konsolu kontrol edin.');
     }
   };
 
@@ -340,10 +339,10 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
         );
         
         console.log('✅ Email başarıyla gönderildi:', emailResult);
-        alert(`✅ Kullanıcı başarıyla oluşturuldu!\n\nLogin bilgileri ${newUser.email} adresine gönderildi.\n\nE-posta: ${newUser.email}\nŞifre: ${password}`);
+        alert(`✅ Kullanıcı başarıyla oluşturuldu!\n\nLogin bilgileri ${newUser.email} adresine gönderildi.`);
       } catch (emailError) {
         console.error('❌ Email gönderme hatası:', emailError);
-        alert(`⚠️ Kullanıcı oluşturuldu ancak e-posta gönderişlemedi!\n\nLütfen manuel olarak iletişime geçin:\nE-posta: ${newUser.email}\nŞifre: ${password}`);
+        alert(`⚠️ Kullanıcı oluşturuldu ancak e-posta gönderilemedi!\n\nLütfen manuel olarak iletişime geçin:\nE-posta: ${newUser.email}`);
       }
       
       // Formu temizle
