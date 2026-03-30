@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS public.users (
   password TEXT NOT NULL,
   name TEXT,
   company TEXT,
+  location TEXT,
   role TEXT DEFAULT 'user',
   approved BOOLEAN DEFAULT false,
   can_access_bordro BOOLEAN DEFAULT false,
@@ -35,11 +36,12 @@ CREATE TRIGGER update_users_updated_at
 BEFORE UPDATE ON public.users
 FOR EACH ROW EXECUTE FUNCTION update_users_updated_at_column();
 
-INSERT INTO public.users (email, password, name, company, role, approved, can_access_bordro)
-VALUES ('info@voltguard.com.tr', 'Eg8502Eg.', 'Admin', 'VoltGuard', 'admin', true, true)
+INSERT INTO public.users (email, password, name, company, location, role, approved, can_access_bordro)
+VALUES ('info@voltguard.com.tr', 'Eg8502Eg.', 'Admin', 'VoltGuard', 'Kemalpaşa Osb', 'admin', true, true)
 ON CONFLICT (email) DO UPDATE
 SET
   role = EXCLUDED.role,
   approved = EXCLUDED.approved,
   can_access_bordro = EXCLUDED.can_access_bordro,
+  location = EXCLUDED.location,
   updated_at = NOW();
