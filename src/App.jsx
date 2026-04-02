@@ -24,6 +24,16 @@ import FaturaData from '../fatura/Fatura.json';
 import FaturaData2 from '../fatura/Fatura2.json';
 import KabloFiyatData from './serer-kablo-fiyat.json';
 import HazirPaketler from './hazir-paketler.json';
+import {
+  COMPANY_ADDRESS_LINE_1,
+  COMPANY_ADDRESS_LINE_2,
+  COMPANY_CONTACT_LINE,
+  COMPANY_EMAIL_WEBSITE_LINE,
+  COMPANY_LEGAL_NAME,
+  COMPANY_NAME,
+  COMPANY_PHONE,
+  COMPANY_PHONE_ADDRESS_LINE
+} from './companyInfo';
 const faturaLogo = '/fatura_logo.png';
 
 // Fatura verilerini birleitir ve normalize et
@@ -2590,11 +2600,11 @@ KURALLAR:
               spacing: { after: 100 }
             }),
             new Paragraph({
-              text: "voltguard.com.tr | info@voltguard.com.tr",
+              text: COMPANY_EMAIL_WEBSITE_LINE,
               spacing: { after: 50 }
             }),
             new Paragraph({
-              text: "Tel: +90 545 434 67 35 | Kemalpaşa OSB, İzmir"
+              text: COMPANY_PHONE_ADDRESS_LINE
             })
           ]
         }]
@@ -2746,9 +2756,9 @@ KURALLAR:
       ['İskonto Tutari:', formatCurrency(selectedCompany.discountAmount)],
       ['AYLIK TEKLİF FİYATI:', formatCurrency(selectedCompany.offerPrice) + ' + KDV'],
       [],
-      ['VoltGuard'],
-      ['voltguard.com.tr | info@voltguard.com.tr'],
-      ['Tel: +90 545 434 67 35 | Kemalpaşa OSB, İzmir']
+      [COMPANY_NAME],
+      [COMPANY_EMAIL_WEBSITE_LINE],
+      [COMPANY_PHONE_ADDRESS_LINE]
     ];
     
     const worksheet = XLSX.utils.aoa_to_sheet(proposalData);
@@ -3021,8 +3031,8 @@ KURALLAR:
     // Footer
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text('VoltGuard', pageWidth / 2, pageHeight - 15, { align: 'center' });
-    doc.text('voltguard.com.tr | info@voltguard.com.tr | Tel: +90 545 434 67 35 | Kemalpaşa OSB, İzmir', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text(COMPANY_NAME, pageWidth / 2, pageHeight - 18, { align: 'center' });
+    doc.text([COMPANY_EMAIL_WEBSITE_LINE, `Tel: ${COMPANY_PHONE}`, COMPANY_ADDRESS_LINE_1, COMPANY_ADDRESS_LINE_2], pageWidth / 2, pageHeight - 13, { align: 'center' });
     
     // Kaydet
     const fileName = `YG_Teklif_${selectedCompany.name.replace(/\s+/g, '_')}_${new Date().toLocaleDateString('tr-TR').replace(/\./g, '-')}.pdf`;
@@ -4205,9 +4215,9 @@ KURALLAR:
                           {/* Footer */}
                           <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                             <div className="text-[9pt] text-gray-600">
-                              <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                              <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                              <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                              <p className="font-bold text-gray-800 text-[9.5pt]">{COMPANY_LEGAL_NAME}</p>
+                              <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                              <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                               <p className="text-gray-400 mt-1 text-right">Sayfa {currentPageNum}/{totalPages}</p>
                             </div>
                           </div>
@@ -4317,9 +4327,9 @@ KURALLAR:
                       {/* Footer - Son Sayfa */}
                       <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                         <div className="text-[9pt] text-gray-600">
-                          <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                          <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                          <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                          <p className="font-bold text-gray-800 text-[9.5pt]">{COMPANY_LEGAL_NAME}</p>
+                          <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                          <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                           <p className="text-gray-400 mt-1 text-right">Sayfa {totalPages}/{totalPages}</p>
                         </div>
                       </div>
@@ -5282,7 +5292,7 @@ KURALLAR:
                     <p className="text-gray-500 text-sm mt-1">Periyodik Kontrol ve Test Hizmetleri</p>
                   </div>
                   <div className="text-right w-48">
-                    <p className="text-xs text-gray-500">Kemalpaşa OSB, İzmir</p>
+                    <p className="text-xs text-gray-500 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
                     <p className="text-xs text-gray-500 mt-1">Tarih: {periodicCustomer.date}</p>
                   </div>
                 </div>
@@ -5394,9 +5404,9 @@ KURALLAR:
                 {/* Footer - Sayfa 1 */}
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
-                    <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                    <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                    <p className="font-bold text-gray-800 text-[9pt]">{COMPANY_LEGAL_NAME}</p>
+                    <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                    <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                     <p className="mt-1 text-gray-400">Sayfa 1/2</p>
                   </div>
                 </div>
@@ -5467,9 +5477,9 @@ KURALLAR:
                 {/* Footer - Sayfa 2 */}
                 <div className="absolute bottom-[10mm] left-0 right-0 border-t border-gray-300 pt-2">
                   <div className="text-center text-[8pt] text-gray-500">
-                    <p className="font-bold text-gray-800 text-[9pt]">VoltGuard MÜHENDİSLİK</p>
-                    <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                    <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                    <p className="font-bold text-gray-800 text-[9pt]">{COMPANY_LEGAL_NAME}</p>
+                    <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                    <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                     <p className="mt-1 text-gray-400">Sayfa 2/2</p>
                   </div>
                 </div>
@@ -7212,9 +7222,9 @@ KURALLAR:
                               {/* Footer */}
                               <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                                 <div className="text-[9pt] text-gray-600">
-                                  <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                                  <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                                  <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                                  <p className="font-bold text-gray-800 text-[9.5pt]">{COMPANY_LEGAL_NAME}</p>
+                                  <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                                  <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                                   <p className="text-gray-400 mt-1 text-right">Sayfa {pageIndex + 1}/{totalPages}</p>
                                 </div>
                               </div>
@@ -7400,9 +7410,9 @@ KURALLAR:
                     {/* Footer - Sayfa 1 */}
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2">
                       <div className="text-[9pt] text-gray-600">
-                        <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                        <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                        <p className="font-bold text-gray-800 text-[9.5pt]">{COMPANY_LEGAL_NAME}</p>
+                        <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                        <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 1/2</p>
                       </div>
                     </div>
@@ -7479,9 +7489,9 @@ KURALLAR:
                     {/* Footer - Page 2 - Always at bottom */}
                     <div className="absolute bottom-[10mm] left-[10mm] right-[10mm] border-t border-gray-300 pt-2" style={{pageBreakInside: 'avoid'}}>
                       <div className="text-[9pt] text-gray-600">
-                        <p className="font-bold text-gray-800 text-[9.5pt]">VoltGuard MÜHENDİSLİK</p>
-                        <p className="text-[9pt] mt-0.5">Kemalpaşa OSB, İzmir</p>
-                        <p className="text-[9pt]">Tel: +90 545 434 67 35 | voltguard.com.tr</p>
+                        <p className="font-bold text-gray-800 text-[9.5pt]">{COMPANY_LEGAL_NAME}</p>
+                        <p className="text-[9pt] mt-0.5 leading-tight">{COMPANY_ADDRESS_LINE_1}<br />{COMPANY_ADDRESS_LINE_2}</p>
+                        <p className="text-[9pt]">{COMPANY_CONTACT_LINE}</p>
                         <p className="text-gray-400 mt-1 text-right">Sayfa 2/2</p>
                       </div>
                     </div>
