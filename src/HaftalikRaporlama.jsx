@@ -19,6 +19,11 @@ export default function HaftalikRaporlama() {
   const [showPdfPreview, setShowPdfPreview] = useState(false);
   const [selectedRapor, setSelectedRapor] = useState(null);
   const [showGrafikModal, setShowGrafikModal] = useState(false);
+  const [parsedExcelData, setParsedExcelData] = useState([]);
+  const [selectedEnergyType, setSelectedEnergyType] = useState('aktif');
+  const [selectedDataColumn, setSelectedDataColumn] = useState('Tüketim');
+  const [excelColumns, setExcelColumns] = useState([]);
+  const [excelData, setExcelData] = useState([]);
 
   const [formData, setFormData] = useState({
     fabrika_adi: '',
@@ -160,7 +165,100 @@ export default function HaftalikRaporlama() {
 
   // Eski tek Excel upload fonksiyonu - Artık kullanılmıyor
   // 3 ayrı Excel upload fonksiyonları: handleExcelUploadAktif, handleExcelUploadEnduktif, handleExcelUploadKapasitif
-  
+
+  const parseNumber = (value) => {
+    if (value === null || value === undefined || value === '' || value === 'SQL' || value === 'MAX') return 0;
+    if (typeof value === 'number') return value;
+    return parseFloat(String(value).replace(/\./g, '').replace(',', '.')) || 0;
+  };
+
+  const parseExcelDate = (value) => {
+    if (typeof value === 'number') {
+      return new Date((value - 25569) * 86400 * 1000);
+    }
+
+    const dateMatch = String(value).match(/^(\d{4})[.-](\d{1,2})[.-](\d{1,2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+    if (dateMatch) {
+      const [, year, month, day, hour = '0', minute = '0', second = '0'] = dateMatch;
+      return new Date(year, Number(month) - 1, day, hour, minute, second);
+    }
+
+    return new Date(value);
+  };
+
+  const findColumnValue = (row, columnNames) => {
+    const normalizedNames = columnNames.map(name => name.toLocaleLowerCase('tr-TR'));
+    const key = Object.keys(row).find(column => normalizedNames.includes(column.trim().toLocaleLowerCase('tr-TR')));
+    return key ? row[key] : undefined;
+  };
+
+  const parseExcelRows = (jsonData) => jsonData.map((row, index) => {
+    const jsDate = parseExcelDate(findColumnValue(row, ['Tarih']));
+    const okunanEndeks = parseNumber(findColumnValue(row, ['Okunan Endeks Değeri', 'Okunan Değer']));
+    const carpan = parseNumber(findColumnValue(row, ['Çarpan'])) || 1;
+    const hesaplanmisEndeks = parseNumber(findColumnValue(row, ['Hesaplanmış Endeks', 'Hesaplanmis Endeks', 'Endeks Değeri']));
+    const importedTuketim = findColumnValue(row, ['Tüketim', 'Tuketim', 'Tüketim (kWh)', 'Tüketim (kVArh)']);
+    const nextHesaplanmisEndeks = index < jsonData.length - 1
+      ? parseNumber(findColumnValue(jsonData[index + 1], ['Hesaplanmış Endeks', 'Hesaplanmis Endeks', 'Endeks Değeri']))
+      : hesaplanmisEndeks;
+    const tuketim = importedTuketim === undefined
+      ? Math.abs(hesaplanmisEndeks - nextHesaplanmisEndeks)
+      : parseNumber(importedTuketim);
+    const gunAdi = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'][jsDate.getDay()];
+    const gun = jsDate.getDate().toString().padStart(2, '0');
+    const ay = (jsDate.getMonth() + 1).toString().padStart(2, '0');
+    const saatDk = jsDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+    return {
+      tarih: jsDate.toISOString().split('T')[0],
+      saat: `${gunAdi} ${gun}.${ay} ${saatDk}`,
+      okunan_endeks: okunanEndeks,
+      carpan,
+      hesaplanmis_endeks: hesaplanmisEndeks,
+      tuketim,
+      raw_data: row
+    };
+  }).filter(row => !Number.isNaN(new Date(row.tarih).getTime()));
+
+  const getTotalConsumption = (data) => data.reduce((total, row) => total + (Number(row.tuketim) || 0), 0);
+
+  const getPdfPageCount = (rapor) => {
+    const excelPageCount = [
+      rapor.excel_data_aktif,
+      rapor.excel_data_enduktif,
+      rapor.excel_data_kapasitif
+    ].filter(Boolean).length;
+    return 2 + excelPageCount + (rapor.osos_ozet_tablo ? 1 : 0) + (rapor.gorsel_url ? 1 : 0);
+  };
+
+  const setAnalyticsDataset = (rapor, energyType) => {
+    const datasetByType = {
+      aktif: rapor.excel_data_aktif,
+      enduktif: rapor.excel_data_enduktif,
+      kapasitif: rapor.excel_data_kapasitif
+    };
+
+    if (!datasetByType[energyType]) return;
+
+    try {
+      const data = JSON.parse(datasetByType[energyType]);
+      setParsedExcelData(data.map(row => ({ ...row, enerji_turu: energyType })));
+      setSelectedEnergyType(energyType);
+    } catch (error) {
+      console.error('Grafik verisi okunamadı:', error);
+      alert('Grafik verisi okunamadı.');
+    }
+  };
+
+  const openReportAnalytics = (rapor) => {
+    const firstAvailableType = ['aktif', 'enduktif', 'kapasitif'].find(type => rapor[`excel_data_${type}`]);
+    if (!firstAvailableType) return;
+
+    setSelectedRapor(rapor);
+    setAnalyticsDataset(rapor, firstAvailableType);
+    setShowGrafikModal(true);
+  };
+
   // 3 Ayrı Excel Upload Handler'ları
   const handleExcelUploadAktif = async (e) => {
     const file = e.target.files[0];
@@ -175,43 +273,13 @@ export default function HaftalikRaporlama() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        // Excel serial date'i JS Date'e çevir
-        const parsedData = jsonData.map(row => {
-          const excelDate = row['Tarih'];
-          let jsDate;
-          
-          if (typeof excelDate === 'number') {
-            jsDate = new Date((excelDate - 25569) * 86400 * 1000);
-          } else {
-            jsDate = new Date(excelDate);
-          }
-
-          // Tüketim kolonunu bul
-          let tuketim = 0;
-          for (const key in row) {
-            if (key.toLowerCase().includes('tüketim') || key.toLowerCase().includes('tuketim')) {
-              tuketim = row[key] || 0;
-              break;
-            }
-          }
-
-          const gunAdi = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'][jsDate.getDay()];
-          const gun = jsDate.getDate().toString().padStart(2, '0');
-          const ay = (jsDate.getMonth() + 1).toString().padStart(2, '0');
-          const saatDk = jsDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-
-          return {
-            tarih: jsDate.toISOString().split('T')[0],
-            saat: `${gunAdi} ${gun}.${ay} ${saatDk}`,
-            okunan_endeks: row['Okunan Endeks Değeri'] || 0,
-            carpan: row['Çarpan'] || 1380,
-            hesaplanmis_endeks: row['Hesaplanmış Endeks'] || 0,
-            tuketim: tuketim,
-            raw_data: row
-          };
-        });
+        const parsedData = parseExcelRows(jsonData);
 
         setExcelDataAktif(parsedData);
+        setFormData(prev => ({
+          ...prev,
+          enerji_tuketimi: getTotalConsumption(parsedData).toFixed(2)
+        }));
         alert(`AKTİF Enerji Excel verisi yüklendi! (${parsedData.length} satır)`);
       };
       reader.readAsArrayBuffer(file);
@@ -234,41 +302,7 @@ export default function HaftalikRaporlama() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        // Excel serial date'i JS Date'e çevir
-        const parsedData = jsonData.map(row => {
-          const excelDate = row['Tarih'];
-          let jsDate;
-          
-          if (typeof excelDate === 'number') {
-            jsDate = new Date((excelDate - 25569) * 86400 * 1000);
-          } else {
-            jsDate = new Date(excelDate);
-          }
-
-          // Tüketim kolonunu bul
-          let tuketim = 0;
-          for (const key in row) {
-            if (key.toLowerCase().includes('tüketim') || key.toLowerCase().includes('tuketim')) {
-              tuketim = row[key] || 0;
-              break;
-            }
-          }
-
-          const gunAdi = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'][jsDate.getDay()];
-          const gun = jsDate.getDate().toString().padStart(2, '0');
-          const ay = (jsDate.getMonth() + 1).toString().padStart(2, '0');
-          const saatDk = jsDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-
-          return {
-            tarih: jsDate.toISOString().split('T')[0],
-            saat: `${gunAdi} ${gun}.${ay} ${saatDk}`,
-            okunan_endeks: row['Okunan Endeks Değeri'] || 0,
-            carpan: row['Çarpan'] || 1380,
-            hesaplanmis_endeks: row['Hesaplanmış Endeks'] || 0,
-            tuketim: tuketim,
-            raw_data: row
-          };
-        });
+        const parsedData = parseExcelRows(jsonData);
 
         setExcelDataEnduktif(parsedData);
         alert(`ENDÜKTİF Reaktif Excel verisi yüklendi! (${parsedData.length} satır)`);
@@ -293,41 +327,7 @@ export default function HaftalikRaporlama() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        // Excel serial date'i JS Date'e çevir
-        const parsedData = jsonData.map(row => {
-          const excelDate = row['Tarih'];
-          let jsDate;
-          
-          if (typeof excelDate === 'number') {
-            jsDate = new Date((excelDate - 25569) * 86400 * 1000);
-          } else {
-            jsDate = new Date(excelDate);
-          }
-
-          // Tüketim kolonunu bul
-          let tuketim = 0;
-          for (const key in row) {
-            if (key.toLowerCase().includes('tüketim') || key.toLowerCase().includes('tuketim')) {
-              tuketim = row[key] || 0;
-              break;
-            }
-          }
-
-          const gunAdi = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'][jsDate.getDay()];
-          const gun = jsDate.getDate().toString().padStart(2, '0');
-          const ay = (jsDate.getMonth() + 1).toString().padStart(2, '0');
-          const saatDk = jsDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-
-          return {
-            tarih: jsDate.toISOString().split('T')[0],
-            saat: `${gunAdi} ${gun}.${ay} ${saatDk}`,
-            okunan_endeks: row['Okunan Endeks Değeri'] || 0,
-            carpan: row['Çarpan'] || 1380,
-            hesaplanmis_endeks: row['Hesaplanmış Endeks'] || 0,
-            tuketim: tuketim,
-            raw_data: row
-          };
-        });
+        const parsedData = parseExcelRows(jsonData);
 
         setExcelDataKapasitif(parsedData);
         alert(`KAPASİTİF Reaktif Excel verisi yüklendi! (${parsedData.length} satır)`);
@@ -347,26 +347,22 @@ export default function HaftalikRaporlama() {
 
       for (const line of lines) {
         // Tab veya çoklu boşluklarla ayrılmış değerleri al
-        const parts = line.split(/\t+|\s{2,}/).map(p => p.trim()).filter(p => p);
+        const parts = (line.includes('\t') ? line.split('\t') : line.split(/\s{2,}/)).map(p => p.trim());
         
-        if (parts.length < 7) continue; // En az 7 kolon olmalı
-        
-        // Sayıları parse et (Türkçe format: 3.296,18 -> 3296.18)
-        const parseNumber = (str) => {
-          if (!str || str === 'SQL' || str === 'MAX') return 0;
-          return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
-        };
+        if (!/^\d+\.\d+\.\d+$/.test(parts[0])) continue;
+
+        const compactFormat = parts.length <= 7;
 
         const row = {
           endeks_kodu: parts[0] || '',
           aciklama: parts[1] || '',
           ilk_endeks: parseNumber(parts[2]),
           son_endeks: parseNumber(parts[3]),
-          endeks_farki: parseNumber(parts[4]),
-          carpan: parseNumber(parts[5]),
-          tuketim: parseNumber(parts[6]),
-          yasal_sinir: parts[7] || '',
-          durum: parts[8] || ''
+          endeks_farki: compactFormat ? 0 : parseNumber(parts[4]),
+          carpan: compactFormat ? 0 : parseNumber(parts[5]),
+          tuketim: parseNumber(parts[compactFormat ? 4 : 6]),
+          yasal_sinir: parts[compactFormat ? 5 : 7] || '',
+          durum: parts[compactFormat ? 6 : 8] || ''
         };
 
         parsedData.push(row);
@@ -408,14 +404,39 @@ export default function HaftalikRaporlama() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const gucFaktoru = parseFloat(formData.guc_faktoru);
+    const hedefGucFaktoru = parseFloat(formData.hedef_guc_faktoru);
+    const aktifGuc = parseFloat(formData.aktif_guc);
+    const enerjiTuketimi = parseFloat(formData.enerji_tuketimi);
+
+    if (!Number.isFinite(gucFaktoru) || gucFaktoru <= 0 || gucFaktoru > 1) {
+      alert('Güç faktörü 0 ile 1 arasında olmalıdır.');
+      return;
+    }
+
+    if (!Number.isFinite(hedefGucFaktoru) || hedefGucFaktoru <= 0 || hedefGucFaktoru > 1) {
+      alert('Hedef güç faktörü 0 ile 1 arasında olmalıdır.');
+      return;
+    }
+
+    if (!Number.isFinite(aktifGuc) || aktifGuc < 0 || !Number.isFinite(enerjiTuketimi) || enerjiTuketimi < 0) {
+      alert('Aktif güç ve enerji tüketimi geçerli sayısal değerler olmalıdır.');
+      return;
+    }
+
+    if (formData.hafta_baslangic > formData.hafta_bitis) {
+      alert('Hafta başlangıcı, hafta bitişinden sonra olamaz.');
+      return;
+    }
     
     try {
       const rapor = {
         ...formData,
-        guc_faktoru: parseFloat(formData.guc_faktoru),
+        guc_faktoru: gucFaktoru,
         reaktif_guc: formData.reaktif_guc ? parseFloat(formData.reaktif_guc) : null,
-        aktif_guc: parseFloat(formData.aktif_guc),
-        enerji_tuketimi: parseFloat(formData.enerji_tuketimi),
+        aktif_guc: aktifGuc,
+        enerji_tuketimi: enerjiTuketimi,
         maliyet: formData.maliyet ? parseFloat(formData.maliyet) : null,
         onceki_hafta_guc_faktoru: formData.onceki_hafta_guc_faktoru ? parseFloat(formData.onceki_hafta_guc_faktoru) : null,
         hedef_guc_faktoru: parseFloat(formData.hedef_guc_faktoru),
@@ -663,6 +684,10 @@ export default function HaftalikRaporlama() {
   const getDurum = (rapor) => {
     const gucFaktoru = parseFloat(rapor.guc_faktoru);
     const hedef = parseFloat(rapor.hedef_guc_faktoru);
+
+    if (!Number.isFinite(gucFaktoru) || !Number.isFinite(hedef)) {
+      return { text: 'VERİ EKSİK', color: 'gray', icon: AlertTriangle, bg: 'bg-slate-100', textColor: 'text-slate-700' };
+    }
     
     if (gucFaktoru >= hedef) {
       return { text: 'UYGUN', color: 'green', icon: CheckCircle, bg: 'bg-green-100', textColor: 'text-green-700' };
@@ -676,6 +701,10 @@ export default function HaftalikRaporlama() {
   const getTrend = (rapor) => {
     const current = parseFloat(rapor.guc_faktoru);
     const previous = parseFloat(rapor.onceki_hafta_guc_faktoru);
+
+    if (!Number.isFinite(current) || !Number.isFinite(previous)) {
+      return { icon: Minus, color: 'text-gray-500', text: 'Karşılaştırma yok' };
+    }
     
     if (current > previous) {
       return { icon: TrendingUp, color: 'text-green-600', text: 'Yükseliş' };
@@ -693,6 +722,14 @@ export default function HaftalikRaporlama() {
     if (filtreTarihBitis && rapor.hafta_bitis > filtreTarihBitis) return false;
     return true;
   });
+
+  const raporTrendData = [...filtreliRaporlar]
+    .sort((first, second) => new Date(first.hafta_baslangic) - new Date(second.hafta_baslangic))
+    .map(rapor => ({
+      hafta: new Date(rapor.hafta_baslangic).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' }),
+      guc_faktoru: Number(rapor.guc_faktoru),
+      hedef: Number(rapor.hedef_guc_faktoru)
+    }));
 
   // İstatistikler
   const istatistikler = {
@@ -718,29 +755,30 @@ export default function HaftalikRaporlama() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 p-6">
+    <div className="min-h-screen bg-[#f4f7f8] p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-            <div className="flex items-center gap-3">
-              <BarChart3 className="w-8 h-8 text-indigo-600" />
+        <div className="bg-white border border-slate-200 rounded-lg shadow-sm p-5 md:p-6 mb-4">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <img src="/fatura_logo.png" alt="VoltGuard" className="w-14 h-14 object-contain rounded-md border border-slate-200 bg-white" />
               <div>
-                <h1 className="text-3xl font-bold text-gray-800">Haftalık Raporlama</h1>
-                <p className="text-sm text-gray-500">Güç kompanzasyonu ve enerji yönetimi raporları</p>
+                <p className="text-xs font-semibold tracking-wide text-cyan-700">VOLTGUARD / İZLEME MERKEZİ</p>
+                <h1 className="text-2xl font-bold text-slate-900">Haftalık Raporlama</h1>
+                <p className="text-sm text-slate-500">Kompanzasyon performansı ve enerji tüketimi takibi</p>
               </div>
             </div>
             <div className="flex gap-2">
               <button
                 onClick={exportToExcel}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                className="flex items-center gap-2 px-4 py-2 border border-emerald-700 bg-white hover:bg-emerald-50 text-emerald-800 rounded-md transition"
               >
                 <Download className="w-5 h-5" />
                 <span>Excel</span>
               </button>
               <button
                 onClick={handleYeniRapor}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-lg transition shadow-lg"
+                className="flex items-center gap-2 px-5 py-2.5 bg-cyan-700 hover:bg-cyan-800 text-white rounded-md transition shadow-sm"
               >
                 <Plus className="w-5 h-5" />
                 <span className="font-semibold">Yeni Rapor</span>
@@ -750,8 +788,25 @@ export default function HaftalikRaporlama() {
         </div>
 
         {/* Filtreler */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">
+        <div className="bg-white border border-slate-200 rounded-lg shadow-sm p-4 mb-4">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <h2 className="text-sm font-semibold text-slate-800">Rapor Filtreleri</h2>
+            {(filtreFabrika || filtreTarihBaslangic || filtreTarihBitis) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setFiltreFabrika('');
+                  setFiltreTarihBaslangic('');
+                  setFiltreTarihBitis('');
+                }}
+                className="flex items-center gap-1 text-xs font-medium text-slate-600 hover:text-cyan-800"
+              >
+                <X className="w-4 h-4" />
+                Temizle
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Fabrika</label>
               <input
@@ -759,7 +814,7 @@ export default function HaftalikRaporlama() {
                 value={filtreFabrika}
                 onChange={(e) => setFiltreFabrika(e.target.value)}
                 placeholder="Fabrika adı..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
             <div>
@@ -768,7 +823,7 @@ export default function HaftalikRaporlama() {
                 type="date"
                 value={filtreTarihBaslangic}
                 onChange={(e) => setFiltreTarihBaslangic(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
             <div>
@@ -777,7 +832,7 @@ export default function HaftalikRaporlama() {
                 type="date"
                 value={filtreTarihBitis}
                 onChange={(e) => setFiltreTarihBitis(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-cyan-600 focus:border-transparent"
               />
             </div>
           </div>
@@ -840,6 +895,33 @@ export default function HaftalikRaporlama() {
             </div>
           </div>
         </div>
+
+        {raporTrendData.length > 0 && (
+          <section className="bg-white border border-slate-200 rounded-lg shadow-sm mb-6">
+            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-slate-200">
+              <div>
+                <h2 className="font-semibold text-slate-900">Güç Faktörü Seyri</h2>
+                <p className="text-xs text-slate-500 mt-1">Seçili raporlardaki cosφ değeri ve tanımlı hedef seviyesi</p>
+              </div>
+              <div className="flex items-center gap-3 text-xs text-slate-600 shrink-0">
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-cyan-700" /> Ölçülen</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" /> Hedef</span>
+              </div>
+            </div>
+            <div className="h-64 p-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsLine data={raporTrendData} margin={{ top: 8, right: 12, left: -18, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="hafta" tick={{ fontSize: 12, fill: '#475569' }} axisLine={false} tickLine={false} />
+                  <YAxis domain={[0, 1]} tickCount={6} tick={{ fontSize: 12, fill: '#475569' }} axisLine={false} tickLine={false} />
+                  <Tooltip formatter={(value) => Number(value).toFixed(3)} contentStyle={{ borderRadius: '6px', borderColor: '#cbd5e1' }} />
+                  <Line type="monotone" dataKey="hedef" name="Hedef" stroke="#ef4444" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                  <Line type="monotone" dataKey="guc_faktoru" name="Güç Faktörü" stroke="#0e7490" strokeWidth={3} dot={{ r: 3, fill: '#0e7490' }} activeDot={{ r: 5 }} />
+                </RechartsLine>
+              </ResponsiveContainer>
+            </div>
+          </section>
+        )}
 
         {/* Raporlar Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -906,7 +988,7 @@ export default function HaftalikRaporlama() {
                     </div>
                     <div className="p-2 bg-orange-50 rounded">
                       <p className="text-xs text-gray-600">Maliyet</p>
-                      <p className="text-sm font-bold text-orange-700">{parseFloat(rapor.maliyet).toLocaleString('tr-TR')} ₺</p>
+                      <p className="text-sm font-bold text-orange-700">{rapor.maliyet ? `${parseFloat(rapor.maliyet).toLocaleString('tr-TR')} ₺` : '-'}</p>
                     </div>
                   </div>
 
@@ -934,18 +1016,9 @@ export default function HaftalikRaporlama() {
 
                 {/* Actions */}
                 <div className="p-4 bg-gray-50 border-t border-gray-200 flex gap-2">
-                  {rapor.excel_data && (
+                  {(rapor.excel_data_aktif || rapor.excel_data_enduktif || rapor.excel_data_kapasitif) && (
                     <button
-                      onClick={() => {
-                        try {
-                          const excelData = JSON.parse(rapor.excel_data);
-                          setParsedExcelData(excelData);
-                          setSelectedRapor(rapor);
-                          setShowGrafikModal(true);
-                        } catch (e) {
-                          alert('Excel verisi okunamadı');
-                        }
-                      }}
+                      onClick={() => openReportAnalytics(rapor)}
                       className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition text-sm"
                     >
                       <LineChart className="w-4 h-4" />
@@ -1709,6 +1782,22 @@ export default function HaftalikRaporlama() {
               </div>
               
               <div className="p-6 space-y-6">
+                <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+                  {[
+                    { key: 'aktif', label: 'Aktif Enerji', unit: 'kWh' },
+                    { key: 'enduktif', label: 'Endüktif Reaktif', unit: 'kVArh' },
+                    { key: 'kapasitif', label: 'Kapasitif Reaktif', unit: 'kVArh' }
+                  ].map(type => selectedRapor[`excel_data_${type.key}`] && (
+                    <button
+                      key={type.key}
+                      type="button"
+                      onClick={() => setAnalyticsDataset(selectedRapor, type.key)}
+                      className={`px-3 py-2 text-sm font-semibold rounded-md transition ${selectedEnergyType === type.key ? 'bg-cyan-700 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                    >
+                      {type.label} ({type.unit})
+                    </button>
+                  ))}
+                </div>
                 {/* Enerji Türü Badge */}
                 {parsedExcelData.length > 0 && parsedExcelData[0].enerji_turu && (
                   <div className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg">
@@ -2094,12 +2183,7 @@ export default function HaftalikRaporlama() {
                               <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
-                            {(() => {
-                              const hasExcel = selectedRapor.excel_data;
-                              const hasImage = selectedRapor.gorsel_url;
-                              const totalPages = 2 + (hasExcel ? 1 : 0) + (hasImage ? 1 : 0);
-                              return <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa 1/{totalPages}</p>;
-                            })()}
+                            <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa 1/{getPdfPageCount(selectedRapor)}</p>
                           </div>
                         </div>
                       </div>
@@ -2176,12 +2260,7 @@ export default function HaftalikRaporlama() {
                               <p style={{ margin: '2px 0 0 0', lineHeight: '1.4' }}>Kemalpaşa OSB/İzmir</p>
                               <p style={{ margin: '2px 0 0 0' }}>Tel: +90 545 434 67 35 | voltguard.com.tr</p>
                             </div>
-                            {(() => {
-                              const hasExcel = selectedRapor.excel_data;
-                              const hasImage = selectedRapor.gorsel_url;
-                              const totalPages = 2 + (hasExcel ? 1 : 0) + (hasImage ? 1 : 0);
-                              return <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa 2/{totalPages}</p>;
-                            })()}
+                            <p style={{ margin: '0', fontWeight: 'bold', color: '#2980b9', fontSize: '9px' }}>Sayfa 2/{getPdfPageCount(selectedRapor)}</p>
                           </div>
                         </div>
                       </div>
@@ -2203,8 +2282,7 @@ export default function HaftalikRaporlama() {
                           
                           excelPageCount++;
                           const currentPageNum = 2 + excelPageCount;
-                          const hasImage = selectedRapor.gorsel_url;
-                          const totalPages = 2 + excelDataSets.filter(s => s.data).length + (hasImage ? 1 : 0);
+                          const totalPages = getPdfPageCount(selectedRapor);
                           
                           pages.push(
                             <div key={`page-excel-${setIndex}`} className="haftalik-pdf-page shadow-xl" style={{ width: '210mm', height: '297mm', background: 'white', padding: '15mm 20mm 30mm 20mm', fontFamily: 'Arial, sans-serif', position: 'relative', boxSizing: 'border-box', overflow: 'hidden' }}>
@@ -2309,8 +2387,7 @@ export default function HaftalikRaporlama() {
                         const ososData = JSON.parse(selectedRapor.osos_ozet_tablo);
                         const excelPageCount = excelDataSets.filter(s => s.data).length;
                         const currentPageNum = 2 + excelPageCount + 1;
-                        const hasImage = selectedRapor.gorsel_url;
-                        const totalPages = 2 + excelPageCount + 1 + (hasImage ? 1 : 0);
+                        const totalPages = getPdfPageCount(selectedRapor);
                         
                         pages.push(
                           <div key="page-osos-table" className="haftalik-pdf-page shadow-xl" style={{ width: '210mm', height: '297mm', background: 'white', padding: '15mm 20mm 30mm 20mm', fontFamily: 'Arial, sans-serif', position: 'relative', boxSizing: 'border-box', overflow: 'hidden' }}>
@@ -2398,7 +2475,7 @@ export default function HaftalikRaporlama() {
                       const excelPageCount = excelDataSets.filter(s => s.data).length;
                       const hasOsosTable = selectedRapor.osos_ozet_tablo ? 1 : 0;
                       const currentPageNum = 2 + excelPageCount + hasOsosTable + 1;
-                      const totalPages = 2 + excelPageCount + hasOsosTable + 1;
+                      const totalPages = getPdfPageCount(selectedRapor);
                       
                       pages.push(
                         <div key="page-image" className="haftalik-pdf-page shadow-xl" style={{ width: '210mm', height: '297mm', background: 'white', padding: '15mm 20mm 30mm 20mm', fontFamily: 'Arial, sans-serif', position: 'relative', boxSizing: 'border-box', overflow: 'hidden' }}>
