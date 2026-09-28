@@ -43,16 +43,15 @@ const UserProfile = ({ onClose }) => {
         if (!formData.currentPassword) {
           throw new Error('Mevcut şifrenizi girmeniz gerekiyor');
         }
-        // Mevcut Şifreyi Supabase üzerinden doğrula
-        const { data: dbUser, error: pwError } = await supabase
-          .from('users')
-          .select('password')
-          .eq('id', currentUser.id)
-          .single();
-        if (pwError || !dbUser) {
+        // Mevcut şifre sunucuda doğrulanır
+        const { data: dbUser, error: pwError } = await supabase.rpc('app_login', {
+          p_email: currentUser.email,
+          p_password: formData.currentPassword,
+        });
+        if (pwError) {
           throw new Error('Kullanıcı doğrulanamadı');
         }
-        if (dbUser.password !== formData.currentPassword) {
+        if (!dbUser) {
           throw new Error('Mevcut şifre yanlış!');
         }
         if (formData.newPassword !== formData.confirmPassword) {
