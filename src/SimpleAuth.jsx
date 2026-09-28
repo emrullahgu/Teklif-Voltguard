@@ -16,13 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Admin bilgileri
-  const ADMIN_EMAIL = 'info@voltguard.com.tr';
-  const ADMIN_PASSWORD = 'Eg8502Eg.';
-
   useEffect(() => {
-    // Admin kullanıcısını otomatik oluştur (yoksa)
-    initializeAdmin();
     setLoading(false);
   }, []);
 
@@ -40,71 +34,20 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
-  const initializeAdmin = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', ADMIN_EMAIL)
-        .single();
-
-      if (isUsersTableMissingError(error)) {
-        console.error('users tablosu bulunamadı. users-migration.sql dosyasını Supabase SQL Editor\'da çalıştırın.');
-        return;
-      }
-
-      if (error && error.code === 'PGRST116') {
-        // Admin yok, oluştur
-        const { error: insertError } = await supabase
-          .from('users')
-          .insert([{
-            email: ADMIN_EMAIL,
-            password: ADMIN_PASSWORD,
-            name: 'Admin',
-            company: 'VoltGuard',
-            approved: true,
-            role: 'admin'
-          }]);
-
-        if (insertError) {
-          console.error('Admin oluşturma hatası:', insertError);
-        } else {
-          console.log('✅ Admin kullanıcısı oluşturuldu');
-        }
-      }
-    } catch (error) {
-      console.error('Admin kontrolü hatası:', error);
-    }
-  };
-
   const signIn = async (email, password) => {
     try {
-      const { data: user, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', email)
-        .eq('password', password)
-        .single();
+      // Şifre kontrolü sunucuda yapılır (bcrypt); şifreler tarayıcıya hiç gelmez
+      const { data: user, error } = await supabase.rpc('app_login', {
+        p_email: email,
+        p_password: password,
+      });
 
       if (isUsersTableMissingError(error)) {
         throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
       }
+      if (error) throw error;
 
-      if (error || !user) {
-        // Ayrıntılı hata ayıklama
-        const { data: userByEmail, error: userByEmailError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('email', email)
-          .single();
-
-        if (isUsersTableMissingError(userByEmailError)) {
-          throw new Error('Veritabanı kurulumu eksik: users tablosu yok. Supabase SQL Editor\'da users-migration.sql dosyasını çalıştırın.');
-        }
-
-        if (!userByEmail) {
-          console.error('❌ E-posta bulunamadı!');
-        }
+      if (!user) {
         throw new Error('E-posta veya şifre hatalı!');
       }
 
@@ -142,7 +85,6 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      console.log('📝 Kayıt işlemi başlatılıyor:', userData);
 
       // E-posta kontrolü
       const { data: existingUser, error: existingUserError } = await supabase
@@ -172,7 +114,6 @@ export const AuthProvider = ({ children }) => {
 
       if (error) throw error;
 
-      console.log('✅ Kayıt başarılı:', data);
       return data;
     } catch (error) {
       console.error('❌ Kayıt hatası:', error);

@@ -37,7 +37,7 @@ BEFORE UPDATE ON public.users
 FOR EACH ROW EXECUTE FUNCTION update_users_updated_at_column();
 
 INSERT INTO public.users (email, password, name, company, location, role, approved, can_access_bordro)
-VALUES ('info@voltguard.com.tr', 'Eg8502Eg.', 'Admin', 'VoltGuard', 'Kemalpaşa Osb', 'admin', true, true)
+VALUES ('info@voltguard.com.tr', '<SIFREYI-BURAYA-YAZIN>', 'Admin', 'VoltGuard', 'Kemalpaşa Osb', 'admin', true, true)
 ON CONFLICT (email) DO UPDATE
 SET
   role = EXCLUDED.role,

@@ -37,9 +37,6 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
   const [editUserLoading, setEditUserLoading] = useState(false);
   const [editUserError, setEditUserError] = useState('');
 
-  // Admin bilgileri
-  const ADMIN_EMAIL = 'info@voltguard.com.tr';
-  const ADMIN_PASSWORD = 'Eg8502Eg.';
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -166,7 +163,10 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
   };
 
   const generateRandomPassword = () => {
-    return Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-4).toUpperCase();
+    const harfler = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const rastgele = new Uint32Array(12);
+    crypto.getRandomValues(rastgele);
+    return Array.from(rastgele, (n) => harfler[n % harfler.length]).join('');
   };
 
   const sendLoginCredentials = async (userId) => {
@@ -182,10 +182,16 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
         return;
       }
 
-      if (!user.password) {
-        alert('⚠️ Kullanıcının şifresi bulunamadı! Lütfen şifresini sıfırlayın.');
+      // Şifreler hash'li saklandığı için eski şifre gönderilemez; yeni şifre oluşturulur
+      if (!window.confirm(`${user.email} için yeni bir şifre oluşturulup e-postayla gönderilecek. Eski şifre geçersiz olacak. Devam edilsin mi?`)) {
         return;
       }
+      const newPassword = generateRandomPassword();
+      const { error: updateError } = await supabase
+        .from('users')
+        .update({ password: newPassword, updated_at: new Date().toISOString() })
+        .eq('id', userId);
+      if (updateError) throw updateError;
 
       console.log('📧 Login bilgileri gönderiliyor:', user.email);
 
@@ -197,7 +203,7 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
           to_name: user.name,
           from_name: 'Teklif Sistemi',
           from_email: 'info@voltguard.com.tr',
-          message: `Giriş Bilgileriniz:\n\nE-posta: ${user.email}\nŞifre: ${user.password}\nFirma: ${user.company || '-'}\n\nGiriş: ${window.location.origin}`
+          message: `Giriş Bilgileriniz:\n\nE-posta: ${user.email}\nŞifre: ${newPassword}\nFirma: ${user.company || '-'}\n\nGiriş: ${window.location.origin}`
         },
         '-rEVDm1IKnRaw6jCm'
       );
@@ -370,9 +376,14 @@ const SimpleAdminPanel = ({ isEmbedded = false }) => {
     return date.toLocaleString('tr-TR');
   };
 
-  const handleAdminLogin = (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
-    if (adminEmail === ADMIN_EMAIL && adminPassword === ADMIN_PASSWORD) {
+    // Admin girişi de sunucuda doğrulanır: sadece rolü 'admin' olan onaylı kullanıcılar
+    const { data: user, error } = await supabase.rpc('app_login', {
+      p_email: adminEmail,
+      p_password: adminPassword,
+    });
+    if (!error && user && user.role === 'admin' && user.approved) {
       setIsAuthenticated(true);
     } else {
       alert('Hatalı e-posta veya şifre!');

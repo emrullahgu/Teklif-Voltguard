@@ -54,3 +54,6 @@ export const adminSupabase = supabase;
 //   updated_by TEXT
 // );
 
+// Sunucu durum kontrolu (SunucuDurumu.jsx) icin
+export const SUPABASE_URL = supabaseUrl;
+export const SUPABASE_ANON_KEY = supabaseAnonKey;
